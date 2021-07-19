@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    app:startDestination="@id/home_fragment">
+
+    <fragment
+        android:id="@+id/home_fragment"
+        android:name="com.example.elonmars.HomeFragment"
+        tools:layout="@layout/fragment_home"
+        android:label="Home" />
+
+    <fragment
+        android:id="@+id/gallery_fragment"
+        android:name="com.example.elonmars.GalleryFragment"
+        tools:layout="@layout/fragment_gallery"
+        android:label="Gallery" />
+
+    <fragment
+        android:id="@+id/rover_fragment"
+        android:name="com.example.elonmars.RoverFragment"
+        tools:layout="@layout/fragment_rover"
+        android:label="Rover" />
+
+    <fragment
+        android:id="@+id/weather_fragment"
+        android:name="com.example.elonmars.WeatherFragment"
+        tools:layout="@layout/fragment_weather"
+        android:label="Weather" />
+
+</navigation>
