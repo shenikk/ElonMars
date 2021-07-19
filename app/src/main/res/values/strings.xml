@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ElonMars</string>
+    <string name="home">Home</string>
+    <string name="gallery">Gallery</string>
+    <string name="trip">Trip</string>
+    <string name="rover_gifs">Rover gifs</string>
+    <string name="weather">Weather</string>
+</resources>
