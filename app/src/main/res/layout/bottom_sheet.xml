@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     app:behavior_hideable="true"
     android:id="@+id/bottom_sheet"
@@ -13,7 +14,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="38dp"
-        android:text="Bottom sheet behavior" />
+        android:textSize="@dimen/dp_30"
+        tools:text="This is Bottom sheet behavior" />
 
 </LinearLayout>

@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home"
-        android:textSize="30dp"
-        android:layout_centerInParent="true"/>
+        android:textSize="@dimen/dp_30"
+        android:layout_centerInParent="true"
+        tools:text="Home" />
 </RelativeLayout>
