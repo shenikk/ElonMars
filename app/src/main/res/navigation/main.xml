@@ -29,4 +29,10 @@
         tools:layout="@layout/fragment_weather"
         android:label="Weather" />
 
+    <fragment
+        android:id="@+id/detail_photo_fragment"
+        android:name="com.example.elonmars.ui.fragments.DetailPhotoFragment"
+        tools:layout="@layout/fragment_detail_photo"
+        android:label="DetailPhoto" />
+
 </navigation>
