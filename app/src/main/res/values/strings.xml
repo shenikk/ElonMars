@@ -5,4 +5,5 @@
     <string name="trip">Trip</string>
     <string name="rover_gifs">Rover gifs</string>
     <string name="weather">Weather</string>
+    <string name="previous_days">Previous days</string>
 </resources>
