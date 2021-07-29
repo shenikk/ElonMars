@@ -2,9 +2,6 @@ package com.example.elonmars
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 
 class PhotoAdapter(private val dataSet: ArrayList<PhotoItem>, private val onItemClicked: (PhotoViewHolder, PhotoItem) -> Unit) : RecyclerView.Adapter<PhotoViewHolder>() {

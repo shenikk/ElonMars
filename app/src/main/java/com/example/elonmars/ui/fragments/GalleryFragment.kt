@@ -9,10 +9,9 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.elonmars.*
-import com.example.elonmars.retrofit.API_KEY
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,7 +44,7 @@ class GalleryFragment : Fragment() {
     }
 
     private fun setUpRecycler(recyclerView: RecyclerView) {
-        recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerView.layoutManager = GridLayoutManager(this@GalleryFragment.context, 2, RecyclerView.VERTICAL, false)
         setUpAdapter()
         recyclerView.adapter = photoAdapter
         processScrollToEnd(recyclerView)
