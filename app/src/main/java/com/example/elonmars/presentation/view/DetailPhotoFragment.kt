@@ -1,4 +1,4 @@
-package com.example.elonmars.ui.fragments
+package com.example.elonmars.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.elonmars.R
+import com.example.elonmars.presentation.view.GalleryFragment
 
 class DetailPhotoFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

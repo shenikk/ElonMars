@@ -1,4 +1,4 @@
-package com.example.elonmars.ui.fragments
+package com.example.elonmars.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.elonmars.*
@@ -25,6 +26,9 @@ class WeatherFragment : Fragment() {
     private lateinit var today: TextView
     private lateinit var highTemp: TextView
     private lateinit var lowTemp: TextView
+    private lateinit var temperatureTitle: SwitchCompat
+
+    private val weatherManager = WeatherManager()
 
     private var dataSet: ArrayList<Soles> = arrayListOf()
 
@@ -42,6 +46,21 @@ class WeatherFragment : Fragment() {
         today = view.findViewById(R.id.today)
         highTemp = view.findViewById(R.id.temp_high)
         lowTemp = view.findViewById(R.id.temp_low)
+//        temperatureTitle = view.findViewById(R.id.temperature_switch)
+//
+//        //TODO
+//        val highTempList = arrayListOf<String>()
+//        val highTempListF = arrayListOf<String>()
+//        temperatureTitle.setOnClickListener {
+//            dataSet.forEach {
+//                it.highTemp?.let { it1 -> highTempList.add(it1) }
+//            }
+//            highTempList.forEach {
+//                highTempList.add(weatherManager.convertToFarenheit(it))
+//            }
+//            weatherAdapter.notifyDataSetChanged()
+//            Toast.makeText(this@WeatherFragment.context, "Switched!", Toast.LENGTH_SHORT).show()
+//        }
 
         setUpRecycler(recyclerView)
         setUpRetrofit(weatherAdapter)

@@ -1,4 +1,4 @@
-package com.example.elonmars.ui.fragments
+package com.example.elonmars.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -53,7 +53,8 @@ class GalleryFragment : Fragment() {
     private fun setUpAdapter() {
         photoAdapter = PhotoAdapter(dataSet) { holder, currentItem ->
             holder.itemView.setOnClickListener { view ->
-                val bundle = bundleOf(BUNDLE_KEY_DESCRIPTION to currentItem.explanation,
+                val bundle = bundleOf(
+                    BUNDLE_KEY_DESCRIPTION to currentItem.explanation,
                         BUNDLE_KEY_IMAGE to currentItem.image)
                 view.findNavController().navigate(R.id.detail_photo_fragment, bundle)
             }

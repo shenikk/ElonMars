@@ -1,8 +1,10 @@
-package com.example.elonmars
+package com.example.elonmars.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.elonmars.data.model.PhotoItem
+import com.example.elonmars.R
 
 class PhotoAdapter(private val dataSet: ArrayList<PhotoItem>, private val onItemClicked: (PhotoViewHolder, PhotoItem) -> Unit) : RecyclerView.Adapter<PhotoViewHolder>() {
 

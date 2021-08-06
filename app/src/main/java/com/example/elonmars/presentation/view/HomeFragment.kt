@@ -1,4 +1,4 @@
-package com.example.elonmars.ui.fragments
+package com.example.elonmars.ui
 
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle

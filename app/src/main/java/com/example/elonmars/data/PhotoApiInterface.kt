@@ -1,6 +1,6 @@
-package com.example.elonmars.retrofit
+package com.example.elonmars.data
 
-import com.example.elonmars.PhotoItem
+import com.example.elonmars.data.model.PhotoItem
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
