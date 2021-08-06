@@ -6,7 +6,7 @@
     xmlns:shimmer="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".presentation.view.MainActivity">
 
     <TextView
         android:id="@+id/title"
@@ -89,6 +89,24 @@
         app:layout_constraintBottom_toTopOf="@id/divider"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/today" />
+
+    <TextView
+        android:id="@+id/converter_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:text="°C | °F"
+        app:layout_constraintEnd_toEndOf="@id/temperature_switch"
+        app:layout_constraintStart_toStartOf="@id/temperature_switch"
+        app:layout_constraintBottom_toTopOf="@id/temperature_switch" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/temperature_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@id/previous_days"
+        android:layout_marginEnd="@dimen/dp_16" />
 
     <View
         android:id="@+id/divider"

@@ -1,4 +1,4 @@
-package com.example.elonmars.ui
+package com.example.elonmars.presentation.view
 
 import android.os.Bundle
 import android.util.Log
@@ -6,16 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.example.elonmars.*
+import com.example.elonmars.R
+import com.example.elonmars.WeatherItem
+import com.example.elonmars.presentation.adapter.WeatherAdapter
+import com.example.elonmars.presentation.viewmodel.WeatherViewModel
 import com.facebook.shimmer.ShimmerFrameLayout
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.google.android.material.snackbar.Snackbar
+import io.reactivex.plugins.RxJavaPlugins
 
+/** Экран с информацией о погоде за последние 10 доступных дней */
 class WeatherFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
@@ -26,11 +28,11 @@ class WeatherFragment : Fragment() {
     private lateinit var today: TextView
     private lateinit var highTemp: TextView
     private lateinit var lowTemp: TextView
-    private lateinit var temperatureTitle: SwitchCompat
 
-    private val weatherManager = WeatherManager()
+    private var viewModel: WeatherViewModel? = null
+    private var dataSet: ArrayList<WeatherItem> = arrayListOf()
 
-    private var dataSet: ArrayList<Soles> = arrayListOf()
+    private val TAG = "WeatherFragment"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_weather, container, false)
@@ -39,6 +41,12 @@ class WeatherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        createViewModel()
+        observeLiveData()
+        if (savedInstanceState == null) {
+            viewModel?.loadDataAsync()
+        }
+
         recyclerView = view.findViewById(R.id.weather_recycler)
         mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container)
         weatherDay = view.findViewById(R.id.weather_day)
@@ -46,24 +54,13 @@ class WeatherFragment : Fragment() {
         today = view.findViewById(R.id.today)
         highTemp = view.findViewById(R.id.temp_high)
         lowTemp = view.findViewById(R.id.temp_low)
-//        temperatureTitle = view.findViewById(R.id.temperature_switch)
-//
-//        //TODO
-//        val highTempList = arrayListOf<String>()
-//        val highTempListF = arrayListOf<String>()
-//        temperatureTitle.setOnClickListener {
-//            dataSet.forEach {
-//                it.highTemp?.let { it1 -> highTempList.add(it1) }
-//            }
-//            highTempList.forEach {
-//                highTempList.add(weatherManager.convertToFarenheit(it))
-//            }
-//            weatherAdapter.notifyDataSetChanged()
-//            Toast.makeText(this@WeatherFragment.context, "Switched!", Toast.LENGTH_SHORT).show()
-//        }
 
         setUpRecycler(recyclerView)
-        setUpRetrofit(weatherAdapter)
+
+        // Необходимо для устранения ошибки самого RxJava2 (UndeliverableException)
+        RxJavaPlugins.setErrorHandler { throwable: Throwable? ->
+            Log.e(TAG, "Exception: ${throwable.toString()}")
+        }
     }
 
     override fun onResume() {
@@ -76,40 +73,60 @@ class WeatherFragment : Fragment() {
         recyclerView.adapter = weatherAdapter
     }
 
-    private fun setUpRetrofit(weatherAdapter: WeatherAdapter) {
-        val call = Common.weatherRetrofit.getWeatherData("weather", "msl", "json")
-        call.enqueue(object : Callback<WeatherItem> {
+    private fun createViewModel() {
+        viewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
+    }
 
-            override fun onResponse(call: Call<WeatherItem>, response: Response<WeatherItem>) {
-                if (response.isSuccessful) {
-
-                    response.body()?.soles?.let {
-                        dataSet.clear()
-                        for (i in 0 until 10) {
-                            dataSet.add(
-                                Soles("Sol ${it[i].weatherDay}",
-                                    it[i].earthDate,
-                                    "High: ${it[i].highTemp} °C",
-                                    "Low: ${it[i].lowTemp} °C")
-                            )
-                        }
-                    }
-
-                    mShimmerViewContainer.stopShimmerAnimation()
-                    mShimmerViewContainer.visibility = View.GONE
-                    setTodayWeather()
-                    weatherAdapter.notifyDataSetChanged()
-
-                    Toast.makeText(this@WeatherFragment.context, "Success!", Toast.LENGTH_SHORT).show()
-                    Log.d("TAG", "Successfully get a list of data")
+    private fun observeLiveData() {
+        viewModel?.let {
+            it.getWeatherItemsLiveData().observe(viewLifecycleOwner, { list ->
+                if (list != null) {
+                    showData(list)
                 }
-            }
+            })
 
-            override fun onFailure(call: Call<WeatherItem>, t: Throwable) {
-                Toast.makeText(this@WeatherFragment.context, "Fail!", Toast.LENGTH_SHORT).show()
-                Log.e("TAG", "Failed to get a list of data")
-            }
-        })
+            it.getProgressLiveData().observe(viewLifecycleOwner, { t ->
+                if (t != null) {
+                    showProgress(t)
+                }
+            })
+
+            it.getErrorLiveData().observe(viewLifecycleOwner, { error ->
+                showError(error)
+            })
+        }
+    }
+
+    private fun showError(throwable: Throwable) {
+        Log.e(TAG, "showError called with error = $throwable")
+        Snackbar.make(recyclerView, throwable.toString(), Snackbar.LENGTH_SHORT).show()
+    }
+
+    private fun showProgress(isVisible: Boolean) {
+        if (isVisible) {
+            mShimmerViewContainer.startShimmerAnimation()
+        } else {
+            mShimmerViewContainer.stopShimmerAnimation()
+            mShimmerViewContainer.visibility = View.GONE
+        }
+    }
+
+    private fun showData(list: ArrayList<WeatherItem>) {
+        prepareData(list)
+        setTodayWeather()
+        weatherAdapter = WeatherAdapter(dataSet)
+        recyclerView.adapter = weatherAdapter
+    }
+
+    private fun prepareData(list: ArrayList<WeatherItem>) {
+        list.take(10).forEach {
+            dataSet.add(
+                WeatherItem("Sol ${it.weatherDay}",
+                    it.earthDate,
+                    "High: ${it.highTemp} °C",
+                    "Low: ${it.lowTemp} °C")
+            )
+        }
     }
 
     private fun setTodayWeather() {

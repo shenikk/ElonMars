@@ -1,29 +1,32 @@
-package com.example.elonmars.ui
+package com.example.elonmars.presentation.view
 
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.ProgressBar
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.elonmars.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.elonmars.R
+import com.example.elonmars.data.model.PhotoItem
+import com.example.elonmars.presentation.adapter.PhotoAdapter
+import com.example.elonmars.presentation.viewmodel.GalleryViewModel
+import com.google.android.material.snackbar.Snackbar
 
+/** Экран со списком фото */
 class GalleryFragment : Fragment() {
-
-    private var NUMBER_OF_PHOTOS = 10
-
-    private var dataSet: ArrayList<PhotoItem> = arrayListOf()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var photoAdapter: PhotoAdapter
+    private lateinit var progressBar: ProgressBar
+
+    private val TAG = "GalleryFragment"
+    private var viewModel: GalleryViewModel? = null
+    private var dataSet: ArrayList<PhotoItem> = arrayListOf()
 
     companion object {
         val BUNDLE_KEY_DESCRIPTION = "Description"
@@ -37,20 +40,16 @@ class GalleryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        createViewModel()
+        observeLiveData()
+        if (savedInstanceState == null) {
+            viewModel?.loadDataAsync()
+        }
         recyclerView = view.findViewById(R.id.recycler)
-
-        setUpRecycler(recyclerView)
-        setUpRetrofit(photoAdapter)
+        progressBar = view.findViewById(R.id.progress_bar)
     }
 
-    private fun setUpRecycler(recyclerView: RecyclerView) {
-        recyclerView.layoutManager = GridLayoutManager(this@GalleryFragment.context, 2, RecyclerView.VERTICAL, false)
-        setUpAdapter()
-        recyclerView.adapter = photoAdapter
-        processScrollToEnd(recyclerView)
-    }
-
-    private fun setUpAdapter() {
+    private fun setUpAdapter(dataSet: ArrayList<PhotoItem>) {
         photoAdapter = PhotoAdapter(dataSet) { holder, currentItem ->
             holder.itemView.setOnClickListener { view ->
                 val bundle = bundleOf(
@@ -61,41 +60,57 @@ class GalleryFragment : Fragment() {
         }
     }
 
-    // TODO добавить кэширование и шиммеры при загрузке картинок
-    // TODO добавить описание ко всем классам и публичным методам
-    // TODO поправить архитектуру
-    // TODO добавить спиннер при загрузке картинок
-    private fun setUpRetrofit(photoAdapter: PhotoAdapter) {
-        val call = Common.retrofit.getPhotos(API_KEY, NUMBER_OF_PHOTOS)
-        call.enqueue(object : Callback<ArrayList<PhotoItem>> {
-            override fun onResponse(call: Call<ArrayList<PhotoItem>>, response: Response<ArrayList<PhotoItem>>) {
-                if (response.isSuccessful) {
-
-                    response.body()?.forEach {
-                        dataSet.add(PhotoItem(it.date, it.title, it.image, it.explanation))
-                    }
-                    photoAdapter.notifyDataSetChanged()
-
-                    Toast.makeText(this@GalleryFragment.context, "Success!", Toast.LENGTH_SHORT).show()
-                    Log.d("TAG", "Successfully get a list of images")
-                }
-            }
-
-            override fun onFailure(call: Call<ArrayList<PhotoItem>>, t: Throwable) {
-                Toast.makeText(this@GalleryFragment.context, "Fail!", Toast.LENGTH_SHORT).show()
-                Log.e("TAG", "Failed to get a list of images")
-            }
-        })
+    private fun createViewModel() {
+        viewModel = ViewModelProvider(this).get(GalleryViewModel::class.java)
     }
 
-    private fun processScrollToEnd(recyclerView: RecyclerView) {
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    setUpRetrofit(photoAdapter)
+    private fun observeLiveData() {
+        viewModel?.let {
+            it.getPhotoItemsLiveData().observe(viewLifecycleOwner, { list ->
+                if (list != null) {
+                    showData(list)
                 }
-            }
-        })
+            })
+
+            it.getProgressLiveData().observe(viewLifecycleOwner, { t ->
+                if (t != null) {
+                    showProgress(t)
+                }
+            })
+
+            it.getErrorLiveData().observe(viewLifecycleOwner, { error ->
+                showError(error)
+            })
+        }
     }
+
+    private fun showError(throwable: Throwable) {
+        Log.e(TAG, "showError called with error = $throwable")
+        Snackbar.make(recyclerView, throwable.toString(), Snackbar.LENGTH_SHORT).show()
+    }
+
+    private fun showProgress(isVisible: Boolean) {
+        if (isVisible) {
+            progressBar.visibility = View.VISIBLE
+        } else {
+            progressBar.visibility = View.GONE
+        }
+    }
+
+    private fun showData(list: ArrayList<PhotoItem>) {
+        setUpAdapter(list)
+        recyclerView.adapter = photoAdapter
+    }
+
+    // TODO delete it later
+//    private fun processScrollToEnd(recyclerView: RecyclerView) {
+//        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+//                super.onScrollStateChanged(recyclerView, newState)
+//                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+//                    setUpRetrofit(photoAdapter)
+//                }
+//            }
+//        })
+//    }
 }

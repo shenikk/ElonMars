@@ -1,4 +1,4 @@
-package com.example.elonmars.ui
+package com.example.elonmars.presentation.view
 
 import android.os.Bundle
 import android.view.LayoutInflater

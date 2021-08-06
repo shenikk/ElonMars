@@ -1,4 +1,4 @@
-package com.example.elonmars.ui
+package com.example.elonmars.presentation.view
 
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import com.example.elonmars.R
 
+/** Главный экран приложения */
 class HomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

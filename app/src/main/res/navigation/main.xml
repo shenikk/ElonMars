@@ -7,31 +7,31 @@
 
     <fragment
         android:id="@+id/home_fragment"
-        android:name="com.example.elonmars.ui.fragments.HomeFragment"
+        android:name="com.example.elonmars.presentation.view.HomeFragment"
         tools:layout="@layout/fragment_home"
         android:label="Home" />
 
     <fragment
         android:id="@+id/gallery_fragment"
-        android:name="com.example.elonmars.ui.fragments.GalleryFragment"
+        android:name="com.example.elonmars.presentation.view.GalleryFragment"
         tools:layout="@layout/fragment_gallery"
         android:label="Gallery" />
 
     <fragment
         android:id="@+id/rover_fragment"
-        android:name="com.example.elonmars.ui.fragments.RoverFragment"
+        android:name="com.example.elonmars.presentation.view.RoverFragment"
         tools:layout="@layout/fragment_rover"
         android:label="Rover" />
 
     <fragment
         android:id="@+id/weather_fragment"
-        android:name="com.example.elonmars.ui.fragments.WeatherFragment"
+        android:name="com.example.elonmars.presentation.view.WeatherFragment"
         tools:layout="@layout/fragment_weather"
         android:label="Weather" />
 
     <fragment
         android:id="@+id/detail_photo_fragment"
-        android:name="com.example.elonmars.ui.fragments.DetailPhotoFragment"
+        android:name="com.example.elonmars.presentation.view.DetailPhotoFragment"
         tools:layout="@layout/fragment_detail_photo"
         android:label="DetailPhoto" />
 

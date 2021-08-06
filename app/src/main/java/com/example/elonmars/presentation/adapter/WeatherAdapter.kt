@@ -1,10 +1,12 @@
-package com.example.elonmars
+package com.example.elonmars.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.elonmars.R
+import com.example.elonmars.WeatherItem
 
-class WeatherAdapter(private val dataSet: ArrayList<Soles>) : RecyclerView.Adapter<WeatherViewHolder>() {
+class WeatherAdapter(private val dataSet: ArrayList<WeatherItem>) : RecyclerView.Adapter<WeatherViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {
         return WeatherViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.weather_item, parent, false))
