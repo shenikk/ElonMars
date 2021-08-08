@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName
  * @param weatherItems список дней с информацией о погоде
  */
 data class WeatherData(
+    @SerializedName("soles")
     var weatherItems: ArrayList<WeatherItem>)
 
 /**
