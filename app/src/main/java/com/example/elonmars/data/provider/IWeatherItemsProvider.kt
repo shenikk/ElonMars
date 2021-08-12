@@ -1,6 +1,6 @@
 package com.example.elonmars.data.provider
 
-import com.example.elonmars.WeatherItem
+import com.example.elonmars.WeatherDataItem
 
 /** Адрес для загрузки картинок */
 const val PHOTOS_BASE_URL = "https://api.nasa.gov/"
@@ -19,7 +19,7 @@ interface IWeatherItemProvider {
     /**
      * Метод для загрузки информации о погоде.
      *
-     * @return список моделей [WeatherItem] описывающих информацию о погоде за конкретный день.
+     * @return список моделей [WeatherDataItem] описывающих информацию о погоде за конкретный день.
      */
-    fun loadWeatherItemsList(): ArrayList<WeatherItem>
+    fun loadWeatherItemsList(): ArrayList<WeatherDataItem>
 }

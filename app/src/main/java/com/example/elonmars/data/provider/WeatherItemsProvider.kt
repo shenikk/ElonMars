@@ -1,7 +1,7 @@
 package com.example.elonmars.data.provider
 
 import android.util.Log
-import com.example.elonmars.WeatherItem
+import com.example.elonmars.WeatherDataItem
 import com.example.elonmars.data.WeatherApiInterface
 import com.example.elonmars.utils.RequestException
 import retrofit2.Retrofit
@@ -18,14 +18,14 @@ class WeatherItemsProvider : IWeatherItemProvider {
         .build()
 
     @Throws(java.lang.Exception::class)
-    override fun loadWeatherItemsList(): ArrayList<WeatherItem> {
+    override fun loadWeatherItemsList(): ArrayList<WeatherDataItem> {
         val weatherRetrofitRequest = weatherRetrofit.create(WeatherApiInterface::class.java)
         val call = weatherRetrofitRequest.getWeatherData("weather", "msl", "json")
 
         call.execute().let { response ->
             return try {
                 if (response.isSuccessful) {
-                    response.body()?.weatherItems ?: throw RequestException("Body is null")
+                    response.body()?.weatherDataItems ?: throw RequestException("Body is null")
                 } else {
                     Log.e("Response code: ", response.code().toString())
                     throw RequestException("Response code: ${response.code()}")

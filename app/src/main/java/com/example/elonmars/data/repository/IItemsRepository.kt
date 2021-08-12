@@ -1,8 +1,7 @@
 package com.example.elonmars.data.repository
 
 import com.example.elonmars.data.model.PhotoItem
-import com.example.elonmars.WeatherItem
-import io.reactivex.Observable
+import com.example.elonmars.WeatherDataItem
 import io.reactivex.Single
 
 /**
@@ -13,9 +12,9 @@ interface IItemsRepository {
     /**
      * Метод для асинхронной загрузки информации о погоде.
      *
-     * @return Single со списком моделей [WeatherItem]
+     * @return Single со списком моделей [WeatherDataItem]
      */
-    fun loadDataAsync(): Single<ArrayList<WeatherItem>>
+    fun loadDataAsync(): Single<ArrayList<WeatherDataItem>>
 
     /**
      * Метод для асинхронной загрузки списка фотографий.

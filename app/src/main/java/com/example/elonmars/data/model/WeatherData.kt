@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName
 /**
  * Модель списка дней с информацией о погоде.
  *
- * @param weatherItems список дней с информацией о погоде
+ * @param weatherDataItems список дней с информацией о погоде
  */
 data class WeatherData(
     @SerializedName("soles")
-    var weatherItems: ArrayList<WeatherItem>)
+    var weatherDataItems: ArrayList<WeatherDataItem>)
 
 /**
  * Модель, для описания данных о погоде за конкретный день.
@@ -19,7 +19,8 @@ data class WeatherData(
  * @param highTemp максимальная температура
  * @param lowTemp минимальная температура
  */
-data class WeatherItem(@SerializedName("sol")
+data class WeatherDataItem(
+                 @SerializedName("sol")
                  var weatherDay: String?,
                  @SerializedName("terrestrial_date")
                  var earthDate: String? = null,

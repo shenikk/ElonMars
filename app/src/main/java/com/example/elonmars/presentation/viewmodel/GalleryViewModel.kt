@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.elonmars.WeatherItem
+import com.example.elonmars.WeatherDataItem
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.data.repository.ItemsRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -65,7 +65,7 @@ class GalleryViewModel : ViewModel() {
     /**
      * Метод для получения инстанса LiveData
      *
-     * @return LiveData со списком моделей [WeatherItem]
+     * @return LiveData со списком моделей [PhotoItem]
      */
     fun getPhotoItemsLiveData(): LiveData<ArrayList<PhotoItem>> {
         return photoItemsLiveData

@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_16"
         android:src="@mipmap/ic_launcher"
-        android:text="Today"
+        android:text="Latest day"
         android:textSize="@dimen/dp_30"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/previous_days"

@@ -1,10 +1,9 @@
 package com.example.elonmars.data.repository
 
 import com.example.elonmars.data.model.PhotoItem
-import com.example.elonmars.WeatherItem
+import com.example.elonmars.WeatherDataItem
 import com.example.elonmars.data.provider.GalleryProvider
 import com.example.elonmars.data.provider.WeatherItemsProvider
-import io.reactivex.Observable
 import io.reactivex.Single
 
 /**
@@ -14,8 +13,8 @@ class ItemsRepository : IItemsRepository {
     private val weatherItemsProvider = WeatherItemsProvider()
     private val galleryProvider = GalleryProvider()
 
-    override fun loadDataAsync(): Single<ArrayList<WeatherItem>> {
-        return Single.fromCallable { weatherItemsProvider.loadWeatherItemsList() }
+    override fun loadDataAsync(): Single<ArrayList<WeatherDataItem>> {
+        return Single.fromCallable { ArrayList(weatherItemsProvider.loadWeatherItemsList().take(10)) }
     }
 
     override fun loadPhotosAsync(): Single<ArrayList<PhotoItem>> {

@@ -6,12 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.elonmars.R
-import com.example.elonmars.WeatherItem
 import com.example.elonmars.presentation.adapter.WeatherAdapter
+import com.example.elonmars.presentation.model.WeatherItem
 import com.example.elonmars.presentation.viewmodel.WeatherViewModel
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.snackbar.Snackbar
@@ -28,9 +29,10 @@ class WeatherFragment : Fragment() {
     private lateinit var today: TextView
     private lateinit var highTemp: TextView
     private lateinit var lowTemp: TextView
+    private lateinit var temperatureSwitch: SwitchCompat
 
     private var viewModel: WeatherViewModel? = null
-    private var dataSet: ArrayList<WeatherItem> = arrayListOf()
+    private var dataSet: List<WeatherItem> = arrayListOf()
 
     private val TAG = "WeatherFragment"
 
@@ -46,14 +48,7 @@ class WeatherFragment : Fragment() {
         if (savedInstanceState == null) {
             viewModel?.loadDataAsync()
         }
-
-        recyclerView = view.findViewById(R.id.weather_recycler)
-        mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container)
-        weatherDay = view.findViewById(R.id.weather_day)
-        title = view.findViewById(R.id.title)
-        today = view.findViewById(R.id.today)
-        highTemp = view.findViewById(R.id.temp_high)
-        lowTemp = view.findViewById(R.id.temp_low)
+        init()
 
         setUpRecycler(recyclerView)
 
@@ -66,6 +61,23 @@ class WeatherFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         mShimmerViewContainer.startShimmerAnimation()
+    }
+
+    private fun init() {
+        view?.let {
+            recyclerView = it.findViewById(R.id.weather_recycler)
+            mShimmerViewContainer = it.findViewById(R.id.shimmer_view_container)
+            weatherDay = it.findViewById(R.id.weather_day)
+            title = it.findViewById(R.id.title)
+            today = it.findViewById(R.id.today)
+            highTemp = it.findViewById(R.id.temp_high)
+            lowTemp = it.findViewById(R.id.temp_low)
+            temperatureSwitch = it.findViewById<SwitchCompat>(R.id.temperature_switch).apply {
+                setOnClickListener {
+                    viewModel?.convertTemperature()
+                }
+            }
+        }
     }
 
     private fun setUpRecycler(recyclerView: RecyclerView) {
@@ -94,6 +106,10 @@ class WeatherFragment : Fragment() {
             it.getErrorLiveData().observe(viewLifecycleOwner, { error ->
                 showError(error)
             })
+
+            it.getLatestDayLiveData().observe(viewLifecycleOwner, { weatherItem ->
+                setLatestData(weatherItem)
+            })
         }
     }
 
@@ -111,27 +127,14 @@ class WeatherFragment : Fragment() {
         }
     }
 
-    private fun showData(list: ArrayList<WeatherItem>) {
-        prepareData(list)
-        setTodayWeather()
-        weatherAdapter = WeatherAdapter(dataSet)
+    private fun showData(list: List<WeatherItem>) {
+        weatherAdapter = WeatherAdapter(list)
         recyclerView.adapter = weatherAdapter
     }
 
-    private fun prepareData(list: ArrayList<WeatherItem>) {
-        list.take(10).forEach {
-            dataSet.add(
-                WeatherItem("Sol ${it.weatherDay}",
-                    it.earthDate,
-                    "High: ${it.highTemp} °C",
-                    "Low: ${it.lowTemp} °C")
-            )
-        }
-    }
-
-    private fun setTodayWeather() {
-        weatherDay.text = dataSet[0].weatherDay
-        highTemp.text = dataSet[0].highTemp
-        lowTemp.text = dataSet[0].lowTemp
+    private fun setLatestData(weatherItem: WeatherItem) {
+        weatherDay.text = weatherItem.weatherDay
+        highTemp.text = weatherItem.highTemp
+        lowTemp.text = weatherItem.lowTemp
     }
 }
