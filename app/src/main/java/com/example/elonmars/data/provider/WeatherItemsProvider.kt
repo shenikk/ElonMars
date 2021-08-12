@@ -25,6 +25,9 @@ class WeatherItemsProvider : IWeatherItemProvider {
         call.execute().let { response ->
             return try {
                 if (response.isSuccessful) {
+                    if (response.body()?.weatherDataItems.isNullOrEmpty()) {
+                        throw RequestException("body is empty")
+                    }
                     response.body()?.weatherDataItems ?: throw RequestException("Body is null")
                 } else {
                     Log.e("Response code: ", response.code().toString())

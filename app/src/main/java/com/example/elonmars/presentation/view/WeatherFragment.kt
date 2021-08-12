@@ -8,9 +8,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.elonmars.R
+import com.example.elonmars.data.provider.SchedulersProvider
+import com.example.elonmars.data.repository.ItemsRepository
 import com.example.elonmars.presentation.adapter.WeatherAdapter
 import com.example.elonmars.presentation.model.WeatherItem
 import com.example.elonmars.presentation.viewmodel.WeatherViewModel
@@ -86,7 +89,18 @@ class WeatherFragment : Fragment() {
     }
 
     private fun createViewModel() {
-        viewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
+//        viewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
+
+        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+
+                // Все зависимости уйдут после внедрения DI
+                val itemsRepository = ItemsRepository()
+                val schedulersProvider = SchedulersProvider()
+
+                return WeatherViewModel(itemsRepository, schedulersProvider) as T
+            }
+        }).get(WeatherViewModel::class.java)
     }
 
     private fun observeLiveData() {
@@ -97,7 +111,7 @@ class WeatherFragment : Fragment() {
                 }
             })
 
-            it.getProgressLiveData().observe(viewLifecycleOwner, { t ->
+            it.getShimmerLiveData().observe(viewLifecycleOwner, { t ->
                 if (t != null) {
                     showProgress(t)
                 }
