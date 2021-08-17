@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".presentation.view.MainActivity">
+
+    <TextView
+        android:id="@+id/weather_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:src="@mipmap/ic_launcher"
+        android:text="Sol 3183"
+        android:textSize="@dimen/dp_30"
+        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/dp_16"
+        app:layout_constraintBottom_toTopOf="@id/today"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/today"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:src="@mipmap/ic_launcher"
+        android:text="Latest day"
+        android:textSize="@dimen/dp_30"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/previous_days"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/weather_day" />
+
+    <TextView
+        android:id="@+id/temp_high"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_4"
+        android:layout_marginLeft="@dimen/dp_4"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_4"
+        android:text="High: NA"
+        android:textSize="@dimen/dp_30"
+        app:layout_constraintBaseline_toBaselineOf="@id/weather_day"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/temp_low"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_4"
+        android:layout_marginLeft="@dimen/dp_4"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_4"
+        android:text="Low: NA"
+        android:textSize="@dimen/dp_30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@id/today" />
+
+    <TextView
+        android:id="@+id/previous_days"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:text="@string/previous_days"
+        android:textSize="@dimen/dp_20"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/dp_50"
+        android:layout_marginBottom="@dimen/dp_16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/today" />
+
+    <TextView
+        android:id="@+id/converter_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:text="°C | °F"
+        app:layout_constraintEnd_toEndOf="@id/temperature_switch"
+        app:layout_constraintStart_toStartOf="@id/temperature_switch"
+        app:layout_constraintBottom_toTopOf="@id/temperature_switch" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/temperature_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@id/previous_days"
+        android:layout_marginEnd="@dimen/dp_16" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

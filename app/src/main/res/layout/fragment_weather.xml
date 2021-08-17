@@ -1,112 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".presentation.view.MainActivity">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/dp_50"
+        android:layout_marginVertical="@dimen/dp_30"
+        android:layout_gravity="center"
         android:text="Latest Weather at Elisium Plantitia"
         android:textSize="@dimen/dp_20"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/weather_day"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintVertical_bias="0.1" />
+        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/weather_day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_16"
-        android:src="@mipmap/ic_launcher"
-        android:text="Sol 3183"
-        android:textSize="@dimen/dp_30"
-        android:textStyle="bold"
-        android:layout_marginBottom="@dimen/dp_16"
-        app:layout_constraintBottom_toTopOf="@id/today"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title" />
-
-    <TextView
-        android:id="@+id/today"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_16"
-        android:src="@mipmap/ic_launcher"
-        android:text="Latest day"
-        android:textSize="@dimen/dp_30"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/previous_days"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/weather_day" />
-
-    <TextView
-        android:id="@+id/temp_high"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_4"
-        android:layout_marginLeft="@dimen/dp_4"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:layout_marginRight="@dimen/dp_4"
-        android:text="High: NA"
-        android:textSize="@dimen/dp_30"
-        app:layout_constraintBaseline_toBaselineOf="@id/weather_day"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <TextView
-        android:id="@+id/temp_low"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_4"
-        android:layout_marginLeft="@dimen/dp_4"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:layout_marginRight="@dimen/dp_4"
-        android:text="Low: NA"
-        android:textSize="@dimen/dp_30"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBaseline_toBaselineOf="@id/today" />
-
-    <TextView
-        android:id="@+id/previous_days"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_16"
-        android:text="@string/previous_days"
-        android:textSize="@dimen/dp_20"
-        android:textStyle="bold"
-        android:layout_marginTop="@dimen/dp_50"
-        android:layout_marginBottom="@dimen/dp_16"
-        app:layout_constraintBottom_toTopOf="@id/divider"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/today" />
-
-    <TextView
-        android:id="@+id/converter_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:text="°C | °F"
-        app:layout_constraintEnd_toEndOf="@id/temperature_switch"
-        app:layout_constraintStart_toStartOf="@id/temperature_switch"
-        app:layout_constraintBottom_toTopOf="@id/temperature_switch" />
-
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/temperature_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBaseline_toBaselineOf="@id/previous_days"
-        android:layout_marginEnd="@dimen/dp_16" />
+    <include layout="@layout/fragment_weather_main_content" />
 
     <View
         android:id="@+id/divider"
@@ -114,60 +24,8 @@
         android:layout_height="@dimen/dp_2"
         android:background="@android:color/darker_gray"
         android:layout_marginHorizontal="@dimen/dp_16"
-        android:layout_marginBottom="@dimen/dp_16"
-        app:layout_constraintTop_toBottomOf="@id/previous_days"
-        app:layout_constraintBottom_toTopOf="@id/frame_layout" />
+        android:layout_marginBottom="@dimen/dp_16" />
 
-    <FrameLayout
-        android:id="@+id/frame_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider">
+    <include layout="@layout/fragment_weather_list_content" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/weather_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/dp_16"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider"
-            tools:listitem="@layout/weather_item" />
-
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmer_view_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginHorizontal="@dimen/dp_16"
-            shimmer:duration="800"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider">
-
-            <!-- Adding 9 rows of placeholders -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <include layout="@layout/data_placeholder_weather" />
-                <include layout="@layout/data_placeholder_weather" />
-                <include layout="@layout/data_placeholder_weather" />
-                <include layout="@layout/data_placeholder_weather" />
-                <include layout="@layout/data_placeholder_weather" />
-                <include layout="@layout/data_placeholder_weather" />
-                <include layout="@layout/data_placeholder_weather" />
-                <include layout="@layout/data_placeholder_weather" />
-                <include layout="@layout/data_placeholder_weather" />
-            </LinearLayout>
-
-        </com.facebook.shimmer.ShimmerFrameLayout>
-
-    </FrameLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
