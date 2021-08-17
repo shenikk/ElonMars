@@ -19,5 +19,8 @@ class ItemsRepository : IItemsRepository {
 
     override fun loadPhotosAsync(): Single<ArrayList<PhotoItem>> {
         return Single.fromCallable { galleryProvider.loadPhotoItemsList() }
+    @Throws(java.lang.Exception::class)
+    override fun loadPhotosOnCall(): Single<ArrayList<PhotoItem>> {
+        return Single.fromCallable { galleryProvider.loadPhotoItemsList().also(dataStorage::savePhotos) }
     }
 }

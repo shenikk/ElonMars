@@ -22,4 +22,6 @@ interface IItemsRepository {
      * @return Single со списком моделей [PhotoItem]
      */
     fun loadPhotosAsync(): Single<ArrayList<PhotoItem>>
+
+    fun loadPhotosOnCall(): Single<ArrayList<PhotoItem>>
 }

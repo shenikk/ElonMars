@@ -26,11 +26,11 @@ class GalleryFragment : Fragment() {
 
     private val TAG = "GalleryFragment"
     private var viewModel: GalleryViewModel? = null
-    private var dataSet: ArrayList<PhotoItem> = arrayListOf()
+    private lateinit var swipeRefresh: SwipeRefreshLayout
 
     companion object {
-        val BUNDLE_KEY_DESCRIPTION = "Description"
-        val BUNDLE_KEY_IMAGE = "Image"
+        const val BUNDLE_KEY_DESCRIPTION = "Description"
+        const val BUNDLE_KEY_IMAGE = "Image"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -47,6 +47,11 @@ class GalleryFragment : Fragment() {
         }
         recyclerView = view.findViewById(R.id.recycler)
         progressBar = view.findViewById(R.id.progress_bar)
+        swipeRefresh = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh_layout).apply {
+            this.setOnRefreshListener {
+                viewModel?.loadDataOnForceAsync()
+            }
+        }
     }
 
     private fun setUpAdapter(dataSet: ArrayList<PhotoItem>) {
@@ -81,6 +86,10 @@ class GalleryFragment : Fragment() {
             it.getErrorLiveData().observe(viewLifecycleOwner, { error ->
                 showError(error)
             })
+
+            it.getRefreshingProgressLiveData().observe(viewLifecycleOwner, { isRefreshing ->
+                showRefreshProgress(isRefreshing)
+            })
         }
     }
 
@@ -100,6 +109,10 @@ class GalleryFragment : Fragment() {
     private fun showData(list: ArrayList<PhotoItem>) {
         setUpAdapter(list)
         recyclerView.adapter = photoAdapter
+    }
+
+    private fun showRefreshProgress(isRefreshing: Boolean) {
+        swipeRefresh.isRefreshing = isRefreshing
     }
 
     // TODO delete it later

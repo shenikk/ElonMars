@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.elonmars.WeatherDataItem
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.data.repository.ItemsRepository
+import com.example.elonmars.data.store.DataStorageImpl
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -14,15 +15,16 @@ import io.reactivex.schedulers.Schedulers
 /**
  * ViewModel экрана со списком фильмов.
  */
-class GalleryViewModel : ViewModel() {
+class GalleryViewModel(dataStorageImpl: DataStorageImpl) : ViewModel() {
 
     private val TAG = "GalleryViewModel"
     private var disposable: Disposable? = null
-    private val itemsRepository = ItemsRepository()
+    private val itemsRepository = ItemsRepository(dataStorageImpl)
 
     private val shimmerLiveData = MutableLiveData<Boolean>()
     private val errorLiveData = MutableLiveData<Throwable>()
     private val photoItemsLiveData = MutableLiveData<ArrayList<PhotoItem>>()
+    private val refreshLiveData = MutableLiveData<Boolean>()
 
     /**
      * Метод для асинхронной загрузки списка фото.
@@ -33,6 +35,20 @@ class GalleryViewModel : ViewModel() {
                 shimmerLiveData.postValue(true)
             }
             .doAfterTerminate { shimmerLiveData.postValue(false) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(photoItemsLiveData::setValue, errorLiveData::setValue)
+    }
+
+    /**
+     * Метод для асинхронной загрузки списка фото после действия pull to refresh.
+     */
+    fun loadDataOnForceAsync() {
+        disposable = itemsRepository.loadPhotosOnCall()
+            .doOnSubscribe {
+                refreshLiveData.postValue(true)
+            }
+            .doAfterTerminate { refreshLiveData.postValue(false) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(photoItemsLiveData::setValue, errorLiveData::setValue)
@@ -69,5 +85,14 @@ class GalleryViewModel : ViewModel() {
      */
     fun getPhotoItemsLiveData(): LiveData<ArrayList<PhotoItem>> {
         return photoItemsLiveData
+    }
+
+    /**
+     * Метод для получения инстанса LiveData.
+     *
+     * @return LiveData с [Boolean]
+     */
+    fun getRefreshingProgressLiveData(): LiveData<Boolean> {
+        return refreshLiveData
     }
 }

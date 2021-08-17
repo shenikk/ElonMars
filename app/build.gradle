@@ -60,4 +60,6 @@ dependencies {
     testImplementation "io.mockk:mockk:1.10.6"
     testImplementation "io.mockk:mockk-android:1.10.6"
     testImplementation "androidx.arch.core:core-testing:2.1.0"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
