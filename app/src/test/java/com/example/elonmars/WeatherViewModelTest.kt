@@ -7,7 +7,7 @@ import com.example.elonmars.data.provider.SchedulersProvider
 import com.example.elonmars.data.repository.ItemsRepository
 import com.example.elonmars.presentation.model.WeatherItem
 import com.example.elonmars.presentation.viewmodel.WeatherViewModel
-import com.example.elonmars.utils.RequestException
+import com.example.elonmars.data.exception.RequestException
 import io.mockk.*
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers

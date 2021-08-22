@@ -10,9 +10,11 @@ import io.reactivex.Single
 /**
  * Репозиторий - провайдер данных о скачанной информации по фото и погоде.
  */
-class ItemsRepository(private val dataStorage: DataStorageImpl) : IItemsRepository {
-    private val weatherItemsProvider = WeatherItemsProvider()
-    private val galleryProvider = GalleryProvider()
+class ItemsRepository(
+    private val dataStorage: DataStorageImpl,
+    private val weatherItemsProvider: WeatherItemsProvider,
+    private val galleryProvider: GalleryProvider
+) : IItemsRepository {
 
     override fun loadDataAsync(): Single<ArrayList<WeatherDataItem>> {
         return Single.fromCallable {
@@ -25,7 +27,7 @@ class ItemsRepository(private val dataStorage: DataStorageImpl) : IItemsReposito
     override fun loadDataAsyncOnCall(): Single<ArrayList<WeatherDataItem>> {
         return Single.fromCallable {
             ArrayList(weatherItemsProvider.loadWeatherItemsList().take(10))
-            .also(dataStorage::saveWeatherDates)
+                .also(dataStorage::saveWeatherDates)
         }
     }
 
@@ -40,6 +42,8 @@ class ItemsRepository(private val dataStorage: DataStorageImpl) : IItemsReposito
 
     @Throws(java.lang.Exception::class)
     override fun loadPhotosOnCall(): Single<ArrayList<PhotoItem>> {
-        return Single.fromCallable { galleryProvider.loadPhotoItemsList().also(dataStorage::savePhotos) }
+        return Single.fromCallable {
+            galleryProvider.loadPhotoItemsList().also(dataStorage::savePhotos)
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.elonmars.utils
+package com.example.elonmars.data.exception
 
 /**
  * Класс, описывающий ошибки при загрузки данных из сети

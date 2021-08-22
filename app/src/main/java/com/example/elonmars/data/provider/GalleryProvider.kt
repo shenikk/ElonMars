@@ -3,25 +3,21 @@ package com.example.elonmars.data.provider
 import android.util.Log
 import com.example.elonmars.data.PhotoApiInterface
 import com.example.elonmars.data.model.PhotoItem
-import com.example.elonmars.utils.RequestException
+import com.example.elonmars.data.exception.RequestException
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * Провайдер данных о загруженных из сети фото.
  */
-class GalleryProvider : IGalleryProvider {
+class GalleryProvider(private val retrofitClient: Retrofit) : IGalleryProvider {
 
-   // TODO добавить кэширование/ сохранение фото в бд
-    private var NUMBER_OF_PHOTOS = 10
-    private val galleryRetrofit = Retrofit.Builder()
-        .baseUrl(PHOTOS_BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+    companion object {
+        private const val NUMBER_OF_PHOTOS = 10
+    }
 
     @Throws(java.lang.Exception::class)
     override fun loadPhotoItemsList(): ArrayList<PhotoItem> {
-        val weatherRetrofitRequest = galleryRetrofit.create(PhotoApiInterface::class.java)
+        val weatherRetrofitRequest = retrofitClient.create(PhotoApiInterface::class.java)
 
         val call = weatherRetrofitRequest.getPhotos(API_KEY, NUMBER_OF_PHOTOS)
 

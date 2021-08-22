@@ -7,6 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.elonmars.R
 
 class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    var taskTitle = view.findViewById<TextView>(R.id.task)
-    var taskCheckBox = view.findViewById<CheckBox>(R.id.task_checkbox)
+    var taskTitle: TextView = view.findViewById(R.id.task)
+    var taskCheckBox: CheckBox = view.findViewById(R.id.task_checkbox)
 }

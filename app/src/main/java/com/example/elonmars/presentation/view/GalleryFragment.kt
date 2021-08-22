@@ -1,5 +1,6 @@
 package com.example.elonmars.presentation.view
 
+import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -14,9 +15,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.elonmars.MyApplication
 import com.example.elonmars.R
 import com.example.elonmars.data.model.PhotoItem
+import com.example.elonmars.data.repository.ItemsRepository
 import com.example.elonmars.data.store.DataStorageImpl
+import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.adapter.PhotoAdapter
 import com.example.elonmars.presentation.viewmodel.GalleryViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -49,7 +53,7 @@ class GalleryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        createViewModel()
+        provideDependencies(view.context)
         observeLiveData()
         if (savedInstanceState == null) {
             viewModel?.loadDataAsync()
@@ -74,23 +78,13 @@ class GalleryFragment : Fragment() {
         }
     }
 
-    private fun createViewModel() {
-        // Fixme implement DI
-        val moshi = Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
+    private fun provideDependencies(context: Context) {
+        val appComponent = MyApplication.getAppComponent(context)
+        val activityComponent = DaggerActivityComponent.builder()
+            .appComponent(appComponent)
             .build()
-        val type: Type = Types.newParameterizedType(MutableList::class.java, PhotoItem::class.java)
-        val jsonAdapter: JsonAdapter<ArrayList<PhotoItem>> = moshi.adapter(type)
 
-//        val storage = context?.let { DataStorageImpl(it.getSharedPreferences("PREFS", Context.MODE_PRIVATE), jsonAdapter) }
-        val storage = context?.let { DataStorageImpl(it.getSharedPreferences("PREFS", Context.MODE_PRIVATE)) }
-
-
-        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return storage?.let { GalleryViewModel(it) } as T
-            }
-        }).get(GalleryViewModel::class.java)
+        viewModel = ViewModelProvider(this, activityComponent.getViewModelFactory()).get(GalleryViewModel::class.java)
     }
 
     private fun observeLiveData() {

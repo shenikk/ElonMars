@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.elonmars.WeatherDataItem
 import com.example.elonmars.data.model.PhotoItem
+import com.example.elonmars.data.provider.SchedulersProvider
 import com.example.elonmars.data.repository.ItemsRepository
 import com.example.elonmars.data.store.DataStorageImpl
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -15,11 +16,13 @@ import io.reactivex.schedulers.Schedulers
 /**
  * ViewModel экрана со списком фильмов.
  */
-class GalleryViewModel(dataStorageImpl: DataStorageImpl) : ViewModel() {
+class GalleryViewModel(
+    private val itemsRepository: ItemsRepository,
+    private val schedulersProvider: SchedulersProvider
+) : ViewModel() {
 
     private val TAG = "GalleryViewModel"
     private var disposable: Disposable? = null
-    private val itemsRepository = ItemsRepository(dataStorageImpl)
 
     private val shimmerLiveData = MutableLiveData<Boolean>()
     private val errorLiveData = MutableLiveData<Throwable>()
@@ -35,8 +38,8 @@ class GalleryViewModel(dataStorageImpl: DataStorageImpl) : ViewModel() {
                 shimmerLiveData.postValue(true)
             }
             .doAfterTerminate { shimmerLiveData.postValue(false) }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(schedulersProvider.io())
+            .observeOn(schedulersProvider.ui())
             .subscribe(photoItemsLiveData::setValue, errorLiveData::setValue)
     }
 

@@ -9,26 +9,18 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.elonmars.MyApplication
 import com.example.elonmars.R
-import com.example.elonmars.data.model.PhotoItem
-import com.example.elonmars.data.provider.SchedulersProvider
-import com.example.elonmars.data.repository.ItemsRepository
-import com.example.elonmars.data.store.DataStorageImpl
+import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.adapter.WeatherAdapter
 import com.example.elonmars.presentation.model.WeatherItem
 import com.example.elonmars.presentation.viewmodel.WeatherViewModel
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.snackbar.Snackbar
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import io.reactivex.plugins.RxJavaPlugins
-import java.lang.reflect.Type
 
 /** Экран с информацией о погоде за последние 10 доступных дней */
 class WeatherFragment : Fragment() {
@@ -58,7 +50,7 @@ class WeatherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        createViewModel()
+        provideDependencies(view.context)
         observeLiveData()
         if (savedInstanceState == null) {
             viewModel?.loadDataAsync()
@@ -106,29 +98,14 @@ class WeatherFragment : Fragment() {
         recyclerView.adapter = weatherAdapter
     }
 
-    private fun createViewModel() {
-        // Fixme implement DI
-//        viewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
+    private fun provideDependencies(context: Context) {
+        val appComponent = MyApplication.getAppComponent(context)
+        val activityComponent = DaggerActivityComponent.builder()
+            .appComponent(appComponent)
+            .build()
 
-        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-
-
-                val moshi = Moshi.Builder()
-                    .add(KotlinJsonAdapterFactory())
-                    .build()
-                val type: Type = Types.newParameterizedType(MutableList::class.java, PhotoItem::class.java)
-                val jsonAdapter: JsonAdapter<ArrayList<PhotoItem>> = moshi.adapter(type)
-
-//                val storage = context?.let { DataStorageImpl(it.getSharedPreferences("PREFS", Context.MODE_PRIVATE), jsonAdapter) }
-                val storage = context?.let { DataStorageImpl(it.getSharedPreferences("PREFS", Context.MODE_PRIVATE)) }
-                // Все зависимости уйдут после внедрения DI
-                val itemsRepository = storage?.let { ItemsRepository(it) }
-                val schedulersProvider = SchedulersProvider()
-
-                return itemsRepository?.let { WeatherViewModel(it, schedulersProvider) } as T
-            }
-        }).get(WeatherViewModel::class.java)
+        viewModel = ViewModelProvider(this, activityComponent.getViewModelFactory()).get(
+            WeatherViewModel::class.java)
     }
 
     private fun observeLiveData() {

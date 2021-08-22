@@ -34,7 +34,7 @@ class MarsMissionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         calendarView = view.findViewById<CalendarView>(R.id.calendar).apply {
-            this.setOnDateChangeListener { view, year, month, dayOfMonth ->
+            this.setOnDateChangeListener { _, _, _, _ ->
                 Toast.makeText(context, "Add a task for this day!", Toast.LENGTH_SHORT).show()
             }
         }

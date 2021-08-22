@@ -17,11 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        val bottomSheet = findViewById<View>(R.id.bottom_sheet)
-//        val floatingButton = findViewById<FloatingActionButton>(R.id.floating_button)
-//        setupBottomSheet(bottomSheet, floatingButton)
-
-
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
 
@@ -74,26 +69,4 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, PreferenceActivity::class.java)
         startActivity(intent)
     }
-//
-//    private fun setupBottomSheet(bottomSheet: View, floatingButton: FloatingActionButton) {
-//        val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-//
-//        floatingButton.setOnClickListener {
-//            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-//        }
-//
-//        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-//            override fun onStateChanged(bottomSheet: View, newState: Int) {
-//
-//            }
-//
-//            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-//                floatingButton.animate().scaleX(1 - slideOffset)
-//                    .scaleY(1 - slideOffset)
-//                    .setDuration(0)
-//                    .start()
-//            }
-//
-//        })
-//    }
 }
