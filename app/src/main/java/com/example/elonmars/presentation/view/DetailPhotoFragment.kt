@@ -1,6 +1,7 @@
 package com.example.elonmars.presentation.view
 
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -33,6 +34,8 @@ class DetailPhotoFragment: Fragment() {
 
         view.findViewById<TextView>(R.id.description).apply {
             text = arguments?.getString(GalleryFragment.BUNDLE_KEY_DESCRIPTION)
+            // нужно для скролла объемных текстов
+            this.movementMethod = ScrollingMovementMethod()
         }
 
         setScaleGestureDetector()
