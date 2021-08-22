@@ -8,6 +8,8 @@ import retrofit2.Retrofit
 
 /**
  * Провайдер данных о загруженных из сети фото.
+ *
+ * @param retrofitClient клиент для работы с сетью
  */
 class GalleryProvider(private val retrofitClient: Retrofit) : IGalleryProvider {
 

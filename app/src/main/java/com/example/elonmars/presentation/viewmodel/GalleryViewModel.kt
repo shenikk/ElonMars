@@ -15,6 +15,9 @@ import io.reactivex.schedulers.Schedulers
 
 /**
  * ViewModel экрана со списком фильмов.
+ *
+ * @param itemsRepository репозиторий с данными о фото
+ * @param schedulersProvider
  */
 class GalleryViewModel(
     private val itemsRepository: ItemsRepository,

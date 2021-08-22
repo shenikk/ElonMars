@@ -6,6 +6,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.example.elonmars.R
 
+/** Экран с настройками приложения */
 class MainPreferenceFragment : PreferenceFragmentCompat() {
 
     companion object {

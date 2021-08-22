@@ -11,6 +11,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.elonmars.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
+/** Главное активити, которое является хостом для фрагметов. */
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

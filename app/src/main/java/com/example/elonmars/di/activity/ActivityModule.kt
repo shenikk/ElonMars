@@ -6,6 +6,7 @@ import com.example.elonmars.presentation.viewmodel.ViewModelFactory
 import dagger.Module
 import dagger.Provides
 
+/** Модуль уровня активити для реализации DI */
 @Module
 class ActivityModule {
 

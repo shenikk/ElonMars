@@ -8,6 +8,8 @@ import retrofit2.Retrofit
 
 /**
  * Провайдер данных об информации о погоде.
+ *
+ * @param retrofitClient клиент для работы с сетью
  */
 class WeatherItemsProvider(private val retrofitClient: Retrofit) : IWeatherItemProvider {
 

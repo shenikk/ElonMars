@@ -5,6 +5,7 @@ import com.example.elonmars.data.repository.ItemsRepository
 import dagger.BindsInstance
 import dagger.Component
 
+/** Компонент уровня приложения для реализации DI */
 @Component(modules = [AppModule::class])
 interface AppComponent {
 
@@ -17,5 +18,6 @@ interface AppComponent {
         fun build(): AppComponent
     }
 
+    /** Метод для получения [ItemsRepository] */
     fun getItemsRepository(): ItemsRepository
 }

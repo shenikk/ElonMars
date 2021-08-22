@@ -10,7 +10,7 @@ import com.example.elonmars.R
 import com.example.elonmars.data.model.PhotoItem
 
 /**
- * ViewHolder для [com.example.elonmars.presentation.adapter.PhotoViewHolder]
+ * ViewHolder для [com.example.elonmars.presentation.adapter.PhotoAdapter]
  */
 class PhotoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     var imageView: ImageView = view.findViewById(R.id.image)

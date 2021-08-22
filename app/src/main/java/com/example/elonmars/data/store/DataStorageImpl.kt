@@ -15,6 +15,11 @@ private const val TASKS_KEY = "TASKS_KEY"
 private const val PHOTOS_KEY = "PHOTOS_KEY"
 private const val WEATHER_KEY = "WEATHER_KEY"
 
+/**
+ * Реализация хранилища данных.
+ *
+ * @param preferences преференсы для хранения данных
+ */
 class DataStorageImpl(private val preferences: SharedPreferences) : DataStorage {
 
 //    override fun saveTasks(tasks: ArrayList<TaskItem>) {

@@ -18,6 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 
+/** Экран с задачами, добавляемые пользователем */
 class MarsMissionFragment : Fragment() {
 
     private lateinit var calendarView: CalendarView

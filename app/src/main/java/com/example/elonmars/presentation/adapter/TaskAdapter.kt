@@ -6,10 +6,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.elonmars.R
 import com.example.elonmars.presentation.model.TaskItem
 
+/**
+ * Адаптер для отображения списка задач.
+ *
+ * @param dataSet список элементов [TaskItem]
+ */
 class TaskAdapter(var dataSet: ArrayList<TaskItem>) : RecyclerView.Adapter<TaskViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        return TaskViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.task_item, parent, false))
+        return TaskViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.task_item, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {

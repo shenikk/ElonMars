@@ -5,6 +5,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.elonmars.data.provider.SchedulersProvider
 import com.example.elonmars.data.repository.ItemsRepository
 
+/**
+ * Класс фабрика для получения инстансов вьюмоделей
+ *
+ * @param itemsRepository репозиторий с данными
+ * @param schedulersProvider
+ */
 class ViewModelFactory(
     private val itemsRepository: ItemsRepository,
     private val schedulersProvider: SchedulersProvider

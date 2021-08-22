@@ -4,9 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.elonmars.R
-import com.example.elonmars.WeatherDataItem
 import com.example.elonmars.presentation.model.WeatherItem
 
+/**
+ * Адаптер для отображения списка погодных дней.
+ *
+ * @param dataSet список погодных дней [WeatherItem]
+ */
 class WeatherAdapter(private val dataSet: List<WeatherItem>) : RecyclerView.Adapter<WeatherViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {

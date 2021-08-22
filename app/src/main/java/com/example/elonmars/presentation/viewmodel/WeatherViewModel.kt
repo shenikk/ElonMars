@@ -13,6 +13,9 @@ import io.reactivex.disposables.Disposable
 /**
  * ViewModel экрана с информацией о погоде за последние 10 дней.
  *
+ * @param itemsRepository репозиторий с данными о погоде
+ * @param schedulersProvider
+ *
  * @testClass unit: WeatherViewModelTest
  */
 class WeatherViewModel(

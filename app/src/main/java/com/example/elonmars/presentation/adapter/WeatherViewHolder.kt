@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.elonmars.R
 
 /**
- * ViewHolder для [com.example.elonmars.presentation.adapter.WeatherViewHolder]
+ * ViewHolder для [com.example.elonmars.presentation.adapter.WeatherAdapter]
  */
 class WeatherViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     var weatherDay: TextView = view.findViewById(R.id.weather_day)

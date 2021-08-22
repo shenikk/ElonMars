@@ -7,6 +7,10 @@ import androidx.preference.PreferenceManager
 import com.example.elonmars.di.AppComponent
 import com.example.elonmars.di.DaggerAppComponent
 
+/**
+ * Класс [Application] для инициализации компонентов,
+ * которые необходимы на всем жизненном цикле приложения.
+ */
 class MyApplication : Application() {
 
     private lateinit var appComponent: AppComponent

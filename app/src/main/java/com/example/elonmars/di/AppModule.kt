@@ -12,9 +12,14 @@ import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/** Модуль уровня приложения для реализации DI */
 @Module
 class AppModule {
 
+    /**
+     * Метод для получения репозитория [ItemsRepository],
+     * который используется в [ActivityComponent]
+     */
     @Provides
     fun provideItemsRepository(context: Context): ItemsRepository {
         return ItemsRepository(getDataStorage(context), getWeatherItemsProvider(), getGalleryProvider())

@@ -9,6 +9,10 @@ import io.reactivex.Single
 
 /**
  * Репозиторий - провайдер данных о скачанной информации по фото и погоде.
+ *
+ * @param dataStorage хранилище данных
+ * @param weatherItemsProvider провайдер погодных данных
+ * @param galleryProvider провайдер данных с фото
  */
 class ItemsRepository(
     private val dataStorage: DataStorageImpl,

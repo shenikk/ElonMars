@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import com.example.elonmars.R
 
-
+/** Активити, которое является хостом для [MainPreferenceFragment] */
 class PreferenceActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
