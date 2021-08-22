@@ -3,27 +3,27 @@
 
     <item
         android:id="@+id/home"
-        android:title="@string/home"
+        android:title="@string/home_item"
         android:icon="@drawable/ic_home" />
 
     <item
         android:id="@+id/gallery"
-        android:title="@string/gallery"
+        android:title="@string/gallery_item"
         android:icon="@drawable/ic_gallery" />
 
     <item
         android:id="@+id/mars_mission"
-        android:title="Rocket mission"
+        android:title="@string/rocket_mission_item"
         android:icon="@drawable/ic_rocket"/>
 
     <item
         android:id="@+id/rover"
-        android:title="@string/rover_gifs"
+        android:title="@string/rover_gifs_item"
         android:icon="@drawable/ic_mars_rover" />
 
     <item
         android:id="@+id/weather"
-        android:title="@string/weather"
+        android:title="@string/weather_item"
         android:icon="@drawable/ic_weather" />
 
 </menu>

@@ -1,12 +1,27 @@
 <resources>
+    <!--  Bottom navigation bar phrases.  -->
     <string name="app_name">ElonMars</string>
-    <string name="home">Home</string>
-    <string name="gallery">Gallery</string>
-    <string name="trip">Trip</string>
-    <string name="rover_gifs">Rover gifs</string>
-    <string name="weather">Weather</string>
+    <string name="home_item">Home</string>
+    <string name="gallery_item">Gallery</string>
+    <string name="rover_gifs_item">Rover</string>
+    <string name="weather_item">Weather</string>
+    <string name="rocket_mission_item">Mission</string>
+    <!--  -->
+    <!--  "Gallery" screen.  -->
+    <string name="gallery_title">Gallery</string>
+    <!--  -->
+    <!--  "Mars mission" screen.  -->
+    <string name="mars_mission_title">Mars Mission</string>
+    <string name="mars_mission_summary">Finish all the tasks before the flight!</string>
+    <!--  -->
+    <!--  "Weather" screen.  -->
+    <string name="weather_title">Weather</string>
     <string name="previous_days">Previous days</string>
-
+    <string name="weather_fragment_latest_day">Latest day</string>
+    <string name="weather_fragment_high_na">High: NA</string>
+    <string name="weather_fragment_low_na">Low: NA</string>
+    <!--  -->
+    <!--  "Settings" screen.  -->
     <string name="settings">Settings</string>
     <string name="dark_theme_key">DarkTheme</string>
     <string name="dark_theme_title">Dark Theme</string>
@@ -16,4 +31,5 @@
     <string name="category_rate_us">Rate us</string>
     <string name="feedback_title">Leave feedback</string>
     <string name="feedback_summary">Or say thank you:)</string>
+    <!--  -->
 </resources>

@@ -34,4 +34,5 @@
         <include layout="@layout/fragment_weather_list_content" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 </LinearLayout>

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.view.MainActivity"
-    android:id="@+id/layout">
-
-<!-- FIXME убери все ненужные атрибуты -->
+    tools:context=".presentation.view.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,45 +18,28 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_30"
             android:layout_marginBottom="@dimen/dp_8"
-            android:text="Mars Mission"
-            android:textSize="@dimen/dp_20"
-            android:textStyle="bold"
             android:gravity="center"
-            app:layout_constraintBottom_toTopOf="@id/flight_date"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.1" />
+            android:text="@string/mars_mission_title"
+            android:textSize="@dimen/dp_20"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/flight_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Finish all the tasks before the flight!"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            app:layout_constraintBottom_toTopOf="@id/calendar"/>
+            android:text="@string/mars_mission_summary" />
 
         <CalendarView
             android:id="@+id/calendar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/flight_date"
-            app:layout_constraintBottom_toTopOf="@id/task_recycler"/>
+            android:layout_height="wrap_content" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/task_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/calendar"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </LinearLayout>
 
@@ -66,11 +47,9 @@
         android:id="@+id/floating_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_rocket"
         android:layout_gravity="bottom|end"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="@dimen/dp_16"
-        android:layout_marginBottom="@dimen/dp_16"/>
+        android:layout_marginBottom="@dimen/dp_16"
+        android:src="@drawable/ic_rocket" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

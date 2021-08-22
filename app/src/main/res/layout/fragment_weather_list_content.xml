@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:id="@+id/frame_layout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frame_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.view.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -21,8 +20,8 @@
         android:id="@+id/shimmer_view_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginHorizontal="@dimen/dp_16"
+        android:orientation="vertical"
         shimmer:duration="800">
 
         <!-- Adding 9 rows of placeholders -->
@@ -30,14 +29,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <include layout="@layout/data_placeholder_weather" />
+
             <include layout="@layout/data_placeholder_weather" />
+
             <include layout="@layout/data_placeholder_weather" />
+
             <include layout="@layout/data_placeholder_weather" />
+
             <include layout="@layout/data_placeholder_weather" />
+
             <include layout="@layout/data_placeholder_weather" />
+
             <include layout="@layout/data_placeholder_weather" />
+
             <include layout="@layout/data_placeholder_weather" />
+
             <include layout="@layout/data_placeholder_weather" />
         </LinearLayout>
 

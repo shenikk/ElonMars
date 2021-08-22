@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="420dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bottom_sheet_background"
     android:orientation="vertical"
     app:behavior_hideable="true"
-    android:id="@+id/bottom_sheet"
-    app:layout_behavior="@string/bottom_sheet_behavior"
     app:behavior_peekHeight="0dp"
-    android:background="@drawable/bottom_sheet_background">
+    app:layout_behavior="@string/bottom_sheet_behavior">
 
     <View
         android:id="@+id/divider"
         android:layout_width="40dp"
         android:layout_height="@dimen/dp_2"
-        android:background="@android:color/darker_gray"
         android:layout_gravity="center|top"
-        android:layout_marginTop="@dimen/dp_16"/>
+        android:layout_marginTop="@dimen/dp_16"
+        android:background="@android:color/darker_gray" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:layout_marginTop="@dimen/dp_20"
         android:text="Add a task!"
         android:textSize="@dimen/dp_20"
-        android:textStyle="bold"
-        android:layout_marginTop="@dimen/dp_20"
-        android:layout_gravity="center|top"/>
+        android:textStyle="bold" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout"
@@ -47,9 +47,9 @@
         android:id="@+id/save_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save"
         android:layout_marginStart="@dimen/dp_30"
         android:layout_marginEnd="@dimen/dp_30"
-        android:layout_marginBottom="@dimen/dp_20" />
+        android:layout_marginBottom="@dimen/dp_20"
+        android:text="Save" />
 
 </LinearLayout>

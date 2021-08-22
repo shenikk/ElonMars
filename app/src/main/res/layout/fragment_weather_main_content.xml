@@ -11,11 +11,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_16"
         android:src="@mipmap/ic_launcher"
         android:text="Sol 3183"
         android:textSize="@dimen/dp_30"
         android:textStyle="bold"
-        android:layout_marginBottom="@dimen/dp_16"
         app:layout_constraintBottom_toTopOf="@id/today"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_16"
         android:src="@mipmap/ic_launcher"
-        android:text="Latest day"
+        android:text="@string/weather_fragment_latest_day"
         android:textSize="@dimen/dp_30"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/previous_days"
@@ -41,10 +41,10 @@
         android:layout_marginLeft="@dimen/dp_4"
         android:layout_marginEnd="@dimen/dp_16"
         android:layout_marginRight="@dimen/dp_4"
-        android:text="High: NA"
+        android:text="@string/weather_fragment_high_na"
         android:textSize="@dimen/dp_30"
         app:layout_constraintBaseline_toBaselineOf="@id/weather_day"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/temp_low"
@@ -54,21 +54,21 @@
         android:layout_marginLeft="@dimen/dp_4"
         android:layout_marginEnd="@dimen/dp_16"
         android:layout_marginRight="@dimen/dp_4"
-        android:text="Low: NA"
+        android:text="@string/weather_fragment_low_na"
         android:textSize="@dimen/dp_30"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBaseline_toBaselineOf="@id/today" />
+        app:layout_constraintBaseline_toBaselineOf="@id/today"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/previous_days"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_50"
+        android:layout_marginBottom="@dimen/dp_16"
         android:text="@string/previous_days"
         android:textSize="@dimen/dp_20"
         android:textStyle="bold"
-        android:layout_marginTop="@dimen/dp_50"
-        android:layout_marginBottom="@dimen/dp_16"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/today" />
 
@@ -78,16 +78,16 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_16"
         android:text="°C | °F"
+        app:layout_constraintBottom_toTopOf="@id/temperature_switch"
         app:layout_constraintEnd_toEndOf="@id/temperature_switch"
-        app:layout_constraintStart_toStartOf="@id/temperature_switch"
-        app:layout_constraintBottom_toTopOf="@id/temperature_switch" />
+        app:layout_constraintStart_toStartOf="@id/temperature_switch" />
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/temperature_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/dp_16"
         app:layout_constraintBaseline_toBaselineOf="@id/previous_days"
-        android:layout_marginEnd="@dimen/dp_16" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
