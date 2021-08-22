@@ -18,6 +18,12 @@
         android:label="Gallery" />
 
     <fragment
+        android:id="@+id/mars_mission_fragment"
+        android:name="com.example.elonmars.presentation.view.MarsMissionFragment"
+        tools:layout="@layout/fragment_mars_mission"
+        android:label="MarsMission" />
+
+    <fragment
         android:id="@+id/rover_fragment"
         android:name="com.example.elonmars.presentation.view.RoverFragment"
         tools:layout="@layout/fragment_rover"

@@ -1,5 +1,6 @@
 package com.example.elonmars.presentation.view
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,14 +9,23 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.elonmars.R
 import com.example.elonmars.data.model.PhotoItem
+import com.example.elonmars.data.store.DataStorageImpl
 import com.example.elonmars.presentation.adapter.PhotoAdapter
 import com.example.elonmars.presentation.viewmodel.GalleryViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
+import com.squareup.moshi.addAdapter
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import java.lang.reflect.Type
 
 /** Экран со списком фото */
 class GalleryFragment : Fragment() {
@@ -66,7 +76,23 @@ class GalleryFragment : Fragment() {
     }
 
     private fun createViewModel() {
-        viewModel = ViewModelProvider(this).get(GalleryViewModel::class.java)
+//        viewModel = ViewModelProvider(this).get(GalleryViewModel::class.java)
+
+        // Fixme implement DI
+        val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
+        val type: Type = Types.newParameterizedType(MutableList::class.java, PhotoItem::class.java)
+        val jsonAdapter: JsonAdapter<ArrayList<PhotoItem>> = moshi.adapter(type)
+
+        val storage = context?.let { DataStorageImpl(it.getSharedPreferences("PREFS", Context.MODE_PRIVATE), jsonAdapter) }
+
+
+        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return storage?.let { GalleryViewModel(it) } as T
+            }
+        }).get(GalleryViewModel::class.java)
     }
 
     private fun observeLiveData() {

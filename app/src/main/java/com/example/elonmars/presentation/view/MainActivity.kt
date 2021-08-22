@@ -10,8 +10,6 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
 import com.example.elonmars.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,9 +17,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val bottomSheet = findViewById<View>(R.id.bottom_sheet)
-        val floatingButton = findViewById<FloatingActionButton>(R.id.floating_button)
-        setupBottomSheet(bottomSheet, floatingButton)
+//        val bottomSheet = findViewById<View>(R.id.bottom_sheet)
+//        val floatingButton = findViewById<FloatingActionButton>(R.id.floating_button)
+//        setupBottomSheet(bottomSheet, floatingButton)
 
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
@@ -41,6 +39,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.gallery -> {
                     navController.navigate(R.id.gallery_fragment)
+                    true
+                }
+                R.id.mars_mission -> {
+                    navController.navigate(R.id.mars_mission_fragment)
                     true
                 }
                 R.id.rover -> {

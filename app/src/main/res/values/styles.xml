@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextInputLayoutStyle">
+        <item name="android:layout_marginStart">@dimen/dp_30</item>
+        <item name="android:layout_marginEnd">@dimen/dp_30</item>
+        <item name="android:layout_marginTop">@dimen/dp_30</item>
+        <item name="errorEnabled">true</item>
+    </style>
+</resources>

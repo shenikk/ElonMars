@@ -4,12 +4,14 @@ import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.WeatherDataItem
 import com.example.elonmars.data.provider.GalleryProvider
 import com.example.elonmars.data.provider.WeatherItemsProvider
+import com.example.elonmars.data.store.DataStorage
+import com.example.elonmars.data.store.DataStorageImpl
 import io.reactivex.Single
 
 /**
  * Репозиторий - провайдер данных о скачанной информации по фото и погоде.
  */
-class ItemsRepository : IItemsRepository {
+class ItemsRepository(private val dataStorage: DataStorageImpl) : IItemsRepository {
     private val weatherItemsProvider = WeatherItemsProvider()
     private val galleryProvider = GalleryProvider()
 
@@ -18,7 +20,15 @@ class ItemsRepository : IItemsRepository {
     }
 
     override fun loadPhotosAsync(): Single<ArrayList<PhotoItem>> {
-        return Single.fromCallable { galleryProvider.loadPhotoItemsList() }
+//        return Single.fromCallable { galleryProvider.loadPhotoItemsList() }
+
+        return Single.fromCallable {
+            dataStorage.getPhotos()
+                ?: galleryProvider.loadPhotoItemsList()
+                    .also(dataStorage::savePhotos)
+        }
+    }
+
     @Throws(java.lang.Exception::class)
     override fun loadPhotosOnCall(): Single<ArrayList<PhotoItem>> {
         return Single.fromCallable { galleryProvider.loadPhotoItemsList().also(dataStorage::savePhotos) }

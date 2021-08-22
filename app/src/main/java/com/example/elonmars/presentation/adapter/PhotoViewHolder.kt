@@ -5,8 +5,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.elonmars.data.model.PhotoItem
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.elonmars.R
+import com.example.elonmars.data.model.PhotoItem
 
 /**
  * ViewHolder для [com.example.elonmars.presentation.adapter.PhotoViewHolder]
@@ -20,6 +21,7 @@ class PhotoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         Glide.with(imageView.context)
             .load(currentItem.image)
                 .centerInside()
+            .diskCacheStrategy(DiskCacheStrategy.DATA) //FIXME?
             .into(imageView)
     }
 }

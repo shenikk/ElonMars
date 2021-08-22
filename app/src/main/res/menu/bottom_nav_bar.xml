@@ -12,8 +12,9 @@
         android:icon="@drawable/ic_gallery" />
 
     <item
-        android:id="@+id/place_holder"
-        android:title=""/>
+        android:id="@+id/mars_mission"
+        android:title="Rocket mission"
+        android:icon="@drawable/ic_rocket"/>
 
     <item
         android:id="@+id/rover"
