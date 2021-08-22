@@ -33,14 +33,13 @@ class GalleryFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var photoAdapter: PhotoAdapter
     private lateinit var progressBar: ProgressBar
-
-    private val TAG = "GalleryFragment"
     private var viewModel: GalleryViewModel? = null
     private lateinit var swipeRefresh: SwipeRefreshLayout
 
     companion object {
         const val BUNDLE_KEY_DESCRIPTION = "Description"
         const val BUNDLE_KEY_IMAGE = "Image"
+        private const val TAG = "GalleryFragment"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -76,8 +75,6 @@ class GalleryFragment : Fragment() {
     }
 
     private fun createViewModel() {
-//        viewModel = ViewModelProvider(this).get(GalleryViewModel::class.java)
-
         // Fixme implement DI
         val moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
@@ -85,7 +82,8 @@ class GalleryFragment : Fragment() {
         val type: Type = Types.newParameterizedType(MutableList::class.java, PhotoItem::class.java)
         val jsonAdapter: JsonAdapter<ArrayList<PhotoItem>> = moshi.adapter(type)
 
-        val storage = context?.let { DataStorageImpl(it.getSharedPreferences("PREFS", Context.MODE_PRIVATE), jsonAdapter) }
+//        val storage = context?.let { DataStorageImpl(it.getSharedPreferences("PREFS", Context.MODE_PRIVATE), jsonAdapter) }
+        val storage = context?.let { DataStorageImpl(it.getSharedPreferences("PREFS", Context.MODE_PRIVATE)) }
 
 
         viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {

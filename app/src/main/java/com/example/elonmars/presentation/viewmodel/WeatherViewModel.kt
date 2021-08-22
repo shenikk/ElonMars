@@ -15,7 +15,10 @@ import io.reactivex.disposables.Disposable
  *
  * @testClass unit: WeatherViewModelTest
  */
-class WeatherViewModel(private val itemsRepository: ItemsRepository, private val schedulersProvider: SchedulersProvider) : ViewModel() {
+class WeatherViewModel(
+    private val itemsRepository: ItemsRepository,
+    private val schedulersProvider: SchedulersProvider
+) : ViewModel() {
 
     private val TAG = "WeatherViewModel"
     private var disposable: Disposable? = null
@@ -27,6 +30,7 @@ class WeatherViewModel(private val itemsRepository: ItemsRepository, private val
     private val weatherItemsData = mutableListOf<WeatherDataItem>()
     private var isFarenheitShown = false
     private var latestDayLiveData = MutableLiveData<WeatherItem>()
+    private val refreshLiveData = MutableLiveData<Boolean>()
 
     /**
      * Метод для асинхронной загрузки списка фильмов.
@@ -37,6 +41,17 @@ class WeatherViewModel(private val itemsRepository: ItemsRepository, private val
                 shimmerLiveData.postValue(true)
             }
             .doAfterTerminate { shimmerLiveData.postValue(false) }
+            .subscribeOn(schedulersProvider.io())
+            .observeOn(schedulersProvider.ui())
+            .subscribe({ doOnSuccess(it) }, errorLiveData::setValue)
+    }
+
+    fun loadDataOnForceAsync() {
+        disposable = itemsRepository.loadDataAsyncOnCall()
+            .doOnSubscribe {
+                refreshLiveData.postValue(true)
+            }
+            .doAfterTerminate { refreshLiveData.postValue(false) }
             .subscribeOn(schedulersProvider.io())
             .observeOn(schedulersProvider.ui())
             .subscribe({ doOnSuccess(it) }, errorLiveData::setValue)
@@ -59,7 +74,8 @@ class WeatherViewModel(private val itemsRepository: ItemsRepository, private val
         weatherItemsData.addAll(weatherDataItemList)
         val convertedValues = weatherDataItemList.map { convertCelsius(it) }
         weatherItemsLiveData.value = convertedValues
-        latestDayLiveData.value = getFirstItem(convertedValues) ?: WeatherItem("NA", "NA", "NA", "NA")
+        latestDayLiveData.value =
+            getFirstItem(convertedValues) ?: WeatherItem("NA", "NA", "NA", "NA")
     }
 
     private fun <E> getFirstItem(list: List<E>): E? {
@@ -144,5 +160,9 @@ class WeatherViewModel(private val itemsRepository: ItemsRepository, private val
      */
     fun getLatestDayLiveData(): LiveData<WeatherItem> {
         return latestDayLiveData
+    }
+
+    fun getRefreshLiveData(): LiveData<Boolean> {
+        return refreshLiveData
     }
 }

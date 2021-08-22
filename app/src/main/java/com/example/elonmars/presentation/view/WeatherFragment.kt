@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.elonmars.R
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.data.provider.SchedulersProvider
@@ -41,11 +42,14 @@ class WeatherFragment : Fragment() {
     private lateinit var highTemp: TextView
     private lateinit var lowTemp: TextView
     private lateinit var temperatureSwitch: SwitchCompat
+    private lateinit var swipeRefresh: SwipeRefreshLayout
 
     private var viewModel: WeatherViewModel? = null
     private var dataSet: List<WeatherItem> = arrayListOf()
 
-    private val TAG = "WeatherFragment"
+    companion object {
+        private const val TAG = "WeatherFragment"
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_weather, container, false)
@@ -62,6 +66,12 @@ class WeatherFragment : Fragment() {
         init()
 
         setUpRecycler(recyclerView)
+
+        swipeRefresh = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh_layout).apply {
+            this.setOnRefreshListener {
+                viewModel?.loadDataOnForceAsync()
+            }
+        }
 
         // Необходимо для устранения ошибки самого RxJava2 (UndeliverableException)
         RxJavaPlugins.setErrorHandler { throwable: Throwable? ->
@@ -110,7 +120,8 @@ class WeatherFragment : Fragment() {
                 val type: Type = Types.newParameterizedType(MutableList::class.java, PhotoItem::class.java)
                 val jsonAdapter: JsonAdapter<ArrayList<PhotoItem>> = moshi.adapter(type)
 
-                val storage = context?.let { DataStorageImpl(it.getSharedPreferences("PREFS", Context.MODE_PRIVATE), jsonAdapter) }
+//                val storage = context?.let { DataStorageImpl(it.getSharedPreferences("PREFS", Context.MODE_PRIVATE), jsonAdapter) }
+                val storage = context?.let { DataStorageImpl(it.getSharedPreferences("PREFS", Context.MODE_PRIVATE)) }
                 // Все зависимости уйдут после внедрения DI
                 val itemsRepository = storage?.let { ItemsRepository(it) }
                 val schedulersProvider = SchedulersProvider()
@@ -141,7 +152,15 @@ class WeatherFragment : Fragment() {
             it.getLatestDayLiveData().observe(viewLifecycleOwner, { weatherItem ->
                 setLatestData(weatherItem)
             })
+
+            it.getRefreshLiveData().observe(viewLifecycleOwner, { isRefreshing ->
+                showRefreshProgress(isRefreshing)
+            })
         }
+    }
+
+    private fun showRefreshProgress(isRefreshing: Boolean) {
+        swipeRefresh.isRefreshing = isRefreshing
     }
 
     private fun showError(throwable: Throwable) {

@@ -10,8 +10,8 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/dp_30"
         android:layout_gravity="center"
+        android:layout_marginVertical="@dimen/dp_30"
         android:text="Latest Weather at Elisium Plantitia"
         android:textSize="@dimen/dp_20"
         android:textStyle="bold" />
@@ -22,10 +22,16 @@
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_2"
-        android:background="@android:color/darker_gray"
         android:layout_marginHorizontal="@dimen/dp_16"
-        android:layout_marginBottom="@dimen/dp_16" />
+        android:layout_marginBottom="@dimen/dp_16"
+        android:background="@android:color/darker_gray" />
 
-    <include layout="@layout/fragment_weather_list_content" />
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <include layout="@layout/fragment_weather_list_content" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

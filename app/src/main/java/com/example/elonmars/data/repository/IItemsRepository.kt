@@ -1,7 +1,7 @@
 package com.example.elonmars.data.repository
 
-import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.WeatherDataItem
+import com.example.elonmars.data.model.PhotoItem
 import io.reactivex.Single
 
 /**
@@ -15,6 +15,8 @@ interface IItemsRepository {
      * @return Single со списком моделей [WeatherDataItem]
      */
     fun loadDataAsync(): Single<ArrayList<WeatherDataItem>>
+
+    fun loadDataAsyncOnCall(): Single<ArrayList<WeatherDataItem>>
 
     /**
      * Метод для асинхронной загрузки списка фотографий.
