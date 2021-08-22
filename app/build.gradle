@@ -62,4 +62,7 @@ dependencies {
     testImplementation "androidx.arch.core:core-testing:2.1.0"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //Preferences
+    implementation "androidx.preference:preference-ktx:1.1.1"
 }

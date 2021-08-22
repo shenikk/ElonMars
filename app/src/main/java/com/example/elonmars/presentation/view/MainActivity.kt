@@ -1,7 +1,9 @@
 package com.example.elonmars.presentation.view
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -54,25 +56,42 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupBottomSheet(bottomSheet: View, floatingButton: FloatingActionButton) {
-        val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-
-        floatingButton.setOnClickListener {
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-        }
-
-        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                floatingButton.animate().scaleX(1 - slideOffset)
-                    .scaleY(1 - slideOffset)
-                    .setDuration(0)
-                    .start()
-            }
-
-        })
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.settings_menu, menu)
+        return true
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.settings) {
+            goToPreferenceActivity()
+        }
+        return true
+    }
+
+    private fun goToPreferenceActivity() {
+        val intent = Intent(this, PreferenceActivity::class.java)
+        startActivity(intent)
+    }
+//
+//    private fun setupBottomSheet(bottomSheet: View, floatingButton: FloatingActionButton) {
+//        val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+//
+//        floatingButton.setOnClickListener {
+//            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+//        }
+//
+//        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+//            override fun onStateChanged(bottomSheet: View, newState: Int) {
+//
+//            }
+//
+//            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+//                floatingButton.animate().scaleX(1 - slideOffset)
+//                    .scaleY(1 - slideOffset)
+//                    .setDuration(0)
+//                    .start()
+//            }
+//
+//        })
+//    }
 }

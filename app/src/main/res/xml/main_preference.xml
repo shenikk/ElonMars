@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/category_general">
+
+        <SwitchPreferenceCompat
+            android:key="@string/dark_theme_key"
+            android:title="@string/dark_theme_title"
+            android:icon="@drawable/ic_color"
+            android:defaultValue="MODE_NIGHT_NO"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/category_about" >
+        <PreferenceScreen
+            android:title="@string/nasa_api_title"
+            android:summary="https://api.nasa.gov"
+            android:icon="@drawable/ic_computer">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://api.nasa.gov/" />
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/category_rate_us">
+
+        <PreferenceScreen
+            android:title="@string/feedback_title"
+            android:summary="@string/feedback_summary"
+            android:icon="@drawable/ic_star">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://t.me/shenikk" />
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+</PreferenceScreen>
