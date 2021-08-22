@@ -1,12 +1,11 @@
 package com.example.elonmars.di
 
 import android.content.Context
-import com.example.elonmars.data.provider.GalleryProvider
-import com.example.elonmars.data.provider.PHOTOS_BASE_URL
-import com.example.elonmars.data.provider.WEATHER_BASE_URL
-import com.example.elonmars.data.provider.WeatherItemsProvider
+import com.example.elonmars.data.provider.*
+import com.example.elonmars.data.repository.IItemsRepository
 import com.example.elonmars.data.repository.ItemsRepository
-import com.example.elonmars.data.store.DataStorageImpl
+import com.example.elonmars.data.store.DataStorage
+import com.example.elonmars.data.store.IDataStorage
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -21,19 +20,20 @@ class AppModule {
      * который используется в [ActivityComponent]
      */
     @Provides
-    fun provideItemsRepository(context: Context): ItemsRepository {
+    fun provideItemsRepository(context: Context): IItemsRepository {
         return ItemsRepository(getDataStorage(context), getWeatherItemsProvider(), getGalleryProvider())
     }
 
-    private fun getDataStorage(context: Context): DataStorageImpl {
-        return DataStorageImpl(context.getSharedPreferences("PREFS", Context.MODE_PRIVATE))
+    @Provides
+    fun getDataStorage(context: Context): IDataStorage {
+        return DataStorage(context.getSharedPreferences("PREFS", Context.MODE_PRIVATE))
     }
 
-    private fun getWeatherItemsProvider(): WeatherItemsProvider {
+    private fun getWeatherItemsProvider(): IWeatherItemProvider {
         return WeatherItemsProvider(getWeatherRetrofit())
     }
 
-    private fun getGalleryProvider(): GalleryProvider {
+    private fun getGalleryProvider(): IGalleryProvider {
         return GalleryProvider(getGalleryRetrofit())
     }
 

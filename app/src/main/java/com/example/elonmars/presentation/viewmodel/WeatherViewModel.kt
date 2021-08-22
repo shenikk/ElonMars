@@ -5,8 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.elonmars.WeatherDataItem
-import com.example.elonmars.data.provider.SchedulersProvider
-import com.example.elonmars.data.repository.ItemsRepository
+import com.example.elonmars.data.provider.ISchedulersProvider
+import com.example.elonmars.data.repository.IItemsRepository
+import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.presentation.model.WeatherItem
 import io.reactivex.disposables.Disposable
 
@@ -19,11 +20,11 @@ import io.reactivex.disposables.Disposable
  * @testClass unit: WeatherViewModelTest
  */
 class WeatherViewModel(
-    private val itemsRepository: ItemsRepository,
-    private val schedulersProvider: SchedulersProvider
+    private val itemsRepository: IItemsRepository,
+    private val schedulersProvider: ISchedulersProvider,
+    private val dataStorage: IDataStorage
 ) : ViewModel() {
 
-    private val TAG = "WeatherViewModel"
     private var disposable: Disposable? = null
 
     private val shimmerLiveData = MutableLiveData<Boolean>()
@@ -31,9 +32,12 @@ class WeatherViewModel(
     private val weatherItemsLiveData = MutableLiveData<List<WeatherItem>>()
 
     private val weatherItemsData = mutableListOf<WeatherDataItem>()
-    private var isFarenheitShown = false
     private var latestDayLiveData = MutableLiveData<WeatherItem>()
     private val refreshLiveData = MutableLiveData<Boolean>()
+
+    companion object {
+        private const val TAG = "WeatherViewModel"
+    }
 
     /**
      * Метод для асинхронной загрузки списка фильмов.
@@ -62,20 +66,20 @@ class WeatherViewModel(
 
     fun convertTemperature() {
         getFirstItem(weatherItemsData)?.let { item ->
-            if (isFarenheitShown) {
-                weatherItemsLiveData.value = weatherItemsData.map { convertCelsius(it) }
-                latestDayLiveData.value = convertCelsius(item)
-            } else {
+            if (dataStorage.farenheitEnabled) {
                 weatherItemsLiveData.value = weatherItemsData.map { convertFarenheit(it) }
                 latestDayLiveData.value = convertFarenheit(item)
+
+            } else {
+                weatherItemsLiveData.value = weatherItemsData.map { convertCelsius(it) }
+                latestDayLiveData.value = convertCelsius(item)
             }
-            isFarenheitShown = !isFarenheitShown
         }
     }
 
     private fun doOnSuccess(weatherDataItemList: List<WeatherDataItem>) {
         weatherItemsData.addAll(weatherDataItemList)
-        val convertedValues = weatherDataItemList.map { convertCelsius(it) }
+        val convertedValues = weatherDataItemList.map { convertAfterServerDownload(it) }
         weatherItemsLiveData.value = convertedValues
         latestDayLiveData.value =
             getFirstItem(convertedValues) ?: WeatherItem("NA", "NA", "NA", "NA")
@@ -87,6 +91,14 @@ class WeatherViewModel(
         } catch (e: Exception) {
             Log.e(TAG, "List is empty")
             null
+        }
+    }
+
+    private fun convertAfterServerDownload(weatherDataItem: WeatherDataItem): WeatherItem {
+        return if (dataStorage.farenheitEnabled) {
+            convertFarenheit(weatherDataItem)
+        } else {
+            convertCelsius(weatherDataItem)
         }
     }
 

@@ -1,23 +1,34 @@
 package com.example.elonmars.data.store
 
+import android.content.SharedPreferences
 import com.example.elonmars.WeatherDataItem
 import com.example.elonmars.data.model.PhotoItem
-import com.example.elonmars.presentation.model.TaskItem
 
-/** Интерфейс хранилища данных */
-interface DataStorage {
-//
-//    /** Метод для сохранения списка задач в [android.content.SharedPreferences] */
-//    fun saveTasks(movies: ArrayList<TaskItem>)
-//
-//    /** Метод для извлечения списка задач из [android.content.SharedPreferences] */
-//    fun getTasks(): ArrayList<TaskItem>?
+/**
+ * Реализация хранилища данных.
+ *
+ * @param preferences преференсы для хранения данных
+ */
+class DataStorage(private val preferences: SharedPreferences) : DataPreferences(), IDataStorage {
 
-    fun saveWeatherDates(dates: ArrayList<WeatherDataItem>)
+    companion object {
+        private const val PHOTOS_KEY = "PHOTOS_KEY"
+        private const val WEATHER_KEY = "WEATHER_KEY"
+        private const val CONVERSION_KEY = "CONVERSION_KEY"
+    }
 
-    fun getWeatherDates(): ArrayList<WeatherDataItem>?
+    /** Список с моделями [WeatherDataItem] */
+    override var weatherDataItems: ArrayList<WeatherDataItem>?
+        get() = preferences.getString(WEATHER_KEY, null)?.let { getDataFromJson(it) }
+        set(value) = preferences.edit().putString(WEATHER_KEY, convertDataToJson(value)).apply()
 
-    fun savePhotos(photos: ArrayList<PhotoItem>)
+    /** Список с моделями [PhotoItem] */
+    override var photos: ArrayList<PhotoItem>?
+        get() = preferences.getString(PHOTOS_KEY, null)?.let { getDataFromJson(it) }
+        set(value) = preferences.edit().putString(PHOTOS_KEY, convertDataToJson(value)).apply()
 
-    fun getPhotos(): ArrayList<PhotoItem>?
+    /** Флаг для обозначения выбранного режима конвертации температуры */
+    override var farenheitEnabled: Boolean
+        get() = preferences.getBoolean(CONVERSION_KEY, false)
+        set(value) = preferences.edit().putBoolean(CONVERSION_KEY, value).apply()
 }

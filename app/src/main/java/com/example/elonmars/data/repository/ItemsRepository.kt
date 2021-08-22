@@ -2,9 +2,9 @@ package com.example.elonmars.data.repository
 
 import com.example.elonmars.WeatherDataItem
 import com.example.elonmars.data.model.PhotoItem
-import com.example.elonmars.data.provider.GalleryProvider
-import com.example.elonmars.data.provider.WeatherItemsProvider
-import com.example.elonmars.data.store.DataStorageImpl
+import com.example.elonmars.data.provider.IGalleryProvider
+import com.example.elonmars.data.provider.IWeatherItemProvider
+import com.example.elonmars.data.store.IDataStorage
 import io.reactivex.Single
 
 /**
@@ -15,39 +15,39 @@ import io.reactivex.Single
  * @param galleryProvider провайдер данных с фото
  */
 class ItemsRepository(
-    private val dataStorage: DataStorageImpl,
-    private val weatherItemsProvider: WeatherItemsProvider,
-    private val galleryProvider: GalleryProvider
+    private val dataStorage: IDataStorage,
+    private val weatherItemsProvider: IWeatherItemProvider,
+    private val galleryProvider: IGalleryProvider
 ) : IItemsRepository {
 
     override fun loadDataAsync(): Single<ArrayList<WeatherDataItem>> {
         return Single.fromCallable {
-            dataStorage.getWeatherDates()
+            dataStorage.weatherDataItems
                 ?: ArrayList(weatherItemsProvider.loadWeatherItemsList().take(10))
-                    .also(dataStorage::saveWeatherDates)
+                    .also { dataStorage.weatherDataItems = it }
         }
     }
 
     override fun loadDataAsyncOnCall(): Single<ArrayList<WeatherDataItem>> {
         return Single.fromCallable {
             ArrayList(weatherItemsProvider.loadWeatherItemsList().take(10))
-                .also(dataStorage::saveWeatherDates)
+                .also { dataStorage.weatherDataItems = it }
         }
     }
 
 
     override fun loadPhotosAsync(): Single<ArrayList<PhotoItem>> {
         return Single.fromCallable {
-            dataStorage.getPhotos()
+            dataStorage.photos
                 ?: galleryProvider.loadPhotoItemsList()
-                    .also(dataStorage::savePhotos)
+                    .also { dataStorage.photos = it }
         }
     }
 
     @Throws(java.lang.Exception::class)
     override fun loadPhotosOnCall(): Single<ArrayList<PhotoItem>> {
         return Single.fromCallable {
-            galleryProvider.loadPhotoItemsList().also(dataStorage::savePhotos)
+            galleryProvider.loadPhotoItemsList().also { dataStorage.photos = it }
         }
     }
 }

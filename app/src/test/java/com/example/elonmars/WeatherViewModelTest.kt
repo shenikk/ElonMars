@@ -3,15 +3,21 @@ package com.example.elonmars
 import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.example.elonmars.data.exception.RequestException
 import com.example.elonmars.data.provider.SchedulersProvider
+import com.example.elonmars.data.repository.IItemsRepository
 import com.example.elonmars.data.repository.ItemsRepository
+import com.example.elonmars.data.store.DataStorage
+import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.presentation.model.WeatherItem
 import com.example.elonmars.presentation.viewmodel.WeatherViewModel
-import com.example.elonmars.data.exception.RequestException
 import io.mockk.*
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import org.junit.*
+import org.junit.After
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 
 /** Класс для тестирования [WeatherViewModel] */
 class WeatherViewModelTest {
@@ -28,12 +34,12 @@ class WeatherViewModelTest {
 
     private val schedulersProvider: SchedulersProvider = mockk()
     private val itemsRepository: ItemsRepository = mockk()
+    private val dataStorage: DataStorage = mockk()
 
     @Before
     fun setUp() {
         mockkStatic(Log::class)
-        weatherViewModel = WeatherViewModel(itemsRepository, schedulersProvider)
-
+        weatherViewModel = WeatherViewModel(itemsRepository, schedulersProvider, dataStorage)
         weatherViewModel.getShimmerLiveData().observeForever(shimmerLiveDataObserver)
         weatherViewModel.getErrorLiveData().observeForever(errorLiveDataObserver)
         weatherViewModel.getWeatherItemsLiveData().observeForever(weatherItemsLiveDataObserver)

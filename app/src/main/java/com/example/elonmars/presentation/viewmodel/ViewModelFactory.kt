@@ -2,8 +2,9 @@ package com.example.elonmars.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.elonmars.data.provider.SchedulersProvider
-import com.example.elonmars.data.repository.ItemsRepository
+import com.example.elonmars.data.provider.ISchedulersProvider
+import com.example.elonmars.data.repository.IItemsRepository
+import com.example.elonmars.data.store.IDataStorage
 
 /**
  * Класс фабрика для получения инстансов вьюмоделей
@@ -12,8 +13,9 @@ import com.example.elonmars.data.repository.ItemsRepository
  * @param schedulersProvider
  */
 class ViewModelFactory(
-    private val itemsRepository: ItemsRepository,
-    private val schedulersProvider: SchedulersProvider
+    private val itemsRepository: IItemsRepository,
+    private val schedulersProvider: ISchedulersProvider,
+    private val dataStorage: IDataStorage
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -22,7 +24,7 @@ class ViewModelFactory(
                 GalleryViewModel(itemsRepository, schedulersProvider) as T
 
             modelClass.isAssignableFrom(WeatherViewModel::class.java) ->
-                WeatherViewModel(itemsRepository, schedulersProvider) as T
+                WeatherViewModel(itemsRepository, schedulersProvider, dataStorage) as T
 
             else -> throw IllegalArgumentException("Unknown ViewModel class")
         }

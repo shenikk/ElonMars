@@ -4,11 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.elonmars.WeatherDataItem
 import com.example.elonmars.data.model.PhotoItem
-import com.example.elonmars.data.provider.SchedulersProvider
-import com.example.elonmars.data.repository.ItemsRepository
-import com.example.elonmars.data.store.DataStorageImpl
+import com.example.elonmars.data.provider.ISchedulersProvider
+import com.example.elonmars.data.repository.IItemsRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -20,8 +18,8 @@ import io.reactivex.schedulers.Schedulers
  * @param schedulersProvider
  */
 class GalleryViewModel(
-    private val itemsRepository: ItemsRepository,
-    private val schedulersProvider: SchedulersProvider
+    private val itemsRepository: IItemsRepository,
+    private val schedulersProvider: ISchedulersProvider
 ) : ViewModel() {
 
     private val TAG = "GalleryViewModel"
