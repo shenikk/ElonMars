@@ -6,17 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CalendarView
-import android.widget.Toast
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.elonmars.R
+import com.example.elonmars.data.database.TasksDbHelper
+import com.example.elonmars.data.provider.SchedulersProvider
+import com.example.elonmars.data.provider.TaskItemsProvider
+import com.example.elonmars.data.repository.TasksRepository
 import com.example.elonmars.presentation.MyItemTouchHelper
 import com.example.elonmars.presentation.adapter.TaskAdapter
 import com.example.elonmars.presentation.model.TaskItem
+import com.example.elonmars.presentation.viewmodel.MarsMissionViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
+import java.util.*
 
 /** Экран с задачами, добавляемые пользователем */
 class MarsMissionFragment : Fragment() {
@@ -25,7 +33,11 @@ class MarsMissionFragment : Fragment() {
     private lateinit var floatingButton: FloatingActionButton
     private lateinit var recyclerView: RecyclerView
     private lateinit var taskAdapter: TaskAdapter
+    private lateinit var noTaskText: TextView
+    private lateinit var chosenTaskDate: Calendar
+
     private var dataSet: ArrayList<TaskItem> = arrayListOf()
+    private var viewModel: MarsMissionViewModel? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_mars_mission, container, false)
@@ -34,9 +46,13 @@ class MarsMissionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        createViewModel()
+        observeLiveData()
+
         calendarView = view.findViewById<CalendarView>(R.id.calendar).apply {
-            this.setOnDateChangeListener { _, _, _, _ ->
-                Toast.makeText(context, "Add a task for this day!", Toast.LENGTH_SHORT).show()
+            this.setOnDateChangeListener { _, _, month, dayOfMonth ->
+                setChosenDate(dayOfMonth, month)
+                showTasksForChosenDate()
             }
         }
 
@@ -46,9 +62,54 @@ class MarsMissionFragment : Fragment() {
             }
         }
 
-        recyclerView = view.findViewById(R.id.task_recycler)
+        noTaskText = view.findViewById(R.id.no_task_text)
 
-        taskAdapter = TaskAdapter(dataSet)
+        recyclerView = view.findViewById(R.id.task_recycler)
+        setUpAdapter(dataSet)
+    }
+
+    private fun createViewModel() {
+        val taskDbHelper = TasksDbHelper(this.context)
+        val taskItemsProvider = TaskItemsProvider(taskDbHelper)
+        val taskRepository = TasksRepository(taskItemsProvider)
+        val schedulersProvider = SchedulersProvider()
+
+        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return MarsMissionViewModel(taskRepository, schedulersProvider) as T
+            }
+        }).get(MarsMissionViewModel::class.java)
+    }
+
+    private fun observeLiveData() {
+        viewModel?.let {
+            it.getTaskItemLiveData().observe(viewLifecycleOwner, { list ->
+                if (list != null) {
+                    showData(list)
+                }
+            })
+        }
+    }
+
+    private fun showData(list: ArrayList<TaskItem>) {
+        setUpAdapter(list)
+        updateText(noTaskText, list)
+    }
+
+    private fun updateText(noTaskText: TextView, dataSet: ArrayList<TaskItem>) {
+        if (dataSet.isEmpty()) {
+            noTaskText.visibility = View.VISIBLE
+        } else {
+            noTaskText.visibility = View.GONE
+        }
+    }
+
+    private fun setUpAdapter(dataSet: ArrayList<TaskItem>) {
+        taskAdapter = TaskAdapter(dataSet) { holder, taskItem ->
+            holder.taskCheckBox.setOnClickListener {
+                viewModel?.updateTaskStatus(taskItem, chosenTaskDate)
+            }
+        }
         recyclerView.adapter = taskAdapter
         addItemTouchHelper(recyclerView, taskAdapter)
     }
@@ -70,14 +131,25 @@ class MarsMissionFragment : Fragment() {
         bottomSheetDialog.findViewById<Button>(R.id.save_button)?.apply {
             setOnClickListener {
                 if (!editText?.text.isNullOrEmpty()) {
-                    dataSet.add(TaskItem(editText?.text.toString(),false))
-                    taskAdapter.notifyDataSetChanged()
+                    val task = TaskItem(editText?.text.toString(),false)
+                    viewModel?.addTaskItemToDataBase(task, chosenTaskDate)
+                    showTasksForChosenDate()
                     bottomSheetDialog.dismiss()
                 } else {
                     bottomSheetDialog.dismiss()
                 }
             }
         }
+    }
+
+    private fun showTasksForChosenDate() {
+        viewModel?.getTaskItemFromDataBase(chosenTaskDate)
+    }
+
+    private fun setChosenDate(dayOfMonth: Int, month: Int) {
+        chosenTaskDate = Calendar.getInstance()
+        chosenTaskDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+        chosenTaskDate.set(Calendar.MONTH, month)
     }
 
     private fun addItemTouchHelper(recyclerView: RecyclerView, taskAdapter: TaskAdapter) {
