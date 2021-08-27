@@ -1,5 +1,6 @@
 package com.example.elonmars.data.database
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -11,7 +12,7 @@ class TasksDbHelper(@Nullable private val context: Context?) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
         private const val DATABASE_NAME = "Tasks.db"
     }
 
@@ -22,9 +23,20 @@ class TasksDbHelper(@Nullable private val context: Context?) :
                     TasksDbSchema.TasksTable.Cols.DAY_OF_MONTH + " text," +
                     TasksDbSchema.TasksTable.Cols.MONTH + " text," +
                     TasksDbSchema.TasksTable.Cols.TITLE + " text," +
-                    TasksDbSchema.TasksTable.Cols.STATUS + " integer" + ")"
+                    TasksDbSchema.TasksTable.Cols.STATUS + " integer," +
+                    BaseColumns._COUNT + " integer" + ")"
         )
     }
 
-    override fun onUpgrade(sqLiteDatabase: SQLiteDatabase, oldVersion: Int, newVersion: Int) {}
+    override fun onUpgrade(sqLiteDatabase: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        if (oldVersion < 2) {
+            sqLiteDatabase.execSQL(
+                "ALTER TABLE " + TasksDbSchema.TasksTable.NAME + " ADD " +
+                        BaseColumns._COUNT + " integer"
+            )
+            val contentValues = ContentValues()
+            contentValues.put(BaseColumns._COUNT, 1)
+            sqLiteDatabase.update(TasksDbSchema.TasksTable.NAME, contentValues, null, null)
+        }
+    }
 }

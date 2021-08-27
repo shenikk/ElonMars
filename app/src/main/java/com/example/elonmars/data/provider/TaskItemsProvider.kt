@@ -3,6 +3,7 @@ package com.example.elonmars.data.provider
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.provider.BaseColumns
 import com.example.elonmars.data.database.TasksDbHelper
 import com.example.elonmars.data.database.TasksDbSchema
 import com.example.elonmars.presentation.model.TaskItem
@@ -20,6 +21,7 @@ class TaskItemsProvider(private val tasksDbHelper: TasksDbHelper) : ITaskItemsPr
 
         contentValues.put(TasksDbSchema.TasksTable.Cols.DAY_OF_MONTH, chosenTaskDate.get(Calendar.DAY_OF_MONTH))
         contentValues.put(TasksDbSchema.TasksTable.Cols.MONTH, chosenTaskDate.get(Calendar.MONTH))
+        contentValues.put(BaseColumns._COUNT, 1)
 
         db.insert(TasksDbSchema.TasksTable.NAME, null, contentValues)
     }
