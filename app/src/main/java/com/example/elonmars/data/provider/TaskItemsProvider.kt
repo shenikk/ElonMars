@@ -12,15 +12,15 @@ import java.util.*
 /** Провайдер данных из базы данных [TasksDbHelper] */
 class TaskItemsProvider(private val tasksDbHelper: TasksDbHelper) : ITaskItemsProvider {
 
-    override fun saveTask(taskItem: TaskItem, chosenTaskDate: Calendar) {
+    override fun saveTask(taskItem: TaskItem) {
         val db: SQLiteDatabase = tasksDbHelper.writableDatabase
         val contentValues = ContentValues()
 
         contentValues.put(TasksDbSchema.TasksTable.Cols.TITLE, taskItem.title)
         contentValues.put(TasksDbSchema.TasksTable.Cols.STATUS, 0) // по умолчанию все задачи сохраняются со статусом isCompleted = false
 
-        contentValues.put(TasksDbSchema.TasksTable.Cols.DAY_OF_MONTH, chosenTaskDate.get(Calendar.DAY_OF_MONTH))
-        contentValues.put(TasksDbSchema.TasksTable.Cols.MONTH, chosenTaskDate.get(Calendar.MONTH))
+        contentValues.put(TasksDbSchema.TasksTable.Cols.DAY_OF_MONTH, taskItem.dayOfMonth)
+        contentValues.put(TasksDbSchema.TasksTable.Cols.MONTH, taskItem.month)
         contentValues.put(BaseColumns._COUNT, 1)
 
         db.insert(TasksDbSchema.TasksTable.NAME, null, contentValues)
@@ -48,10 +48,10 @@ class TaskItemsProvider(private val tasksDbHelper: TasksDbHelper) : ITaskItemsPr
             null
         )
 
-        return readFromCursor(cursor)
+        return readFromCursor(cursor, date)
     }
 
-    override fun updateTaskStatus(taskItem: TaskItem, date: Calendar) {
+    override fun updateTaskStatus(taskItem: TaskItem) {
         // передается значение, которое сейчас сохранено в TaskItem
         val taskStatus = if (taskItem.isCompleted) {
             0
@@ -61,20 +61,43 @@ class TaskItemsProvider(private val tasksDbHelper: TasksDbHelper) : ITaskItemsPr
 
         val db: SQLiteDatabase = tasksDbHelper.writableDatabase
 
-        val selection = TasksDbSchema.TasksTable.Cols.DAY_OF_MONTH + " = ? AND " + TasksDbSchema.TasksTable.Cols.MONTH + " = ? AND " + TasksDbSchema.TasksTable.Cols.TITLE + " = ? "
-        val selectionArgs = arrayOf(date.get(Calendar.DAY_OF_MONTH).toString(), date.get(Calendar.MONTH).toString(), taskItem.title.toString())
+        val selection =
+            TasksDbSchema.TasksTable.Cols.DAY_OF_MONTH + " = ? AND " + TasksDbSchema.TasksTable.Cols.MONTH + " = ? AND " + TasksDbSchema.TasksTable.Cols.TITLE + " = ? "
+        val selectionArgs = arrayOf(
+            taskItem.dayOfMonth.toString(),
+            taskItem.month.toString(),
+            taskItem.title.toString()
+        )
 
         val contentValues = ContentValues()
         contentValues.put(TasksDbSchema.TasksTable.Cols.STATUS, taskStatus)
 
-        db.update(TasksDbSchema.TasksTable.NAME,
+        db.update(
+            TasksDbSchema.TasksTable.NAME,
             contentValues,
             selection,
             selectionArgs
         )
     }
 
-    private fun readFromCursor(cursor: Cursor): ArrayList<TaskItem> {
+    override fun deleteTask(taskItem: TaskItem) {
+        val db: SQLiteDatabase = tasksDbHelper.writableDatabase
+        val selection =
+            TasksDbSchema.TasksTable.Cols.DAY_OF_MONTH + " = ? AND " + TasksDbSchema.TasksTable.Cols.MONTH + " = ? AND " + TasksDbSchema.TasksTable.Cols.TITLE + " = ? "
+        val selectionArgs = arrayOf(
+            taskItem.dayOfMonth.toString(),
+            taskItem.month.toString(),
+            taskItem.title.toString()
+        )
+
+        db.delete(
+            TasksDbSchema.TasksTable.NAME,
+            selection,
+            selectionArgs
+        )
+    }
+
+    private fun readFromCursor(cursor: Cursor, date: Calendar): ArrayList<TaskItem> {
         val tasksList = arrayListOf<TaskItem>()
         try {
             while (cursor.moveToNext()) {
@@ -85,7 +108,7 @@ class TaskItemsProvider(private val tasksDbHelper: TasksDbHelper) : ITaskItemsPr
                 if (status == 1) {
                     statusForTask = true
                 }
-                tasksList.add(TaskItem(title, statusForTask))
+                tasksList.add(TaskItem(title, statusForTask, date.get(Calendar.DAY_OF_MONTH), date.get(Calendar.MONTH)))
             }
         } finally {
             cursor.close()

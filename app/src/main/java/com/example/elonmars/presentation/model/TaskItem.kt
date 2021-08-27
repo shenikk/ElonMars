@@ -6,5 +6,7 @@ package com.example.elonmars.presentation.model
  */
 class TaskItem(
         var title: String?,
-        var isCompleted: Boolean
+        var isCompleted: Boolean,
+        var dayOfMonth: Int,
+        var month: Int
 )

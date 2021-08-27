@@ -1,5 +1,6 @@
 package com.example.elonmars.presentation.view
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +11,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.elonmars.R
 import com.example.elonmars.data.database.TasksDbHelper
 import com.example.elonmars.data.provider.SchedulersProvider
 import com.example.elonmars.data.provider.TaskItemsProvider
 import com.example.elonmars.data.repository.TasksRepository
-import com.example.elonmars.presentation.MyItemTouchHelper
 import com.example.elonmars.presentation.adapter.TaskAdapter
 import com.example.elonmars.presentation.model.TaskItem
 import com.example.elonmars.presentation.viewmodel.MarsMissionViewModel
@@ -48,6 +47,8 @@ class MarsMissionFragment : Fragment() {
 
         createViewModel()
         observeLiveData()
+        setChosenDate()
+        viewModel?.getTaskItemFromDataBase(chosenTaskDate)
 
         calendarView = view.findViewById<CalendarView>(R.id.calendar).apply {
             this.setOnDateChangeListener { _, _, month, dayOfMonth ->
@@ -107,11 +108,32 @@ class MarsMissionFragment : Fragment() {
     private fun setUpAdapter(dataSet: ArrayList<TaskItem>) {
         taskAdapter = TaskAdapter(dataSet) { holder, taskItem ->
             holder.taskCheckBox.setOnClickListener {
-                viewModel?.updateTaskStatus(taskItem, chosenTaskDate)
+                viewModel?.updateTaskStatus(taskItem)
+            }
+            holder.itemView.setOnLongClickListener {
+                setUpAlertDialog(taskItem)
+                true
             }
         }
         recyclerView.adapter = taskAdapter
-        addItemTouchHelper(recyclerView, taskAdapter)
+    }
+
+    private fun setUpAlertDialog(taskItem: TaskItem) {
+        AlertDialog.Builder(this.context)
+            .setTitle(getString(R.string.alert_dialog_title))
+            .setMessage(getString(R.string.alert_dialog_summary))
+            .setPositiveButton(android.R.string.ok
+            ) { _, _ ->
+                viewModel?.deleteTaskItemFromDataBase(taskItem)
+                // FIXME подумать, как можно улучшить этот момент (убрать мерцание текста при удалении айтема)
+                viewModel?.getTaskItemFromDataBase(chosenTaskDate)
+                taskAdapter.dataSet.remove(taskItem)
+                taskAdapter.notifyDataSetChanged()
+                updateText(noTaskText, dataSet)
+            }
+            // A null listener allows the button to dismiss the dialog and take no further action.
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     private fun setUpDialog(view: View) {
@@ -131,8 +153,12 @@ class MarsMissionFragment : Fragment() {
         bottomSheetDialog.findViewById<Button>(R.id.save_button)?.apply {
             setOnClickListener {
                 if (!editText?.text.isNullOrEmpty()) {
-                    val task = TaskItem(editText?.text.toString(),false)
-                    viewModel?.addTaskItemToDataBase(task, chosenTaskDate)
+                    val task = TaskItem(editText?.text.toString(),false, chosenTaskDate.get(Calendar.DAY_OF_MONTH),
+                        chosenTaskDate.get(Calendar.MONTH))
+                    viewModel?.addTaskItemToDataBase(task)
+
+                    taskAdapter.dataSet.add(task)
+                    taskAdapter.notifyItemInserted(taskAdapter.itemCount)
                     showTasksForChosenDate()
                     bottomSheetDialog.dismiss()
                 } else {
@@ -146,15 +172,11 @@ class MarsMissionFragment : Fragment() {
         viewModel?.getTaskItemFromDataBase(chosenTaskDate)
     }
 
-    private fun setChosenDate(dayOfMonth: Int, month: Int) {
+    private fun setChosenDate(dayOfMonth: Int? = null, month: Int? = null) {
         chosenTaskDate = Calendar.getInstance()
-        chosenTaskDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-        chosenTaskDate.set(Calendar.MONTH, month)
-    }
-
-    private fun addItemTouchHelper(recyclerView: RecyclerView, taskAdapter: TaskAdapter) {
-        val itemTouchHelperCallback = MyItemTouchHelper(taskAdapter)
-        val touchHelper = ItemTouchHelper(itemTouchHelperCallback)
-        touchHelper.attachToRecyclerView(recyclerView)
+        if (dayOfMonth != null && month != null) {
+            chosenTaskDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            chosenTaskDate.set(Calendar.MONTH, month)
+        }
     }
 }

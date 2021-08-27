@@ -31,8 +31,8 @@ class MarsMissionViewModel(
         Log.d(TAG, "onCleared() called")
     }
 
-    fun addTaskItemToDataBase(taskItem: TaskItem, date: Calendar) {
-        disposable = tasksRepository.saveDataAsync(taskItem, date)
+    fun addTaskItemToDataBase(taskItem: TaskItem) {
+        disposable = tasksRepository.saveDataAsync(taskItem)
             .subscribeOn(schedulersProvider.io())
             .observeOn(schedulersProvider.ui())
             .subscribe()
@@ -49,8 +49,15 @@ class MarsMissionViewModel(
             .subscribe(taskItemsLiveData::setValue, errorLiveData::setValue)
     }
 
-    fun updateTaskStatus(taskItem: TaskItem, date: Calendar) {
-        disposable = tasksRepository.updateDataAsync(taskItem, date)
+    fun updateTaskStatus(taskItem: TaskItem) {
+        disposable = tasksRepository.updateDataAsync(taskItem)
+            .subscribeOn(schedulersProvider.io())
+            .observeOn(schedulersProvider.ui())
+            .subscribe()
+    }
+
+    fun deleteTaskItemFromDataBase(taskItem: TaskItem) {
+        disposable = tasksRepository.deleteTask(taskItem)
             .subscribeOn(schedulersProvider.io())
             .observeOn(schedulersProvider.ui())
             .subscribe()

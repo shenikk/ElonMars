@@ -6,7 +6,8 @@ import io.reactivex.Single
 import java.util.*
 
 interface ITasksRepository {
-    fun saveDataAsync(taskItem: TaskItem, date: Calendar): Completable
+    fun saveDataAsync(taskItem: TaskItem): Completable
     fun getDataAsync(date: Calendar): Single<ArrayList<TaskItem>>
-    fun updateDataAsync(taskItem: TaskItem, date: Calendar): Completable
+    fun updateDataAsync(taskItem: TaskItem): Completable
+    fun deleteTask(taskItem: TaskItem): Completable
 }
