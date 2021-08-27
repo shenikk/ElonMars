@@ -8,5 +8,6 @@ class TaskItem(
         var title: String?,
         var isCompleted: Boolean,
         var dayOfMonth: Int,
-        var month: Int
+        var month: Int,
+        var id: Int = 0
 )

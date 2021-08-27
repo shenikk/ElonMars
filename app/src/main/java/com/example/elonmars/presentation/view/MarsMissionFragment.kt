@@ -129,11 +129,11 @@ class MarsMissionFragment : Fragment() {
             .setPositiveButton(android.R.string.ok
             ) { _, _ ->
                 viewModel?.deleteTaskItemFromDataBase(taskItem)
-                // FIXME подумать, как можно улучшить этот момент (убрать мерцание текста при удалении айтема)
-                viewModel?.getTaskItemFromDataBase(chosenTaskDate)
                 taskAdapter.dataSet.remove(taskItem)
                 taskAdapter.notifyDataSetChanged()
-                updateText(noTaskText, dataSet)
+                if (taskAdapter.dataSet.isEmpty()) {
+                    updateText(noTaskText, dataSet)
+                }
             }
             // A null listener allows the button to dismiss the dialog and take no further action.
             .setNegativeButton(android.R.string.cancel, null)
@@ -162,7 +162,7 @@ class MarsMissionFragment : Fragment() {
                     viewModel?.addTaskItemToDataBase(task)
 
                     taskAdapter.dataSet.add(task)
-                    taskAdapter.notifyItemInserted(taskAdapter.itemCount)
+                    taskAdapter.notifyDataSetChanged()
                     showTasksForChosenDate()
                     bottomSheetDialog.dismiss()
                 } else {
