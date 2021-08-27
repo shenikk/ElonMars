@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.elonmars.R
-import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.presentation.model.TaskItem
 
 /**

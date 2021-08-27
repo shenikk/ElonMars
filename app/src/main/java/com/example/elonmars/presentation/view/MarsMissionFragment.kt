@@ -1,6 +1,7 @@
 package com.example.elonmars.presentation.view
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.elonmars.R
+import com.example.elonmars.data.ConverterImpl
+import com.example.elonmars.data.database.TaskDataBase
 import com.example.elonmars.data.database.TasksDbHelper
 import com.example.elonmars.data.provider.SchedulersProvider
 import com.example.elonmars.data.provider.TaskItemsProvider
@@ -45,7 +48,7 @@ class MarsMissionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        createViewModel()
+        createViewModel(view.context)
         observeLiveData()
         setChosenDate()
         viewModel?.getTaskItemFromDataBase(chosenTaskDate)
@@ -69,10 +72,10 @@ class MarsMissionFragment : Fragment() {
         setUpAdapter(dataSet)
     }
 
-    private fun createViewModel() {
-        val taskDbHelper = TasksDbHelper(this.context)
-        val taskItemsProvider = TaskItemsProvider(taskDbHelper)
-        val taskRepository = TasksRepository(taskItemsProvider)
+    private fun createViewModel(context: Context) {
+        val dataBase = TaskDataBase.createDataBase(context)
+
+        val taskRepository = TasksRepository(ConverterImpl(), dataBase.taskDao())
         val schedulersProvider = SchedulersProvider()
 
         viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
@@ -108,6 +111,7 @@ class MarsMissionFragment : Fragment() {
     private fun setUpAdapter(dataSet: ArrayList<TaskItem>) {
         taskAdapter = TaskAdapter(dataSet) { holder, taskItem ->
             holder.taskCheckBox.setOnClickListener {
+                taskItem.isCompleted = !taskItem.isCompleted
                 viewModel?.updateTaskStatus(taskItem)
             }
             holder.itemView.setOnLongClickListener {
