@@ -14,11 +14,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.elonmars.R
-import com.example.elonmars.data.ConverterImpl
+import com.example.elonmars.data.converters.ConverterImpl
 import com.example.elonmars.data.database.TaskDataBase
-import com.example.elonmars.data.database.TasksDbHelper
 import com.example.elonmars.data.provider.SchedulersProvider
-import com.example.elonmars.data.provider.TaskItemsProvider
 import com.example.elonmars.data.repository.TasksRepository
 import com.example.elonmars.presentation.adapter.TaskAdapter
 import com.example.elonmars.presentation.model.TaskItem

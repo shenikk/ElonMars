@@ -1,4 +1,4 @@
-package com.example.elonmars.data
+package com.example.elonmars.data.converters
 
 interface Converter<T, R> {
     fun convert(item: T): R

@@ -1,6 +1,6 @@
 package com.example.elonmars.data.repository
 
-import com.example.elonmars.data.ConverterImpl
+import com.example.elonmars.data.converters.ConverterImpl
 import com.example.elonmars.data.database.TaskDao
 import com.example.elonmars.presentation.model.TaskItem
 import io.reactivex.Completable

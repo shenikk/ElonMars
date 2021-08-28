@@ -1,4 +1,4 @@
-package com.example.elonmars.data
+package com.example.elonmars.data.converters
 
 import com.example.elonmars.data.model.TaskEntity
 import com.example.elonmars.presentation.model.TaskItem
