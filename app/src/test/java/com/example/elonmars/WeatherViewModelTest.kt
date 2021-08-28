@@ -5,10 +5,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.elonmars.data.exception.RequestException
 import com.example.elonmars.data.provider.SchedulersProvider
-import com.example.elonmars.data.repository.IItemsRepository
 import com.example.elonmars.data.repository.ItemsRepository
 import com.example.elonmars.data.store.DataStorage
-import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.presentation.model.WeatherItem
 import com.example.elonmars.presentation.viewmodel.WeatherViewModel
 import io.mockk.*

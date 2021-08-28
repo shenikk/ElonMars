@@ -17,6 +17,7 @@ import com.example.elonmars.data.database.TasksDbHelper
 import com.example.elonmars.data.provider.SchedulersProvider
 import com.example.elonmars.data.provider.TaskItemsProvider
 import com.example.elonmars.data.repository.TasksRepository
+import com.example.elonmars.domain.interactors.TaskInteractor
 import com.example.elonmars.presentation.adapter.TaskAdapter
 import com.example.elonmars.presentation.model.TaskItem
 import com.example.elonmars.presentation.viewmodel.MarsMissionViewModel
@@ -73,11 +74,13 @@ class MarsMissionFragment : Fragment() {
         val taskDbHelper = TasksDbHelper(this.context)
         val taskItemsProvider = TaskItemsProvider(taskDbHelper)
         val taskRepository = TasksRepository(taskItemsProvider)
+
+        val tasksInteractor = TaskInteractor(taskRepository)
         val schedulersProvider = SchedulersProvider()
 
         viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return MarsMissionViewModel(taskRepository, schedulersProvider) as T
+                return MarsMissionViewModel(tasksInteractor, schedulersProvider) as T
             }
         }).get(MarsMissionViewModel::class.java)
     }

@@ -3,7 +3,7 @@ package com.example.elonmars.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.elonmars.data.provider.ISchedulersProvider
-import com.example.elonmars.data.repository.IItemsRepository
+import com.example.elonmars.domain.repositories.IItemsRepository
 import com.example.elonmars.data.store.IDataStorage
 
 /**

@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.elonmars.WeatherDataItem
 import com.example.elonmars.data.provider.ISchedulersProvider
-import com.example.elonmars.data.repository.IItemsRepository
+import com.example.elonmars.domain.repositories.IItemsRepository
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.presentation.model.WeatherItem
 import io.reactivex.disposables.Disposable

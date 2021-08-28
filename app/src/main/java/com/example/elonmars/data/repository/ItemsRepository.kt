@@ -5,6 +5,7 @@ import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.data.provider.IGalleryProvider
 import com.example.elonmars.data.provider.IWeatherItemProvider
 import com.example.elonmars.data.store.IDataStorage
+import com.example.elonmars.domain.repositories.IItemsRepository
 import io.reactivex.Single
 
 /**

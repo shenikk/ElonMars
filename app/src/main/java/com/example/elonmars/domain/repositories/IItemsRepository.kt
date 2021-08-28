@@ -1,4 +1,4 @@
-package com.example.elonmars.data.repository
+package com.example.elonmars.domain.repositories
 
 import com.example.elonmars.WeatherDataItem
 import com.example.elonmars.data.model.PhotoItem

@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.data.provider.ISchedulersProvider
-import com.example.elonmars.data.repository.IItemsRepository
+import com.example.elonmars.domain.repositories.IItemsRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers

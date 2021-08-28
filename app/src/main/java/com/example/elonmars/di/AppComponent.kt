@@ -1,7 +1,7 @@
 package com.example.elonmars.di
 
 import android.content.Context
-import com.example.elonmars.data.repository.IItemsRepository
+import com.example.elonmars.domain.repositories.IItemsRepository
 import com.example.elonmars.data.repository.ItemsRepository
 import com.example.elonmars.data.store.IDataStorage
 import dagger.BindsInstance

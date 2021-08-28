@@ -6,12 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.elonmars.data.provider.ISchedulersProvider
 import com.example.elonmars.data.repository.TasksRepository
+import com.example.elonmars.domain.interactors.TaskInteractor
 import com.example.elonmars.presentation.model.TaskItem
 import io.reactivex.disposables.Disposable
 import java.util.*
 
 class MarsMissionViewModel(
-    private val tasksRepository: TasksRepository,
+    private val tasksInteractor: TaskInteractor,
     private val schedulersProvider: ISchedulersProvider
 ) : ViewModel() {
 
@@ -32,14 +33,14 @@ class MarsMissionViewModel(
     }
 
     fun addTaskItemToDataBase(taskItem: TaskItem) {
-        disposable = tasksRepository.saveDataAsync(taskItem)
+        disposable = tasksInteractor.saveDataAsync(taskItem)
             .subscribeOn(schedulersProvider.io())
             .observeOn(schedulersProvider.ui())
             .subscribe()
     }
 
     fun getTaskItemFromDataBase(date: Calendar) {
-        disposable = tasksRepository.getDataAsync(date)
+        disposable = tasksInteractor.getDataAsync(date)
             .doOnSubscribe {
                 shimmerLiveData.postValue(true)
             }
@@ -50,14 +51,14 @@ class MarsMissionViewModel(
     }
 
     fun updateTaskStatus(taskItem: TaskItem) {
-        disposable = tasksRepository.updateDataAsync(taskItem)
+        disposable = tasksInteractor.updateDataAsync(taskItem)
             .subscribeOn(schedulersProvider.io())
             .observeOn(schedulersProvider.ui())
             .subscribe()
     }
 
     fun deleteTaskItemFromDataBase(taskItem: TaskItem) {
-        disposable = tasksRepository.deleteTask(taskItem)
+        disposable = tasksInteractor.deleteTask(taskItem)
             .subscribeOn(schedulersProvider.io())
             .observeOn(schedulersProvider.ui())
             .subscribe()
