@@ -2,8 +2,9 @@ package com.example.elonmars.di.activity
 
 import com.example.elonmars.data.provider.ISchedulersProvider
 import com.example.elonmars.data.provider.SchedulersProvider
-import com.example.elonmars.domain.repositories.IItemsRepository
 import com.example.elonmars.data.store.IDataStorage
+import com.example.elonmars.domain.interactors.ITaskInteractor
+import com.example.elonmars.domain.repositories.IItemsRepository
 import com.example.elonmars.presentation.viewmodel.ViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -15,9 +16,10 @@ class ActivityModule {
     @Provides
     fun provideViewModelFactory(
         itemsRepository: IItemsRepository,
-        dataStorage: IDataStorage
+        dataStorage: IDataStorage,
+        taskInteractor: ITaskInteractor
     ): ViewModelFactory {
-        return ViewModelFactory(itemsRepository, getSchedulersProvider(), dataStorage)
+        return ViewModelFactory(itemsRepository, getSchedulersProvider(), dataStorage, taskInteractor)
     }
 
     private fun getSchedulersProvider(): ISchedulersProvider {

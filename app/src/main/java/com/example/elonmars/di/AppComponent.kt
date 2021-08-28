@@ -1,9 +1,10 @@
 package com.example.elonmars.di
 
 import android.content.Context
-import com.example.elonmars.domain.repositories.IItemsRepository
 import com.example.elonmars.data.repository.ItemsRepository
 import com.example.elonmars.data.store.IDataStorage
+import com.example.elonmars.domain.interactors.ITaskInteractor
+import com.example.elonmars.domain.repositories.IItemsRepository
 import dagger.BindsInstance
 import dagger.Component
 
@@ -24,4 +25,6 @@ interface AppComponent {
     fun getItemsRepository(): IItemsRepository
 
     fun getDataStorage(): IDataStorage
+
+    fun getTaskInteractor(): ITaskInteractor
 }

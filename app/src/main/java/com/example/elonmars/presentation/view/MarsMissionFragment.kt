@@ -10,15 +10,11 @@ import android.widget.Button
 import android.widget.CalendarView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.example.elonmars.MyApplication
 import com.example.elonmars.R
-import com.example.elonmars.data.database.TasksDbHelper
-import com.example.elonmars.data.provider.SchedulersProvider
-import com.example.elonmars.data.provider.TaskItemsProvider
-import com.example.elonmars.data.repository.TasksRepository
-import com.example.elonmars.domain.interactors.TaskInteractor
+import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.adapter.TaskAdapter
 import com.example.elonmars.presentation.model.TaskItem
 import com.example.elonmars.presentation.viewmodel.MarsMissionViewModel
@@ -47,7 +43,7 @@ class MarsMissionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        createViewModel(view.context)
+        provideDependencies(view.context)
         observeLiveData()
         setChosenDate()
         viewModel?.getTaskItemFromDataBase(chosenTaskDate)
@@ -71,19 +67,13 @@ class MarsMissionFragment : Fragment() {
         setUpAdapter(dataSet)
     }
 
-    private fun createViewModel(context: Context) {
-        val taskDbHelper = TasksDbHelper(context)
-        val taskItemsProvider = TaskItemsProvider(taskDbHelper)
-        val taskRepository = TasksRepository(taskItemsProvider)
+    private fun provideDependencies(context: Context) {
+        val appComponent = MyApplication.getAppComponent(context)
+        val activityComponent = DaggerActivityComponent.builder()
+            .appComponent(appComponent)
+            .build()
 
-        val tasksInteractor = TaskInteractor(taskRepository)
-        val schedulersProvider = SchedulersProvider()
-
-        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return MarsMissionViewModel(tasksInteractor, schedulersProvider) as T
-            }
-        }).get(MarsMissionViewModel::class.java)
+        viewModel = ViewModelProvider(this, activityComponent.getViewModelFactory()).get(MarsMissionViewModel::class.java)
     }
 
     private fun observeLiveData() {

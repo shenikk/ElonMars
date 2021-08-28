@@ -5,14 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.elonmars.data.provider.ISchedulersProvider
-import com.example.elonmars.data.repository.TasksRepository
-import com.example.elonmars.domain.interactors.TaskInteractor
+import com.example.elonmars.domain.interactors.ITaskInteractor
 import com.example.elonmars.presentation.model.TaskItem
 import io.reactivex.disposables.Disposable
 import java.util.*
 
 class MarsMissionViewModel(
-    private val tasksInteractor: TaskInteractor,
+    private val tasksInteractor: ITaskInteractor,
     private val schedulersProvider: ISchedulersProvider
 ) : ViewModel() {
 
