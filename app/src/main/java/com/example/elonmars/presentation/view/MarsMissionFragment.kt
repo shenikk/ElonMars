@@ -1,6 +1,7 @@
 package com.example.elonmars.presentation.view
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -46,7 +47,7 @@ class MarsMissionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        createViewModel()
+        createViewModel(view.context)
         observeLiveData()
         setChosenDate()
         viewModel?.getTaskItemFromDataBase(chosenTaskDate)
@@ -70,8 +71,8 @@ class MarsMissionFragment : Fragment() {
         setUpAdapter(dataSet)
     }
 
-    private fun createViewModel() {
-        val taskDbHelper = TasksDbHelper(this.context)
+    private fun createViewModel(context: Context) {
+        val taskDbHelper = TasksDbHelper(context)
         val taskItemsProvider = TaskItemsProvider(taskDbHelper)
         val taskRepository = TasksRepository(taskItemsProvider)
 

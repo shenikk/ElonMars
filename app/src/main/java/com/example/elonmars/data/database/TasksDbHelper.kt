@@ -8,7 +8,7 @@ import android.provider.BaseColumns
 import androidx.annotation.Nullable
 
 /** База данных для хранения [TaskItem] */
-class TasksDbHelper(@Nullable private val context: Context?) :
+class TasksDbHelper(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
