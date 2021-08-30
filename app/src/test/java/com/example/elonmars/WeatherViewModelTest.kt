@@ -57,11 +57,32 @@ class WeatherViewModelTest {
     fun tearDown() {
         unmockkAll()
     }
-
+    
     @Test
     fun loadDataAsync() {
         // Arrange
         every { itemsRepository.loadDataAsync() } returns Single.just(createData())
+        every { dataStorage.farenheitEnabled } returns true
+
+        // Act
+        weatherViewModel.loadDataAsync()
+
+        // Assert
+        verify(exactly = 1) { itemsRepository.loadDataAsync() }
+        verify { errorLiveDataObserver wasNot called }
+        verifyOrder {
+            shimmerLiveDataObserver.onChanged(true)
+            weatherItemsLiveDataObserver.onChanged(any())
+            latestDayLiveDataObserver.onChanged(any())
+            shimmerLiveDataObserver.onChanged(false)
+        }
+    }
+
+    @Test
+    fun loadDataAsyncFarnheitEnabled() {
+        // Arrange
+        every { itemsRepository.loadDataAsync() } returns Single.just(createData())
+        every { dataStorage.farenheitEnabled } returns false
 
         // Act
         weatherViewModel.loadDataAsync()
@@ -116,6 +137,7 @@ class WeatherViewModelTest {
     fun convertTemperatureTest() {
         // Arrange
         every { itemsRepository.loadDataAsync() } returns Single.just(createData())
+        every { dataStorage.farenheitEnabled } returns false
         weatherViewModel.loadDataAsync()
 
         // Act
