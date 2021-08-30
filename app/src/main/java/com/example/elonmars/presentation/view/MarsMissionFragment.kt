@@ -17,10 +17,12 @@ import com.example.elonmars.R
 import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.adapter.TaskAdapter
 import com.example.elonmars.presentation.model.TaskItem
+import com.example.elonmars.presentation.utils.InputTextWatcher
 import com.example.elonmars.presentation.viewmodel.MarsMissionViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import java.util.*
 
 /** Экран с задачами, добавляемые пользователем */
@@ -36,7 +38,11 @@ class MarsMissionFragment : Fragment() {
     private var dataSet: ArrayList<TaskItem> = arrayListOf()
     private var viewModel: MarsMissionViewModel? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_mars_mission, container, false)
     }
 
@@ -73,7 +79,9 @@ class MarsMissionFragment : Fragment() {
             .appComponent(appComponent)
             .build()
 
-        viewModel = ViewModelProvider(this, activityComponent.getViewModelFactory()).get(MarsMissionViewModel::class.java)
+        viewModel = ViewModelProvider(this, activityComponent.getViewModelFactory()).get(
+            MarsMissionViewModel::class.java
+        )
     }
 
     private fun observeLiveData() {
@@ -116,8 +124,7 @@ class MarsMissionFragment : Fragment() {
         AlertDialog.Builder(this.context)
             .setTitle(getString(R.string.alert_dialog_title))
             .setMessage(getString(R.string.alert_dialog_summary))
-            .setPositiveButton(android.R.string.ok
-            ) { _, _ ->
+            .setPositiveButton(android.R.string.ok) { _, _ ->
                 viewModel?.deleteTaskItemFromDataBase(taskItem)
                 // FIXME подумать, как можно улучшить этот момент (убрать мерцание текста при удалении айтема)
                 viewModel?.getTaskItemFromDataBase(chosenTaskDate)
@@ -131,24 +138,33 @@ class MarsMissionFragment : Fragment() {
     }
 
     private fun setUpDialog(view: View) {
-        val bottomSheetDialog = BottomSheetDialog(view.context, R.style.BottomSheetDialogTheme)
+        val bottomSheetDialog = BottomSheetDialog(view.context, R.style.BottomSheetDialogTheme).also {
+            it.setContentView(
+                LayoutInflater.from(context).inflate(R.layout.bottom_sheet, null)
+            )
+            it.setCancelable(true)
+            it.dismissWithAnimation = true
+            it.show()
+        }
 
-        bottomSheetDialog.setContentView(LayoutInflater.from(context).inflate(R.layout.bottom_sheet, null))
-        bottomSheetDialog.setCancelable(true)
-        bottomSheetDialog.dismissWithAnimation = true
-        bottomSheetDialog.show()
-
-        initDialogViews(bottomSheetDialog)
+        setUpBottomSheetDialog(bottomSheetDialog)
     }
 
-    private fun initDialogViews(bottomSheetDialog: BottomSheetDialog) {
+    private fun setUpBottomSheetDialog(bottomSheetDialog: BottomSheetDialog) {
         val editText = bottomSheetDialog.findViewById<TextInputEditText>(R.id.edit_text)
+        val textInputLayout = bottomSheetDialog.findViewById<TextInputLayout>(R.id.input_layout)
+        textInputLayout?.editText?.addTextChangedListener(InputTextWatcher {
+            viewModel?.hideError(textInputLayout)
+        })
 
         bottomSheetDialog.findViewById<Button>(R.id.save_button)?.apply {
             setOnClickListener {
                 if (!editText?.text.isNullOrEmpty()) {
-                    val task = TaskItem(editText?.text.toString(),false, chosenTaskDate.get(Calendar.DAY_OF_MONTH),
-                        chosenTaskDate.get(Calendar.MONTH))
+                    val task = TaskItem(
+                        editText?.text.toString(), false,
+                        chosenTaskDate.get(Calendar.DAY_OF_MONTH),
+                        chosenTaskDate.get(Calendar.MONTH)
+                    )
                     viewModel?.addTaskItemToDataBase(task)
 
                     taskAdapter.dataSet.add(task)
@@ -156,7 +172,9 @@ class MarsMissionFragment : Fragment() {
                     showTasksForChosenDate()
                     bottomSheetDialog.dismiss()
                 } else {
-                    bottomSheetDialog.dismiss()
+                    textInputLayout?.let { textInputLayout ->
+                        viewModel?.validateInput(editText?.text.toString(), textInputLayout)
+                    }
                 }
             }
         }
