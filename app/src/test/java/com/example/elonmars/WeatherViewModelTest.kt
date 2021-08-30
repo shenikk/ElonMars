@@ -4,15 +4,14 @@ import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.elonmars.data.exception.RequestException
-import com.example.elonmars.data.provider.SchedulersProvider
-import com.example.elonmars.data.repository.ItemsRepository
+import com.example.elonmars.data.provider.ISchedulersProvider
 import com.example.elonmars.data.store.DataStorage
+import com.example.elonmars.domain.repositories.IItemsRepository
 import com.example.elonmars.presentation.model.WeatherItem
 import com.example.elonmars.presentation.viewmodel.WeatherViewModel
 import io.mockk.*
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -30,8 +29,8 @@ class WeatherViewModelTest {
     private var weatherItemsLiveDataObserver: Observer<List<WeatherItem>> = mockk()
     private var latestDayLiveDataObserver: Observer<WeatherItem> = mockk()
 
-    private val schedulersProvider: SchedulersProvider = mockk()
-    private val itemsRepository: ItemsRepository = mockk()
+    private val schedulersProvider: ISchedulersProvider = mockk()
+    private val itemsRepository: IItemsRepository = mockk()
     private val dataStorage: DataStorage = mockk()
 
     @Before
@@ -53,11 +52,6 @@ class WeatherViewModelTest {
         every { latestDayLiveDataObserver.onChanged(any()) } just Runs
     }
 
-    @After
-    fun tearDown() {
-        unmockkAll()
-    }
-    
     @Test
     fun loadDataAsync() {
         // Arrange

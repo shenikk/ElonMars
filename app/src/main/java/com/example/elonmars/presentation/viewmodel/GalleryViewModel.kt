@@ -7,28 +7,31 @@ import androidx.lifecycle.ViewModel
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.data.provider.ISchedulersProvider
 import com.example.elonmars.domain.repositories.IItemsRepository
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 
 /**
  * ViewModel экрана со списком фильмов.
  *
  * @param itemsRepository репозиторий с данными о фото
  * @param schedulersProvider
+ *
+ * @testClass unit: GalleryViewModelTest
  */
 class GalleryViewModel(
     private val itemsRepository: IItemsRepository,
     private val schedulersProvider: ISchedulersProvider
 ) : ViewModel() {
 
-    private val TAG = "GalleryViewModel"
     private var disposable: Disposable? = null
 
-    private val shimmerLiveData = MutableLiveData<Boolean>()
+    private val progressLiveData = MutableLiveData<Boolean>()
     private val errorLiveData = MutableLiveData<Throwable>()
     private val photoItemsLiveData = MutableLiveData<ArrayList<PhotoItem>>()
     private val refreshLiveData = MutableLiveData<Boolean>()
+
+    companion object {
+        private const val TAG = "GalleryViewModel"
+    }
 
     /**
      * Метод для асинхронной загрузки списка фото.
@@ -36,9 +39,9 @@ class GalleryViewModel(
     fun loadDataAsync() {
         disposable = itemsRepository.loadPhotosAsync()
             .doOnSubscribe {
-                shimmerLiveData.postValue(true)
+                progressLiveData.postValue(true)
             }
-            .doAfterTerminate { shimmerLiveData.postValue(false) }
+            .doAfterTerminate { progressLiveData.postValue(false) }
             .subscribeOn(schedulersProvider.io())
             .observeOn(schedulersProvider.ui())
             .subscribe(photoItemsLiveData::setValue, errorLiveData::setValue)
@@ -53,8 +56,8 @@ class GalleryViewModel(
                 refreshLiveData.postValue(true)
             }
             .doAfterTerminate { refreshLiveData.postValue(false) }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(schedulersProvider.io())
+            .observeOn(schedulersProvider.ui())
             .subscribe(photoItemsLiveData::setValue, errorLiveData::setValue)
     }
 
@@ -70,7 +73,7 @@ class GalleryViewModel(
      * @return LiveData с [Boolean]
      */
     fun getProgressLiveData(): LiveData<Boolean> {
-        return shimmerLiveData
+        return progressLiveData
     }
 
     /**
