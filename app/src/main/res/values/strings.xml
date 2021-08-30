@@ -13,6 +13,7 @@
     <!--  "Mars mission" screen.  -->
     <string name="mars_mission_title">Mars Mission</string>
     <string name="mars_mission_summary">Finish all the tasks before the flight!</string>
+    <string name="task_description">Getting ready for a trip to Mars!</string>
     <!--  -->
     <!--  "Weather" screen.  -->
     <string name="weather_title">Weather</string>

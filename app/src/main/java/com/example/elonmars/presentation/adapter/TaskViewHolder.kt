@@ -2,6 +2,7 @@ package com.example.elonmars.presentation.adapter
 
 import android.view.View
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.elonmars.R
@@ -12,4 +13,5 @@ import com.example.elonmars.R
 class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     var taskTitle: TextView = view.findViewById(R.id.task)
     var taskCheckBox: CheckBox = view.findViewById(R.id.task_checkbox)
+    var calendarImage: ImageView = view.findViewById(R.id.add_to_calendar)
 }

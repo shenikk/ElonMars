@@ -1,14 +1,20 @@
 package com.example.elonmars.presentation.view
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CalendarView
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -38,6 +44,10 @@ class MarsMissionFragment : Fragment() {
     private var dataSet: ArrayList<TaskItem> = arrayListOf()
     private var viewModel: MarsMissionViewModel? = null
 
+    companion object {
+        private const val REQUEST_CODE_CALENDAR_PERMISSION = 122
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -63,7 +73,7 @@ class MarsMissionFragment : Fragment() {
 
         floatingButton = view.findViewById<FloatingActionButton>(R.id.floating_button).apply {
             this.setOnClickListener {
-                setUpDialog(this)
+                setUpDialog(this.context)
             }
         }
 
@@ -116,8 +126,38 @@ class MarsMissionFragment : Fragment() {
                 setUpAlertDialog(taskItem)
                 true
             }
+            holder.calendarImage.setOnClickListener {
+                checkPermissionToInsertToCalendar(holder.itemView.context, taskItem.title)
+            }
         }
         recyclerView.adapter = taskAdapter
+    }
+
+    private fun checkPermissionToInsertToCalendar(context: Context, title: String?) {
+        if (ContextCompat.checkSelfPermission(
+                context.applicationContext,
+                Manifest.permission.READ_CALENDAR
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this.requireActivity(),
+                arrayOf(Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR),
+                REQUEST_CODE_CALENDAR_PERMISSION
+            )
+        } else {
+            insertEventToCalnedar(title)
+        }
+    }
+
+    private fun insertEventToCalnedar(title: String?) {
+        val intent = Intent(Intent.ACTION_INSERT)
+        intent.data = CalendarContract.Events.CONTENT_URI
+        intent.putExtra(CalendarContract.Events.TITLE, title)
+        intent.putExtra(CalendarContract.Events.DESCRIPTION, getString(R.string.task_description))
+        intent.putExtra(CalendarContract.Events.ALL_DAY, true)
+        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, chosenTaskDate.timeInMillis)
+        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, chosenTaskDate.timeInMillis)
+        startActivity(intent)
     }
 
     private fun setUpAlertDialog(taskItem: TaskItem) {
@@ -137,8 +177,8 @@ class MarsMissionFragment : Fragment() {
             .show()
     }
 
-    private fun setUpDialog(view: View) {
-        val bottomSheetDialog = BottomSheetDialog(view.context, R.style.BottomSheetDialogTheme).also {
+    private fun setUpDialog(context: Context) {
+        val bottomSheetDialog = BottomSheetDialog(context, R.style.BottomSheetDialogTheme).also {
             it.setContentView(
                 LayoutInflater.from(context).inflate(R.layout.bottom_sheet, null)
             )

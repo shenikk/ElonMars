@@ -26,6 +26,16 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Task" />
 
+        <ImageView
+            android:id="@+id/add_to_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_calendar"
+            android:layout_marginHorizontal="@dimen/dp_16"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/task_checkbox" />
+
         <CheckBox
             android:id="@+id/task_checkbox"
             android:layout_width="wrap_content"
