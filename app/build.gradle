@@ -78,4 +78,7 @@ dependencies {
     // Dagger2 for dependency injection
     implementation 'com.google.dagger:dagger:2.38.1'
     kapt "com.google.dagger:dagger-compiler:2.38.1"
+
+    // Lottie animation
+    implementation 'com.airbnb.android:lottie:4.1.0'
 }
