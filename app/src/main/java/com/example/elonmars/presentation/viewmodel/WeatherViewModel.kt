@@ -8,6 +8,7 @@ import com.example.elonmars.WeatherDataItem
 import com.example.elonmars.data.provider.ISchedulersProvider
 import com.example.elonmars.domain.repositories.IItemsRepository
 import com.example.elonmars.data.store.IDataStorage
+import com.example.elonmars.domain.interactors.IWeatherInteractor
 import com.example.elonmars.presentation.model.WeatherItem
 import io.reactivex.disposables.Disposable
 
@@ -20,7 +21,7 @@ import io.reactivex.disposables.Disposable
  * @testClass unit: WeatherViewModelTest
  */
 class WeatherViewModel(
-    private val itemsRepository: IItemsRepository,
+    private val weatherInteractor: IWeatherInteractor,
     private val schedulersProvider: ISchedulersProvider,
     private val dataStorage: IDataStorage
 ) : ViewModel() {
@@ -43,7 +44,7 @@ class WeatherViewModel(
      * Метод для асинхронной загрузки списка фильмов.
      */
     fun loadDataAsync() {
-        disposable = itemsRepository.loadDataAsync()
+        disposable = weatherInteractor.loadDataAsync()
             .doOnSubscribe {
                 shimmerLiveData.postValue(true)
             }
@@ -54,7 +55,7 @@ class WeatherViewModel(
     }
 
     fun loadDataOnForceAsync() {
-        disposable = itemsRepository.loadDataAsyncOnCall()
+        disposable = weatherInteractor.loadDataAsyncOnCall()
             .doOnSubscribe {
                 refreshLiveData.postValue(true)
             }

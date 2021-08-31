@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.elonmars.data.repository.ItemsRepository
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.interactors.ITaskInteractor
+import com.example.elonmars.domain.interactors.IWeatherInteractor
 import com.example.elonmars.domain.repositories.IItemsRepository
 import com.example.elonmars.domain.repositories.IPhotosRepository
 import dagger.BindsInstance
@@ -22,12 +23,11 @@ interface AppComponent {
         fun build(): AppComponent
     }
 
-    /** Метод для получения [ItemsRepository] */
-    fun getItemsRepository(): IItemsRepository
-
     fun getPhotosRepository(): IPhotosRepository
 
     fun getDataStorage(): IDataStorage
 
     fun getTaskInteractor(): ITaskInteractor
+
+    fun getWeatherInteractor(): IWeatherInteractor
 }

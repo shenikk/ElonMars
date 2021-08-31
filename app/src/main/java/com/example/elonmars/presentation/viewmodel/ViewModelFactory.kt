@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.elonmars.data.provider.ISchedulersProvider
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.interactors.ITaskInteractor
+import com.example.elonmars.domain.interactors.IWeatherInteractor
 import com.example.elonmars.domain.repositories.IItemsRepository
 import com.example.elonmars.domain.repositories.IPhotosRepository
 
@@ -15,7 +16,7 @@ import com.example.elonmars.domain.repositories.IPhotosRepository
  * @param schedulersProvider
  */
 class ViewModelFactory(
-    private val itemsRepository: IItemsRepository,
+    private val weatherInteractor: IWeatherInteractor,
     private val photosRepository: IPhotosRepository,
     private val schedulersProvider: ISchedulersProvider,
     private val dataStorage: IDataStorage,
@@ -28,7 +29,7 @@ class ViewModelFactory(
                 GalleryViewModel(photosRepository, schedulersProvider) as T
 
             modelClass.isAssignableFrom(WeatherViewModel::class.java) ->
-                WeatherViewModel(itemsRepository, schedulersProvider, dataStorage) as T
+                WeatherViewModel(weatherInteractor, schedulersProvider, dataStorage) as T
 
             modelClass.isAssignableFrom(MarsMissionViewModel::class.java) ->
                 MarsMissionViewModel(taskInteractor, schedulersProvider) as T

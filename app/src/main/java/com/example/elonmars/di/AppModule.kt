@@ -9,7 +9,9 @@ import com.example.elonmars.data.repository.TasksRepository
 import com.example.elonmars.data.store.DataStorage
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.interactors.ITaskInteractor
+import com.example.elonmars.domain.interactors.IWeatherInteractor
 import com.example.elonmars.domain.interactors.TaskInteractor
+import com.example.elonmars.domain.interactors.WeatherInteractor
 import com.example.elonmars.domain.repositories.IItemsRepository
 import com.example.elonmars.domain.repositories.IPhotosRepository
 import dagger.Module
@@ -20,15 +22,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 /** Модуль уровня приложения для реализации DI */
 @Module
 class AppModule {
-
-    /**
-     * Метод для получения репозитория [ItemsRepository],
-     * который используется в [ActivityComponent]
-     */
-    @Provides
-    fun provideItemsRepository(context: Context): IItemsRepository {
-        return ItemsRepository(getDataStorage(context), getWeatherItemsProvider())
-    }
 
     @Provides
     fun providePhotosRepository(context: Context): IPhotosRepository {
@@ -41,8 +34,17 @@ class AppModule {
     }
 
     @Provides
-    fun getTaskInteractor(context: Context) : ITaskInteractor {
+    fun getTaskInteractor(context: Context): ITaskInteractor {
         return TaskInteractor(getTasksRepository(context))
+    }
+
+    @Provides
+    fun getWeatherInteractor(context: Context): IWeatherInteractor {
+        return WeatherInteractor(getItemsRepository(context))
+    }
+
+    private fun getItemsRepository(context: Context): ItemsRepository {
+        return ItemsRepository(getDataStorage(context), getWeatherItemsProvider())
     }
 
     private fun getTasksRepository(context: Context): TasksRepository {
