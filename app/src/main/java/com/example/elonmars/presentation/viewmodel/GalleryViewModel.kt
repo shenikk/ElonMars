@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.data.provider.ISchedulersProvider
-import com.example.elonmars.domain.repositories.IItemsRepository
+import com.example.elonmars.domain.repositories.IPhotosRepository
 import io.reactivex.disposables.Disposable
 
 /**
@@ -18,7 +18,7 @@ import io.reactivex.disposables.Disposable
  * @testClass unit: GalleryViewModelTest
  */
 class GalleryViewModel(
-    private val itemsRepository: IItemsRepository,
+    private val photosRepository: IPhotosRepository,
     private val schedulersProvider: ISchedulersProvider
 ) : ViewModel() {
 
@@ -37,7 +37,7 @@ class GalleryViewModel(
      * Метод для асинхронной загрузки списка фото.
      */
     fun loadDataAsync() {
-        disposable = itemsRepository.loadPhotosAsync()
+        disposable = photosRepository.loadPhotosAsync()
             .doOnSubscribe {
                 progressLiveData.postValue(true)
             }
@@ -51,7 +51,7 @@ class GalleryViewModel(
      * Метод для асинхронной загрузки списка фото после действия pull to refresh.
      */
     fun loadDataOnForceAsync() {
-        disposable = itemsRepository.loadPhotosOnCall()
+        disposable = photosRepository.loadPhotosOnCall()
             .doOnSubscribe {
                 refreshLiveData.postValue(true)
             }

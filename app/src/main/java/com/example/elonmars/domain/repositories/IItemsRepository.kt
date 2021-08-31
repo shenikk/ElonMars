@@ -17,13 +17,4 @@ interface IItemsRepository {
     fun loadDataAsync(): Single<ArrayList<WeatherDataItem>>
 
     fun loadDataAsyncOnCall(): Single<ArrayList<WeatherDataItem>>
-
-    /**
-     * Метод для асинхронной загрузки списка фотографий.
-     *
-     * @return Single со списком моделей [PhotoItem]
-     */
-    fun loadPhotosAsync(): Single<ArrayList<PhotoItem>>
-
-    fun loadPhotosOnCall(): Single<ArrayList<PhotoItem>>
 }

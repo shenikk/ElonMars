@@ -4,12 +4,14 @@ import android.content.Context
 import com.example.elonmars.data.database.TasksDbHelper
 import com.example.elonmars.data.provider.*
 import com.example.elonmars.data.repository.ItemsRepository
+import com.example.elonmars.data.repository.PhotosRepository
 import com.example.elonmars.data.repository.TasksRepository
 import com.example.elonmars.data.store.DataStorage
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.interactors.ITaskInteractor
 import com.example.elonmars.domain.interactors.TaskInteractor
 import com.example.elonmars.domain.repositories.IItemsRepository
+import com.example.elonmars.domain.repositories.IPhotosRepository
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -25,7 +27,12 @@ class AppModule {
      */
     @Provides
     fun provideItemsRepository(context: Context): IItemsRepository {
-        return ItemsRepository(getDataStorage(context), getWeatherItemsProvider(), getGalleryProvider())
+        return ItemsRepository(getDataStorage(context), getWeatherItemsProvider())
+    }
+
+    @Provides
+    fun providePhotosRepository(context: Context): IPhotosRepository {
+        return PhotosRepository(getDataStorage(context), getGalleryProvider())
     }
 
     @Provides

@@ -5,6 +5,7 @@ import com.example.elonmars.data.repository.ItemsRepository
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.interactors.ITaskInteractor
 import com.example.elonmars.domain.repositories.IItemsRepository
+import com.example.elonmars.domain.repositories.IPhotosRepository
 import dagger.BindsInstance
 import dagger.Component
 
@@ -23,6 +24,8 @@ interface AppComponent {
 
     /** Метод для получения [ItemsRepository] */
     fun getItemsRepository(): IItemsRepository
+
+    fun getPhotosRepository(): IPhotosRepository
 
     fun getDataStorage(): IDataStorage
 

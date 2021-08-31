@@ -1,8 +1,6 @@
 package com.example.elonmars.data.repository
 
 import com.example.elonmars.WeatherDataItem
-import com.example.elonmars.data.model.PhotoItem
-import com.example.elonmars.data.provider.IGalleryProvider
 import com.example.elonmars.data.provider.IWeatherItemProvider
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.repositories.IItemsRepository
@@ -17,8 +15,7 @@ import io.reactivex.Single
  */
 class ItemsRepository(
     private val dataStorage: IDataStorage,
-    private val weatherItemsProvider: IWeatherItemProvider,
-    private val galleryProvider: IGalleryProvider
+    private val weatherItemsProvider: IWeatherItemProvider
 ) : IItemsRepository {
 
     override fun loadDataAsync(): Single<ArrayList<WeatherDataItem>> {
@@ -33,22 +30,6 @@ class ItemsRepository(
         return Single.fromCallable {
             ArrayList(weatherItemsProvider.loadWeatherItemsList().take(10))
                 .also { dataStorage.weatherDataItems = it }
-        }
-    }
-
-
-    override fun loadPhotosAsync(): Single<ArrayList<PhotoItem>> {
-        return Single.fromCallable {
-            dataStorage.photos
-                ?: galleryProvider.loadPhotoItemsList()
-                    .also { dataStorage.photos = it }
-        }
-    }
-
-    @Throws(java.lang.Exception::class)
-    override fun loadPhotosOnCall(): Single<ArrayList<PhotoItem>> {
-        return Single.fromCallable {
-            galleryProvider.loadPhotoItemsList().also { dataStorage.photos = it }
         }
     }
 }
