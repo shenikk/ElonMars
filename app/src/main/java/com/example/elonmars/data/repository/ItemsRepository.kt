@@ -11,7 +11,8 @@ import io.reactivex.Single
  *
  * @param dataStorage хранилище данных
  * @param weatherItemsProvider провайдер погодных данных
- * @param galleryProvider провайдер данных с фото
+ *
+ * @testclass unit: ItemsRepositoryTest
  */
 class ItemsRepository(
     private val dataStorage: IDataStorage,

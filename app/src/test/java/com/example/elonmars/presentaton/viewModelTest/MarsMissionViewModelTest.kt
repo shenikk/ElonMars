@@ -1,4 +1,4 @@
-package com.example.elonmars
+package com.example.elonmars.presentaton.viewModelTest
 
 import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule

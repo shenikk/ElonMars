@@ -1,11 +1,12 @@
-package com.example.elonmars
+package com.example.elonmars.presentaton.viewModelTest
 
 import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.example.elonmars.WeatherDataItem
 import com.example.elonmars.data.exception.RequestException
 import com.example.elonmars.data.provider.ISchedulersProvider
-import com.example.elonmars.data.store.DataStorage
+import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.interactors.IWeatherInteractor
 import com.example.elonmars.presentation.model.WeatherItem
 import com.example.elonmars.presentation.viewmodel.WeatherViewModel
@@ -31,7 +32,7 @@ class WeatherViewModelTest {
 
     private val schedulersProvider: ISchedulersProvider = mockk()
     private val weatherInteractor: IWeatherInteractor = mockk()
-    private val dataStorage: DataStorage = mockk()
+    private val dataStorage: IDataStorage = mockk()
 
     @Before
     fun setUp() {
