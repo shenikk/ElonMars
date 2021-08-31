@@ -1,10 +1,10 @@
 package com.example.elonmars.domain.interactors
 
 import com.example.elonmars.WeatherDataItem
-import com.example.elonmars.data.repository.ItemsRepository
+import com.example.elonmars.domain.repositories.IItemsRepository
 import io.reactivex.Single
 
-class WeatherInteractor(private val itemsRepository: ItemsRepository) : IWeatherInteractor {
+class WeatherInteractor(private val itemsRepository: IItemsRepository) : IWeatherInteractor {
 
     override fun loadDataAsync(): Single<ArrayList<WeatherDataItem>> {
         return itemsRepository.loadDataAsync()

@@ -8,11 +8,7 @@ import com.example.elonmars.data.repository.PhotosRepository
 import com.example.elonmars.data.repository.TasksRepository
 import com.example.elonmars.data.store.DataStorage
 import com.example.elonmars.data.store.IDataStorage
-import com.example.elonmars.domain.interactors.ITaskInteractor
-import com.example.elonmars.domain.interactors.IWeatherInteractor
-import com.example.elonmars.domain.interactors.TaskInteractor
-import com.example.elonmars.domain.interactors.WeatherInteractor
-import com.example.elonmars.domain.repositories.IItemsRepository
+import com.example.elonmars.domain.interactors.*
 import com.example.elonmars.domain.repositories.IPhotosRepository
 import dagger.Module
 import dagger.Provides
@@ -24,13 +20,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 class AppModule {
 
     @Provides
-    fun providePhotosRepository(context: Context): IPhotosRepository {
-        return PhotosRepository(getDataStorage(context), getGalleryProvider())
+    fun getDataStorage(context: Context): IDataStorage {
+        return DataStorage(context.getSharedPreferences("PREFS", Context.MODE_PRIVATE))
     }
 
     @Provides
-    fun getDataStorage(context: Context): IDataStorage {
-        return DataStorage(context.getSharedPreferences("PREFS", Context.MODE_PRIVATE))
+    fun providePhotosInteractor(context: Context): IPhotosInteractor {
+        return PhotosInteractor(getPhotosRepository(context))
     }
 
     @Provides
@@ -41,6 +37,10 @@ class AppModule {
     @Provides
     fun getWeatherInteractor(context: Context): IWeatherInteractor {
         return WeatherInteractor(getItemsRepository(context))
+    }
+
+    private fun getPhotosRepository(context: Context): IPhotosRepository {
+        return PhotosRepository(getDataStorage(context), getGalleryProvider())
     }
 
     private fun getItemsRepository(context: Context): ItemsRepository {
