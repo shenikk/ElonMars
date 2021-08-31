@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer
 import com.example.elonmars.data.exception.RequestException
 import com.example.elonmars.data.provider.ISchedulersProvider
 import com.example.elonmars.data.store.DataStorage
-import com.example.elonmars.domain.repositories.IItemsRepository
+import com.example.elonmars.domain.interactors.IWeatherInteractor
 import com.example.elonmars.presentation.model.WeatherItem
 import com.example.elonmars.presentation.viewmodel.WeatherViewModel
 import io.mockk.*
@@ -30,13 +30,13 @@ class WeatherViewModelTest {
     private var latestDayLiveDataObserver: Observer<WeatherItem> = mockk()
 
     private val schedulersProvider: ISchedulersProvider = mockk()
-    private val itemsRepository: IItemsRepository = mockk()
+    private val weatherInteractor: IWeatherInteractor = mockk()
     private val dataStorage: DataStorage = mockk()
 
     @Before
     fun setUp() {
         mockkStatic(Log::class)
-        weatherViewModel = WeatherViewModel(itemsRepository, schedulersProvider, dataStorage)
+        weatherViewModel = WeatherViewModel(weatherInteractor, schedulersProvider, dataStorage)
         weatherViewModel.getShimmerLiveData().observeForever(shimmerLiveDataObserver)
         weatherViewModel.getErrorLiveData().observeForever(errorLiveDataObserver)
         weatherViewModel.getWeatherItemsLiveData().observeForever(weatherItemsLiveDataObserver)
@@ -55,14 +55,14 @@ class WeatherViewModelTest {
     @Test
     fun loadDataAsync() {
         // Arrange
-        every { itemsRepository.loadDataAsync() } returns Single.just(createData())
+        every { weatherInteractor.loadDataAsync() } returns Single.just(createData())
         every { dataStorage.farenheitEnabled } returns true
 
         // Act
         weatherViewModel.loadDataAsync()
 
         // Assert
-        verify(exactly = 1) { itemsRepository.loadDataAsync() }
+        verify(exactly = 1) { weatherInteractor.loadDataAsync() }
         verify { errorLiveDataObserver wasNot called }
         verifyOrder {
             shimmerLiveDataObserver.onChanged(true)
@@ -75,14 +75,14 @@ class WeatherViewModelTest {
     @Test
     fun loadDataAsyncFarnheitEnabled() {
         // Arrange
-        every { itemsRepository.loadDataAsync() } returns Single.just(createData())
+        every { weatherInteractor.loadDataAsync() } returns Single.just(createData())
         every { dataStorage.farenheitEnabled } returns false
 
         // Act
         weatherViewModel.loadDataAsync()
 
         // Assert
-        verify(exactly = 1) { itemsRepository.loadDataAsync() }
+        verify(exactly = 1) { weatherInteractor.loadDataAsync() }
         verify { errorLiveDataObserver wasNot called }
         verifyOrder {
             shimmerLiveDataObserver.onChanged(true)
@@ -96,7 +96,7 @@ class WeatherViewModelTest {
     fun loadDataAsyncFail() {
         // Arrange
         val exception = RequestException("It's a test")
-        every { itemsRepository.loadDataAsync() } returns Single.error(exception)
+        every { weatherInteractor.loadDataAsync() } returns Single.error(exception)
 
         // Act
         weatherViewModel.loadDataAsync()
@@ -116,7 +116,7 @@ class WeatherViewModelTest {
     @Test
     fun loadDataAsyncDataEmpty() {
         // Arrange
-        every { itemsRepository.loadDataAsync() } returns Single.just(arrayListOf())
+        every { weatherInteractor.loadDataAsync() } returns Single.just(arrayListOf())
 
         // Act
         weatherViewModel.loadDataAsync()
@@ -130,7 +130,7 @@ class WeatherViewModelTest {
     @Test
     fun convertTemperatureTest() {
         // Arrange
-        every { itemsRepository.loadDataAsync() } returns Single.just(createData())
+        every { weatherInteractor.loadDataAsync() } returns Single.just(createData())
         every { dataStorage.farenheitEnabled } returns false
         weatherViewModel.loadDataAsync()
 
@@ -147,7 +147,7 @@ class WeatherViewModelTest {
     @Test
     fun convertTemperatureDataEmpty() {
         // Arrange
-        every { itemsRepository.loadDataAsync() } returns Single.just(arrayListOf())
+        every { weatherInteractor.loadDataAsync() } returns Single.just(arrayListOf())
         weatherViewModel.loadDataAsync()
 
         // Act

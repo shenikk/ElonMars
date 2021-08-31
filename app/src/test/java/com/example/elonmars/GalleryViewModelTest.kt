@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer
 import com.example.elonmars.data.exception.RequestException
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.data.provider.ISchedulersProvider
-import com.example.elonmars.domain.repositories.IItemsRepository
+import com.example.elonmars.domain.interactors.IPhotosInteractor
 import com.example.elonmars.presentation.viewmodel.GalleryViewModel
 import io.mockk.*
 import io.reactivex.Single
@@ -28,12 +28,12 @@ class GalleryViewModelTest {
     private var photoItemsLiveDataObserver: Observer<ArrayList<PhotoItem>> = mockk()
 
     private val schedulersProvider: ISchedulersProvider = mockk()
-    private val itemsRepository: IItemsRepository = mockk()
+    private val photosInteractor: IPhotosInteractor = mockk()
 
     @Before
     fun setUp() {
         mockkStatic(Log::class)
-        galleryViewModel = GalleryViewModel(itemsRepository, schedulersProvider)
+        galleryViewModel = GalleryViewModel(photosInteractor, schedulersProvider)
         galleryViewModel.getProgressLiveData().observeForever(progressLiveDataObserver)
         galleryViewModel.getErrorLiveData().observeForever(errorLiveDataObserver)
         galleryViewModel.getPhotoItemsLiveData().observeForever(photoItemsLiveDataObserver)
@@ -52,13 +52,13 @@ class GalleryViewModelTest {
     @Test
     fun loadDataAsyncTest() {
         // Arrange
-        every { itemsRepository.loadPhotosAsync() } returns Single.just(createData())
+        every { photosInteractor.loadPhotosAsync() } returns Single.just(createData())
 
         // Act
         galleryViewModel.loadDataAsync()
 
         // Assert
-        verify(exactly = 1) { itemsRepository.loadPhotosAsync() }
+        verify(exactly = 1) { photosInteractor.loadPhotosAsync() }
         verify { errorLiveDataObserver wasNot called }
         verifyOrder {
             progressLiveDataObserver.onChanged(true)
@@ -71,7 +71,7 @@ class GalleryViewModelTest {
     fun loadDataAsyncTestFail() {
         // Arrange
         val exception = RequestException("It's a test")
-        every { itemsRepository.loadPhotosAsync() } returns Single.error(exception)
+        every { photosInteractor.loadPhotosAsync() } returns Single.error(exception)
 
         // Act
         galleryViewModel.loadDataAsync()
@@ -90,13 +90,13 @@ class GalleryViewModelTest {
     @Test
     fun loadDataOnForceAsync() {
         // Arrange
-        every { itemsRepository.loadPhotosOnCall() } returns Single.just(createData())
+        every { photosInteractor.loadPhotosOnCall() } returns Single.just(createData())
 
         // Act
         galleryViewModel.loadDataOnForceAsync()
 
         // Assert
-        verify(exactly = 1) { itemsRepository.loadPhotosOnCall() }
+        verify(exactly = 1) { photosInteractor.loadPhotosOnCall() }
         verify { errorLiveDataObserver wasNot called }
         verifyOrder {
             refreshLiveDataObserver.onChanged(true)
@@ -109,7 +109,7 @@ class GalleryViewModelTest {
     fun loadDataOnForceAsyncFail() {
         // Arrange
         val exception = RequestException("It's a test")
-        every { itemsRepository.loadPhotosOnCall() } returns Single.error(exception)
+        every { photosInteractor.loadPhotosOnCall() } returns Single.error(exception)
 
         // Act
         galleryViewModel.loadDataOnForceAsync()

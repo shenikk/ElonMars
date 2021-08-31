@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.CalendarContract
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,7 @@ import com.example.elonmars.presentation.utils.InputTextWatcher
 import com.example.elonmars.presentation.viewmodel.MarsMissionViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import java.util.*
@@ -45,6 +47,7 @@ class MarsMissionFragment : Fragment() {
     private var viewModel: MarsMissionViewModel? = null
 
     companion object {
+        private const val TAG = "MarsMissionFragment"
         private const val REQUEST_CODE_CALENDAR_PERMISSION = 122
     }
 
@@ -101,12 +104,21 @@ class MarsMissionFragment : Fragment() {
                     showData(list)
                 }
             })
+
+            it.getErrorLiveData().observe(viewLifecycleOwner, { error ->
+                showError(error)
+            })
         }
     }
 
     private fun showData(list: ArrayList<TaskItem>) {
         setUpAdapter(list)
         updateText(noTaskText, list)
+    }
+
+    private fun showError(throwable: Throwable) {
+        Log.e(TAG, "showError called with error = $throwable")
+        Snackbar.make(recyclerView, throwable.toString(), Snackbar.LENGTH_SHORT).show()
     }
 
     private fun updateText(noTaskText: TextView, dataSet: ArrayList<TaskItem>) {
@@ -194,7 +206,7 @@ class MarsMissionFragment : Fragment() {
         val editText = bottomSheetDialog.findViewById<TextInputEditText>(R.id.edit_text)
         val textInputLayout = bottomSheetDialog.findViewById<TextInputLayout>(R.id.input_layout)
         textInputLayout?.editText?.addTextChangedListener(InputTextWatcher {
-            viewModel?.hideError(textInputLayout)
+            hideError(textInputLayout)
         })
 
         bottomSheetDialog.findViewById<Button>(R.id.save_button)?.apply {
@@ -213,7 +225,7 @@ class MarsMissionFragment : Fragment() {
                     bottomSheetDialog.dismiss()
                 } else {
                     textInputLayout?.let { textInputLayout ->
-                        viewModel?.validateInput(editText?.text.toString(), textInputLayout)
+                        validateInput(editText?.text.toString(), textInputLayout)
                     }
                 }
             }
@@ -230,5 +242,23 @@ class MarsMissionFragment : Fragment() {
             chosenTaskDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
             chosenTaskDate.set(Calendar.MONTH, month)
         }
+    }
+
+    private fun validateInput(input: String, inputView: TextInputLayout): Boolean {
+        return if (input.isEmpty()) {
+            showError(inputView)
+            false
+        } else {
+            hideError(inputView)
+            true
+        }
+    }
+
+    private fun hideError(inputView: TextInputLayout) {
+        inputView.error = null
+    }
+
+    private fun showError(inputView: TextInputLayout) {
+        inputView.error = inputView.context.getString(R.string.error_message)
     }
 }
