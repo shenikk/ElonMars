@@ -12,10 +12,15 @@ import com.example.elonmars.R
  * @param dataSet список элементов [PhotoItem]
  * @param onItemClicked лямбда с полезной нагрузкой, которая выполняется по клику на элемент адаптера
  */
-class PhotoAdapter(private val dataSet: ArrayList<PhotoItem>, private val onItemClicked: (PhotoViewHolder, PhotoItem) -> Unit) : RecyclerView.Adapter<PhotoViewHolder>() {
+class PhotoAdapter(
+    private val dataSet: ArrayList<PhotoItem>,
+    private val onItemClicked: (PhotoViewHolder, PhotoItem) -> Unit
+) : RecyclerView.Adapter<PhotoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
-        return PhotoViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.photo_item, parent, false))
+        return PhotoViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.photo_item, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {

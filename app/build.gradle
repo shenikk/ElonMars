@@ -2,10 +2,11 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-parcelize'
+    id 'kotlin-kapt'
 }
 
-apply plugin: 'kotlin-parcelize'
-apply plugin: 'kotlin-kapt'
+//apply plugin: 'kotlin-parcelize' это то же самое, что и наверху
+//apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30

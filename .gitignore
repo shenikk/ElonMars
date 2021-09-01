@@ -10,6 +10,9 @@
 /.idea/navEditor.xml
 /.idea/deploymentTargetDropDown.xml
 /.idea/assetWizardSettings.xml
+.idea/compiler.xml
+.idea/gradle.xml
+.idea/jarRepositories.xml
 .DS_Store
 /build
 /captures

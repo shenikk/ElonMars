@@ -12,6 +12,11 @@ import com.example.elonmars.R
 /** Главный экран приложения */
 class HomeFragment : Fragment() {
 
+    companion object {
+        private const val ENTER_FADE_TIME = 1000
+        private const val EXIT_FADE_TIME = 3000
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
@@ -29,8 +34,8 @@ class HomeFragment : Fragment() {
         val animationDrawable: AnimationDrawable = view.background as AnimationDrawable
 
         animationDrawable.apply {
-            setEnterFadeDuration(1000)
-            setExitFadeDuration(3000)
+            setEnterFadeDuration(ENTER_FADE_TIME)
+            setExitFadeDuration(EXIT_FADE_TIME)
             start()
         }
     }

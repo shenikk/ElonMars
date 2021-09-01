@@ -10,6 +10,7 @@ import com.example.elonmars.domain.repositories.IItemsRepository
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.interactors.IWeatherInteractor
 import com.example.elonmars.presentation.model.WeatherItem
+import com.example.extensions.getFirstItem
 import io.reactivex.disposables.Disposable
 
 /**
@@ -66,7 +67,7 @@ class WeatherViewModel(
     }
 
     fun convertTemperature() {
-        getFirstItem(weatherItemsData)?.let { item ->
+        weatherItemsData.getFirstItem()?.let { item ->
             if (dataStorage.farenheitEnabled) {
                 weatherItemsLiveData.value = weatherItemsData.map { convertFarenheit(it) }
                 latestDayLiveData.value = convertFarenheit(item)
@@ -83,16 +84,7 @@ class WeatherViewModel(
         val convertedValues = weatherDataItemList.map { convertAfterServerDownload(it) }
         weatherItemsLiveData.value = convertedValues
         latestDayLiveData.value =
-            getFirstItem(convertedValues) ?: WeatherItem("NA", "NA", "NA", "NA")
-    }
-
-    private fun <E> getFirstItem(list: List<E>): E? {
-        return try {
-            list.first()
-        } catch (e: Exception) {
-            Log.e(TAG, "List is empty")
-            null
-        }
+            convertedValues.getFirstItem() ?: WeatherItem("NA", "NA", "NA", "NA")
     }
 
     private fun convertAfterServerDownload(weatherDataItem: WeatherDataItem): WeatherItem {

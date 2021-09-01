@@ -21,7 +21,13 @@ class ActivityModule {
         taskInteractor: ITaskInteractor,
         dataStorage: IDataStorage
     ): ViewModelFactory {
-        return ViewModelFactory(weatherInteractor, photosInteractor, taskInteractor, getSchedulersProvider(), dataStorage)
+        return ViewModelFactory(
+            weatherInteractor,
+            photosInteractor,
+            taskInteractor,
+            getSchedulersProvider(),
+            dataStorage
+        )
     }
 
     private fun getSchedulersProvider(): ISchedulersProvider {

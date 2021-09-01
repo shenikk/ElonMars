@@ -10,13 +10,22 @@ import com.bumptech.glide.Glide
 import com.example.elonmars.R
 
 /** Экран с детальной информацией о выбранном фото */
-class DetailPhotoFragment: Fragment() {
+class DetailPhotoFragment : Fragment() {
 
     private lateinit var scaleGestureDetector: ScaleGestureDetector
     private lateinit var detailPhoto: ImageView
     private var scaleFactor: Float = 1.0f
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    companion object {
+        private var MIN_SCALE = 0.1f
+        private var MAX_SCALE = 10.0f
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_detail_photo, container, false)
         setZoom(view)
         return view
@@ -27,9 +36,9 @@ class DetailPhotoFragment: Fragment() {
 
         detailPhoto = view.findViewById<ImageView>(R.id.detail_photo).apply {
             Glide.with(this)
-                    .load(arguments?.getString(GalleryFragment.BUNDLE_KEY_IMAGE))
-                    .centerInside()
-                    .into(this)
+                .load(arguments?.getString(GalleryFragment.BUNDLE_KEY_IMAGE))
+                .centerInside()
+                .into(this)
         }
 
         view.findViewById<TextView>(R.id.description).apply {
@@ -42,25 +51,27 @@ class DetailPhotoFragment: Fragment() {
     }
 
     private fun setScaleGestureDetector() {
-        scaleGestureDetector = ScaleGestureDetector(context, object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
-            override fun onScale(detector: ScaleGestureDetector?): Boolean {
-                detector?.let {
-                    scaleFactor *= detector.scaleFactor
+        scaleGestureDetector = ScaleGestureDetector(
+            context,
+            object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+                override fun onScale(detector: ScaleGestureDetector?): Boolean {
+                    detector?.let {
+                        scaleFactor *= detector.scaleFactor
 
-                    scaleFactor = Math.max(0.1f, Math.min(scaleFactor, 10.0f))
+                        scaleFactor = Math.max(MIN_SCALE, Math.min(scaleFactor, MAX_SCALE))
 
-                    detailPhoto.scaleX = scaleFactor
-                    detailPhoto.scaleY = scaleFactor
+                        detailPhoto.scaleX = scaleFactor
+                        detailPhoto.scaleY = scaleFactor
+                    }
+                    return true
                 }
-                return true
-            }
-        })
+            })
     }
 
     private fun setZoom(view: View) {
         view.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent): Boolean {
-                if(scaleGestureDetector.onTouchEvent(event)) {
+                if (scaleGestureDetector.onTouchEvent(event)) {
                     return true
                 }
                 return false

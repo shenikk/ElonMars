@@ -19,17 +19,21 @@ class ItemsRepository(
     private val weatherItemsProvider: IWeatherItemProvider
 ) : IItemsRepository {
 
+    companion object {
+        private const val NUMBER_OF_ITEMS = 10
+    }
+
     override fun loadDataAsync(): Single<ArrayList<WeatherDataItem>> {
         return Single.fromCallable {
             dataStorage.weatherDataItems
-                ?: ArrayList(weatherItemsProvider.loadWeatherItemsList().take(10))
+                ?: ArrayList(weatherItemsProvider.loadWeatherItemsList().take(NUMBER_OF_ITEMS))
                     .also { dataStorage.weatherDataItems = it }
         }
     }
 
     override fun loadDataAsyncOnCall(): Single<ArrayList<WeatherDataItem>> {
         return Single.fromCallable {
-            ArrayList(weatherItemsProvider.loadWeatherItemsList().take(10))
+            ArrayList(weatherItemsProvider.loadWeatherItemsList().take(NUMBER_OF_ITEMS))
                 .also { dataStorage.weatherDataItems = it }
         }
     }

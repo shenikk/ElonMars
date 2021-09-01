@@ -12,7 +12,10 @@ import com.example.elonmars.presentation.model.TaskItem
  *
  * @param dataSet список элементов [TaskItem]
  */
-class TaskAdapter(var dataSet: ArrayList<TaskItem>, private val onItemClicked: (TaskViewHolder, TaskItem) -> Unit) : RecyclerView.Adapter<TaskViewHolder>() {
+class TaskAdapter(
+    var dataSet: ArrayList<TaskItem>,
+    private val onItemClicked: (TaskViewHolder, TaskItem) -> Unit
+) : RecyclerView.Adapter<TaskViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         return TaskViewHolder(

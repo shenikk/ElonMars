@@ -17,7 +17,8 @@ class TaskItemsProvider(private val tasksDbHelper: TasksDbHelper) : ITaskItemsPr
         val contentValues = ContentValues()
 
         contentValues.put(TasksDbSchema.TasksTable.Cols.TITLE, taskItem.title)
-        contentValues.put(TasksDbSchema.TasksTable.Cols.STATUS, 0) // по умолчанию все задачи сохраняются со статусом isCompleted = false
+        // по умолчанию все задачи сохраняются со статусом isCompleted = false
+        contentValues.put(TasksDbSchema.TasksTable.Cols.STATUS, 0)
 
         contentValues.put(TasksDbSchema.TasksTable.Cols.DAY_OF_MONTH, taskItem.dayOfMonth)
         contentValues.put(TasksDbSchema.TasksTable.Cols.MONTH, taskItem.month)
@@ -35,8 +36,10 @@ class TaskItemsProvider(private val tasksDbHelper: TasksDbHelper) : ITaskItemsPr
         )
 
         // условия запроса
-        val selection = TasksDbSchema.TasksTable.Cols.DAY_OF_MONTH + " = ? AND " + TasksDbSchema.TasksTable.Cols.MONTH + " = ? "
-        val selectionArgs = arrayOf(date.get(Calendar.DAY_OF_MONTH).toString(), date.get(Calendar.MONTH).toString())
+        val selection =
+            TasksDbSchema.TasksTable.Cols.DAY_OF_MONTH + " = ? AND " + TasksDbSchema.TasksTable.Cols.MONTH + " = ? "
+        val selectionArgs =
+            arrayOf(date.get(Calendar.DAY_OF_MONTH).toString(), date.get(Calendar.MONTH).toString())
 
         val cursor = db.query(
             TasksDbSchema.TasksTable.NAME,
@@ -61,8 +64,9 @@ class TaskItemsProvider(private val tasksDbHelper: TasksDbHelper) : ITaskItemsPr
 
         val db: SQLiteDatabase = tasksDbHelper.writableDatabase
 
-        val selection =
-            TasksDbSchema.TasksTable.Cols.DAY_OF_MONTH + " = ? AND " + TasksDbSchema.TasksTable.Cols.MONTH + " = ? AND " + TasksDbSchema.TasksTable.Cols.TITLE + " = ? "
+        val selection = TasksDbSchema.TasksTable.Cols.DAY_OF_MONTH +
+                " = ? AND " + TasksDbSchema.TasksTable.Cols.MONTH +
+                " = ? AND " + TasksDbSchema.TasksTable.Cols.TITLE + " = ? "
         val selectionArgs = arrayOf(
             taskItem.dayOfMonth.toString(),
             taskItem.month.toString(),
@@ -82,8 +86,9 @@ class TaskItemsProvider(private val tasksDbHelper: TasksDbHelper) : ITaskItemsPr
 
     override fun deleteTask(taskItem: TaskItem) {
         val db: SQLiteDatabase = tasksDbHelper.writableDatabase
-        val selection =
-            TasksDbSchema.TasksTable.Cols.DAY_OF_MONTH + " = ? AND " + TasksDbSchema.TasksTable.Cols.MONTH + " = ? AND " + TasksDbSchema.TasksTable.Cols.TITLE + " = ? "
+        val selection = TasksDbSchema.TasksTable.Cols.DAY_OF_MONTH +
+                    " = ? AND " + TasksDbSchema.TasksTable.Cols.MONTH +
+                " = ? AND " + TasksDbSchema.TasksTable.Cols.TITLE + " = ? "
         val selectionArgs = arrayOf(
             taskItem.dayOfMonth.toString(),
             taskItem.month.toString(),
@@ -101,14 +106,23 @@ class TaskItemsProvider(private val tasksDbHelper: TasksDbHelper) : ITaskItemsPr
         val tasksList = arrayListOf<TaskItem>()
         try {
             while (cursor.moveToNext()) {
-                val title = cursor.getString(cursor.getColumnIndex(TasksDbSchema.TasksTable.Cols.TITLE))
-                val status = cursor.getInt(cursor.getColumnIndex(TasksDbSchema.TasksTable.Cols.STATUS))
+                val title =
+                    cursor.getString(cursor.getColumnIndex(TasksDbSchema.TasksTable.Cols.TITLE))
+                val status =
+                    cursor.getInt(cursor.getColumnIndex(TasksDbSchema.TasksTable.Cols.STATUS))
                 var statusForTask = false
 
                 if (status == 1) {
                     statusForTask = true
                 }
-                tasksList.add(TaskItem(title, statusForTask, date.get(Calendar.DAY_OF_MONTH), date.get(Calendar.MONTH)))
+                tasksList.add(
+                    TaskItem(
+                        title,
+                        statusForTask,
+                        date.get(Calendar.DAY_OF_MONTH),
+                        date.get(Calendar.MONTH)
+                    )
+                )
             }
         } finally {
             cursor.close()
