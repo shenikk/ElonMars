@@ -1,4 +1,4 @@
-package com.example.extensions
+package com.example.elonmars.presentation.extensions
 
 import android.util.Log
 

@@ -6,5 +6,6 @@ import com.example.elonmars.data.model.PhotoItem
 interface IDataStorage {
     var weatherDataItems: ArrayList<WeatherDataItem>?
     var photos: ArrayList<PhotoItem>?
+    var favouritePhotos: ArrayList<PhotoItem>?
     var farenheitEnabled: Boolean
 }

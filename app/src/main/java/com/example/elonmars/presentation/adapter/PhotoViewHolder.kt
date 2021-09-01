@@ -16,6 +16,7 @@ class PhotoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     var imageView: ImageView = view.findViewById(R.id.image)
     var titleText: TextView = view.findViewById(R.id.title)
     var dateText: TextView = view.findViewById(R.id.description)
+    var starIcon: ImageView = view.findViewById(R.id.star_icon)
 
     fun configureImage(currentItem: PhotoItem) {
         Glide.with(imageView.context)

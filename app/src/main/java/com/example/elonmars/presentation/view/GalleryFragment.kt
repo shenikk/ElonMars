@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +19,7 @@ import com.example.elonmars.MyApplication
 import com.example.elonmars.R
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.di.activity.DaggerActivityComponent
+import com.example.elonmars.presentation.GalleryType
 import com.example.elonmars.presentation.adapter.PhotoAdapter
 import com.example.elonmars.presentation.viewmodel.GalleryViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -29,6 +32,9 @@ class GalleryFragment : Fragment() {
     private lateinit var progressBar: ProgressBar
     private var viewModel: GalleryViewModel? = null
     private lateinit var swipeRefresh: SwipeRefreshLayout
+
+    private lateinit var stockText: TextView
+    private lateinit var favouriteStockText: TextView
 
     companion object {
         const val BUNDLE_KEY_DESCRIPTION = "Description"
@@ -49,12 +55,15 @@ class GalleryFragment : Fragment() {
             viewModel?.loadDataAsync()
         }
         recyclerView = view.findViewById(R.id.recycler)
+        // чтобы не моргало при обновлении одного айтема
+        recyclerView.itemAnimator = null
         progressBar = view.findViewById(R.id.progress_bar)
         swipeRefresh = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh_layout).apply {
             this.setOnRefreshListener {
                 viewModel?.loadDataOnForceAsync()
             }
         }
+        setUpButtons(view)
     }
 
     private fun setUpAdapter(dataSet: ArrayList<PhotoItem>) {
@@ -64,6 +73,13 @@ class GalleryFragment : Fragment() {
                     BUNDLE_KEY_DESCRIPTION to currentItem.explanation,
                         BUNDLE_KEY_IMAGE to currentItem.image)
                 view.findNavController().navigate(R.id.detail_photo_fragment, bundle)
+            }
+            holder.starIcon.setOnClickListener {
+                viewModel?.setFavourite(currentItem)
+
+                // обновляем звездочку после нажатия
+                currentItem.isFavourite = !currentItem.isFavourite
+                photoAdapter.notifyItemChanged(holder.adapterPosition)
             }
         }
     }
@@ -82,6 +98,12 @@ class GalleryFragment : Fragment() {
             it.getPhotoItemsLiveData().observe(viewLifecycleOwner, { list ->
                 if (list != null) {
                     showData(list)
+                }
+            })
+
+            it.getFavPhotoItemsLiveData().observe(viewLifecycleOwner, { list ->
+                if (list != null) {
+                    showFavData(list)
                 }
             })
 
@@ -117,10 +139,43 @@ class GalleryFragment : Fragment() {
     private fun showData(list: ArrayList<PhotoItem>) {
         setUpAdapter(list)
         recyclerView.adapter = photoAdapter
+        viewModel?.setContentType(GalleryType.RANDOM)
+    }
+
+    private fun showFavData(list: ArrayList<PhotoItem>) {
+        setUpAdapter(list)
+        recyclerView.adapter = photoAdapter
+        viewModel?.setContentType(GalleryType.FAVOURITE)
     }
 
     private fun showRefreshProgress(isRefreshing: Boolean) {
         swipeRefresh.isRefreshing = isRefreshing
+    }
+
+    private fun setUpButtons(view: View) {
+        stockText = view.findViewById<TextView>(R.id.photos).apply {
+            setOnClickListener {
+                this.textSize = 28f
+                this.setTextColor(ContextCompat.getColor(view.context, R.color.black_title))
+                favouriteStockText.setTextColor(ContextCompat.getColor(view.context, R.color.grey_title))
+                favouriteStockText.textSize = 18f
+
+                swipeRefresh.isEnabled = true
+                viewModel?.loadDataAsync()
+            }
+        }
+
+        favouriteStockText = view.findViewById<TextView>(R.id.favourite).apply {
+            setOnClickListener {
+                this.textSize = 28f
+                stockText.textSize = 18f
+                this.setTextColor(ContextCompat.getColor(view.context, R.color.black_title))
+                stockText.setTextColor(ContextCompat.getColor(view.context, R.color.grey_title))
+
+                swipeRefresh.isEnabled = false
+                viewModel?.getFavouritePhotos()
+            }
+        }
     }
 
     // TODO delete it later

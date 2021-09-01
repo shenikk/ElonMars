@@ -16,4 +16,8 @@ interface IPhotosRepository {
     fun loadPhotosAsync(): Single<ArrayList<PhotoItem>>
 
     fun loadPhotosOnCall(): Single<ArrayList<PhotoItem>>
+
+    fun getPhotosFromCache(): ArrayList<PhotoItem>
+
+    fun setFavourite(photoItem: PhotoItem)
 }

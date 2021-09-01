@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.data.provider.ISchedulersProvider
 import com.example.elonmars.domain.interactors.IPhotosInteractor
+import com.example.elonmars.presentation.GalleryType
 import io.reactivex.disposables.Disposable
 
 /**
@@ -27,7 +28,10 @@ class GalleryViewModel(
     private val progressLiveData = MutableLiveData<Boolean>()
     private val errorLiveData = MutableLiveData<Throwable>()
     private val photoItemsLiveData = MutableLiveData<ArrayList<PhotoItem>>()
+    private val favPhotoItemsLiveData = MutableLiveData<ArrayList<PhotoItem>>()
     private val refreshLiveData = MutableLiveData<Boolean>()
+
+    private var galleryType: GalleryType = GalleryType.RANDOM
 
     companion object {
         private const val TAG = "GalleryViewModel"
@@ -59,6 +63,26 @@ class GalleryViewModel(
             .subscribeOn(schedulersProvider.io())
             .observeOn(schedulersProvider.ui())
             .subscribe(photoItemsLiveData::setValue, errorLiveData::setValue)
+    }
+
+    fun getFavouritePhotos() {
+        favPhotoItemsLiveData.value = photosInteractor.getFavouritePhotos()
+    }
+
+    fun setFavourite(photoItem: PhotoItem) {
+        photosInteractor.setFavourite(photoItem)
+        updateContent()
+    }
+
+    private fun updateContent() {
+        when(galleryType) {
+            GalleryType.RANDOM -> null
+            GalleryType.FAVOURITE -> getFavouritePhotos()
+        }
+    }
+
+    fun setContentType(galleryType: GalleryType) {
+        this.galleryType = galleryType
     }
 
     override fun onCleared() {
@@ -94,6 +118,9 @@ class GalleryViewModel(
         return photoItemsLiveData
     }
 
+    fun getFavPhotoItemsLiveData(): LiveData<ArrayList<PhotoItem>> {
+        return favPhotoItemsLiveData
+    }
     /**
      * Метод для получения инстанса LiveData.
      *

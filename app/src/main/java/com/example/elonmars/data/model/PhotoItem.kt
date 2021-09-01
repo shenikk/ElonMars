@@ -15,4 +15,15 @@ data class PhotoItem(
     var date: String? = null,
     @SerializedName("url")
     var image: String? = null,
-    var explanation: String? = null)
+    var explanation: String? = null,
+    var isFavourite: Boolean = false) {
+
+    override fun equals(other: Any?): Boolean{
+        other as PhotoItem
+        return date == other.date
+    }
+
+    override fun hashCode(): Int{
+        return date.hashCode()
+    }
+}

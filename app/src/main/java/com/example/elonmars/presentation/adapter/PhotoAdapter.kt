@@ -31,6 +31,12 @@ class PhotoAdapter(
         holder.configureImage(currentItem)
 
         onItemClicked(holder, currentItem)
+
+        if (!currentItem.isFavourite) {
+            holder.starIcon.setImageResource(R.drawable.ic_fav_star)
+        } else {
+            holder.starIcon.setImageResource(R.drawable.ic_fav_star_selected)
+        }
     }
 
     override fun getItemCount(): Int = dataSet.size

@@ -9,6 +9,8 @@
     <!--  -->
     <!--  "Gallery" screen.  -->
     <string name="gallery_title">Gallery</string>
+    <string name="photos_subtitle">Photos</string>
+    <string name="favourites_subtitle">Favourites</string>
     <!--  -->
     <!--  "Mars mission" screen.  -->
     <string name="mars_mission_title">Mars Mission</string>

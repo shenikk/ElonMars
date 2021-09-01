@@ -25,4 +25,23 @@ class PhotosRepository(
             galleryProvider.loadPhotoItemsList().also { dataStorage.photos = it }
         }
     }
+
+    override fun getPhotosFromCache(): ArrayList<PhotoItem> {
+        return dataStorage.favouritePhotos ?: arrayListOf()
+    }
+
+    override fun setFavourite(photoItem: PhotoItem) {
+        if (dataStorage.favouritePhotos?.contains(photoItem) == true) {
+
+            val newList = dataStorage.favouritePhotos ?: arrayListOf()
+            newList.remove(photoItem)
+
+            dataStorage.favouritePhotos = newList
+        } else {
+            val newList = dataStorage.favouritePhotos ?: arrayListOf()
+            newList.add(photoItem)
+
+            dataStorage.favouritePhotos = newList
+        }
+    }
 }

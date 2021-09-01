@@ -6,4 +6,6 @@ import io.reactivex.Single
 interface IPhotosInteractor {
     fun loadPhotosAsync(): Single<ArrayList<PhotoItem>>
     fun loadPhotosOnCall(): Single<ArrayList<PhotoItem>>
+    fun getFavouritePhotos(): ArrayList<PhotoItem>
+    fun setFavourite(photoItem: PhotoItem)
 }

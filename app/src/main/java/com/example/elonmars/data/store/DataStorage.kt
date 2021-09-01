@@ -13,6 +13,7 @@ class DataStorage(private val preferences: SharedPreferences) : DataPreferences(
 
     companion object {
         private const val PHOTOS_KEY = "PHOTOS_KEY"
+        private const val FAVOURITE_PHOTOS_KEY = "FAVOURITE_PHOTOS_KEY"
         private const val WEATHER_KEY = "WEATHER_KEY"
         private const val CONVERSION_KEY = "CONVERSION_KEY"
     }
@@ -26,6 +27,10 @@ class DataStorage(private val preferences: SharedPreferences) : DataPreferences(
     override var photos: ArrayList<PhotoItem>?
         get() = preferences.getString(PHOTOS_KEY, null)?.let { getDataFromJson(it) }
         set(value) = preferences.edit().putString(PHOTOS_KEY, convertDataToJson(value)).apply()
+
+    override var favouritePhotos: ArrayList<PhotoItem>?
+        get() = preferences.getString(FAVOURITE_PHOTOS_KEY, null)?.let { getDataFromJson(it) }
+        set(value) = preferences.edit().putString(FAVOURITE_PHOTOS_KEY, convertDataToJson(value)).apply()
 
     /** Флаг для обозначения выбранного режима конвертации температуры */
     override var farenheitEnabled: Boolean

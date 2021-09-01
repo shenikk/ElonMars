@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.14947916666666666" />
+        <entry key="app/src/main/res/drawable/ic_fav_star.xml" value="0.30925925925925923" />
+        <entry key="app/src/main/res/drawable/ic_fav_star_selected.xml" value="0.30925925925925923" />
+        <entry key="app/src/main/res/drawable/ic_star.xml" value="0.30925925925925923" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1524822695035461" />
         <entry key="app/src/main/res/layout/activity_preference.xml" value="0.23867753623188406" />
         <entry key="app/src/main/res/layout/bottom_sheet.xml" value="0.335" />
@@ -15,6 +19,7 @@
         <entry key="app/src/main/res/layout/fragment_weather.xml" value="0.1524822695035461" />
         <entry key="app/src/main/res/layout/fragment_weather_list_content.xml" value="0.1524822695035461" />
         <entry key="app/src/main/res/layout/fragment_weather_main_content.xml" value="0.1524822695035461" />
+        <entry key="app/src/main/res/layout/photo_item.xml" value="0.1524822695035461" />
         <entry key="app/src/main/res/layout/task_item.xml" value="0.1524822695035461" />
         <entry key="app/src/main/res/layout/weather_item.xml" value="0.25" />
         <entry key="app/src/main/res/menu/bottom_nav_bar.xml" value="0.24814814814814815" />
