@@ -7,16 +7,6 @@
     android:orientation="vertical"
     tools:context=".presentation.view.MainActivity">
 
-    <TextView
-        android:id="@+id/gallery_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dp_30"
-        android:text="@string/gallery_title"
-        android:textSize="@dimen/dp_20"
-        android:textStyle="bold" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -27,8 +17,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/photos_subtitle"
-            android:textColor="@color/black_title"
-            android:textSize="28sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
