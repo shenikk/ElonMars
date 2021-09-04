@@ -83,7 +83,6 @@ class WeatherFragment : Fragment() {
             recyclerView = it.findViewById(R.id.weather_recycler)
             mShimmerViewContainer = it.findViewById(R.id.shimmer_view_container)
             weatherDay = it.findViewById(R.id.weather_day)
-            title = it.findViewById(R.id.title)
             today = it.findViewById(R.id.today)
             highTemp = it.findViewById(R.id.temp_high)
             lowTemp = it.findViewById(R.id.temp_low)
