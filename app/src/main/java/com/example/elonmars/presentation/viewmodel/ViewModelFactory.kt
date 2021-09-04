@@ -29,6 +29,9 @@ class ViewModelFactory(
             modelClass.isAssignableFrom(GalleryViewModel::class.java) ->
                 GalleryViewModel(photosInteractor, schedulersProvider) as T
 
+            modelClass.isAssignableFrom(DetailPhotoViewModel::class.java) ->
+                DetailPhotoViewModel(photosInteractor, schedulersProvider) as T
+
             modelClass.isAssignableFrom(WeatherViewModel::class.java) ->
                 WeatherViewModel(weatherInteractor, schedulersProvider, dataStorage) as T
 

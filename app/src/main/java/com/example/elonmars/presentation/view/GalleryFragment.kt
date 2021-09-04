@@ -37,8 +37,7 @@ class GalleryFragment : Fragment() {
     private lateinit var favouriteStockText: TextView
 
     companion object {
-        const val BUNDLE_KEY_DESCRIPTION = "Description"
-        const val BUNDLE_KEY_IMAGE = "Image"
+        const val BUNDLE_KEY_CURRENT_ITEM = "currentItem"
         private const val TAG = "GalleryFragment"
     }
 
@@ -69,9 +68,7 @@ class GalleryFragment : Fragment() {
     private fun setUpAdapter(dataSet: ArrayList<PhotoItem>) {
         photoAdapter = PhotoAdapter(dataSet) { holder, currentItem ->
             holder.itemView.setOnClickListener { view ->
-                val bundle = bundleOf(
-                    BUNDLE_KEY_DESCRIPTION to currentItem.explanation,
-                        BUNDLE_KEY_IMAGE to currentItem.image)
+                val bundle = bundleOf(BUNDLE_KEY_CURRENT_ITEM to currentItem)
                 view.findNavController().navigate(R.id.detail_photo_fragment, bundle)
             }
             holder.starIcon.setOnClickListener {
