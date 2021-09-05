@@ -51,10 +51,7 @@ class DetailPhotoFragment : Fragment() {
             arguments?.getParcelable<PhotoItem>(GalleryFragment.BUNDLE_KEY_CURRENT_ITEM)
 
         detailPhoto = view.findViewById<ImageView>(R.id.detail_photo).apply {
-            Glide.with(this)
-                .load(currentItem?.image)
-                .centerInside()
-                .into(this)
+            currentItem?.image?.let { viewModel?.loadPhotoAsync(this, it) }
         }
 
         view.findViewById<TextView>(R.id.description).apply {

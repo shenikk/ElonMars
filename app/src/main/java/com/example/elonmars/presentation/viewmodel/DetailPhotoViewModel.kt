@@ -1,9 +1,11 @@
 package com.example.elonmars.presentation.viewmodel
 
 import android.util.Log
+import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.bumptech.glide.Glide
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.data.provider.ISchedulersProvider
 import com.example.elonmars.domain.interactors.IPhotosInteractor
@@ -27,14 +29,19 @@ class DetailPhotoViewModel(
 
     private val progressLiveData = MutableLiveData<Boolean>()
     private val errorLiveData = MutableLiveData<Throwable>()
-    private val photoItemsLiveData = MutableLiveData<ArrayList<PhotoItem>>()
+    private val photoLiveData = MutableLiveData<PhotoItem>()
     private val favPhotoItemsLiveData = MutableLiveData<ArrayList<PhotoItem>>()
     private val refreshLiveData = MutableLiveData<Boolean>()
 
-    private var galleryType: GalleryType = GalleryType.RANDOM
-
     companion object {
-        private const val TAG = "GalleryViewModel"
+        private const val TAG = "DetailPhotoViewModel"
+    }
+
+    /**
+     * Метод для асинхронной загрузки фото.
+     */
+    fun loadPhotoAsync(view: ImageView, image: String) {
+        photosInteractor.loadPhoto(view, image)
     }
 
     fun setFavourite(photoItem: PhotoItem) {
@@ -70,8 +77,8 @@ class DetailPhotoViewModel(
      *
      * @return LiveData со списком моделей [PhotoItem]
      */
-    fun getPhotoItemsLiveData(): LiveData<ArrayList<PhotoItem>> {
-        return photoItemsLiveData
+    fun getPhotoItemsLiveData(): LiveData<PhotoItem> {
+        return photoLiveData
     }
 
     fun getFavPhotoItemsLiveData(): LiveData<ArrayList<PhotoItem>> {

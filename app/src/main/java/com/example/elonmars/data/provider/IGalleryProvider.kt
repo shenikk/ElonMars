@@ -1,5 +1,6 @@
 package com.example.elonmars.data.provider
 
+import android.widget.ImageView
 import com.example.elonmars.data.model.PhotoItem
 
 /**
@@ -13,4 +14,6 @@ interface IGalleryProvider {
      * @return список моделей [PhotoItem] описывающих загруженные из сети фото на космическую тему.
      */
     fun loadPhotoItemsList(): ArrayList<PhotoItem>
+
+    fun loadPhoto(view: ImageView, image: String)
 }
