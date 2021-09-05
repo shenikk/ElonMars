@@ -23,12 +23,12 @@ import com.example.elonmars.MyApplication
 import com.example.elonmars.R
 import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.adapter.TaskAdapter
+import com.example.elonmars.presentation.extensions.showSnackbar
 import com.example.elonmars.presentation.model.TaskItem
 import com.example.elonmars.presentation.utils.InputTextWatcher
 import com.example.elonmars.presentation.viewmodel.MarsMissionViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import java.util.*
@@ -118,7 +118,7 @@ class MarsMissionFragment : Fragment() {
 
     private fun showError(throwable: Throwable) {
         Log.e(TAG, "showError called with error = $throwable")
-        Snackbar.make(recyclerView, throwable.toString(), Snackbar.LENGTH_SHORT).show()
+        showSnackbar(throwable.toString())
     }
 
     private fun updateText(noTaskText: TextView, dataSet: ArrayList<TaskItem>) {

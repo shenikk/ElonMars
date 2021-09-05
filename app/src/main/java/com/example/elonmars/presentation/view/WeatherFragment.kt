@@ -17,10 +17,10 @@ import com.example.elonmars.R
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.adapter.WeatherAdapter
+import com.example.elonmars.presentation.extensions.showSnackbar
 import com.example.elonmars.presentation.model.WeatherItem
 import com.example.elonmars.presentation.viewmodel.WeatherViewModel
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.google.android.material.snackbar.Snackbar
 import io.reactivex.plugins.RxJavaPlugins
 
 /** Экран с информацией о погоде за последние 10 доступных дней */
@@ -148,7 +148,7 @@ class WeatherFragment : Fragment() {
 
     private fun showError(throwable: Throwable) {
         Log.e(TAG, "showError called with error = $throwable")
-        Snackbar.make(recyclerView, throwable.toString(), Snackbar.LENGTH_SHORT).show()
+        showSnackbar(throwable.toString())
     }
 
     private fun showProgress(isVisible: Boolean) {

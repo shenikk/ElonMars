@@ -14,6 +14,7 @@ import com.example.elonmars.MyApplication
 import com.example.elonmars.R
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.di.activity.DaggerActivityComponent
+import com.example.elonmars.presentation.extensions.showSnackbar
 import com.example.elonmars.presentation.viewmodel.DetailPhotoViewModel
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -71,6 +72,9 @@ class DetailPhotoFragment : Fragment() {
                 setOnClickListener {
                     viewModel?.setFavourite(currentItem)
                     setFabIcon(currentItem, this)
+
+                    val snackbarText =  if (currentItem.isFavourite) R.string.snackbar_message_delete else R.string.snackbar_message_add
+                    showSnackbar(snackbarText)
                 }
             }
         }

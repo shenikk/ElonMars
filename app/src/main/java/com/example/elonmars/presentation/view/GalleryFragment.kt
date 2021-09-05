@@ -21,8 +21,8 @@ import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.GalleryType
 import com.example.elonmars.presentation.adapter.PhotoAdapter
+import com.example.elonmars.presentation.extensions.showSnackbar
 import com.example.elonmars.presentation.viewmodel.GalleryViewModel
-import com.google.android.material.snackbar.Snackbar
 
 /** Экран со списком фото */
 class GalleryFragment : Fragment() {
@@ -122,7 +122,7 @@ class GalleryFragment : Fragment() {
 
     private fun showError(throwable: Throwable) {
         Log.e(TAG, "showError called with error = $throwable")
-        Snackbar.make(recyclerView, throwable.toString(), Snackbar.LENGTH_SHORT).show()
+        showSnackbar(throwable.toString())
     }
 
     private fun showProgress(isVisible: Boolean) {
