@@ -21,7 +21,9 @@ import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.GalleryType
 import com.example.elonmars.presentation.adapter.PhotoAdapter
+import com.example.elonmars.presentation.extensions.debug
 import com.example.elonmars.presentation.extensions.showSnackbar
+import com.example.elonmars.presentation.model.TaskItem
 import com.example.elonmars.presentation.viewmodel.GalleryViewModel
 
 /** Экран со списком фото */
@@ -30,6 +32,7 @@ class GalleryFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var photoAdapter: PhotoAdapter
     private lateinit var progressBar: ProgressBar
+    private lateinit var noFavourites: TextView
     private var viewModel: GalleryViewModel? = null
     private lateinit var swipeRefresh: SwipeRefreshLayout
 
@@ -62,7 +65,16 @@ class GalleryFragment : Fragment() {
                 viewModel?.loadDataOnForceAsync()
             }
         }
+        noFavourites = view.findViewById(R.id.no_favourite_photos_text)
         setUpButtons(view)
+    }
+
+    private fun updateText(noFavourites: TextView, dataSet: ArrayList<PhotoItem>) {
+        if (dataSet.isEmpty()) {
+            noFavourites.visibility = View.VISIBLE
+        } else {
+            noFavourites.visibility = View.GONE
+        }
     }
 
     private fun setUpAdapter(dataSet: ArrayList<PhotoItem>) {
@@ -137,12 +149,16 @@ class GalleryFragment : Fragment() {
         setUpAdapter(list)
         recyclerView.adapter = photoAdapter
         viewModel?.setContentType(GalleryType.RANDOM)
+
+        updateText(noFavourites, list)
     }
 
     private fun showFavData(list: ArrayList<PhotoItem>) {
         setUpAdapter(list)
         recyclerView.adapter = photoAdapter
         viewModel?.setContentType(GalleryType.FAVOURITE)
+
+        updateText(noFavourites, list)
     }
 
     private fun showRefreshProgress(isRefreshing: Boolean) {

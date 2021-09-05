@@ -62,6 +62,16 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
 
+            <TextView
+                android:id="@+id/no_favourite_photos_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="Nothing has been added here yet! :("
+                android:textSize="@dimen/dp_20" />
+
         </FrameLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
