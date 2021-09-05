@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.data.provider.ISchedulersProvider
 import com.example.elonmars.domain.interactors.IPhotosInteractor
-import com.example.elonmars.presentation.extensions.LogDebug
+import com.example.elonmars.presentation.extensions.logDebug
 import io.reactivex.disposables.Disposable
 
 /**
@@ -45,7 +45,7 @@ class DetailPhotoViewModel(
     override fun onCleared() {
         super.onCleared()
         disposable?.dispose()
-        LogDebug("onCleared() called")
+        logDebug("onCleared() called")
     }
 
     /**

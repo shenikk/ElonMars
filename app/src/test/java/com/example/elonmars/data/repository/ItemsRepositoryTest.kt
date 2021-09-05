@@ -32,6 +32,7 @@ class ItemsRepositoryTest {
         testObserver.assertResult(arrayListOf(firstWeatherDataItem, secondWeatherDataItem, thirdWeatherDataItem))
         testObserver.assertValueAt(0, arrayListOf(firstWeatherDataItem, secondWeatherDataItem, thirdWeatherDataItem))
         testObserver.assertNever(arrayListOf(firstWeatherDataItem))
+        testObserver.assertNoErrors()
         verify(exactly = 1) { dataStorage.weatherDataItems }
         verify(exactly = 0) { weatherItemsProvider.loadWeatherItemsList() }
         testObserver.dispose()
@@ -51,6 +52,7 @@ class ItemsRepositoryTest {
         testObserver.assertResult(arrayListOf(firstWeatherDataItem))
         testObserver.assertValueAt(0, arrayListOf(firstWeatherDataItem))
         testObserver.assertNever(arrayListOf(firstWeatherDataItem, secondWeatherDataItem, thirdWeatherDataItem))
+        testObserver.assertNoErrors()
         verify(exactly = 1) { dataStorage.weatherDataItems }
         verify(exactly = 1) { weatherItemsProvider.loadWeatherItemsList() }
         testObserver.dispose()
@@ -68,6 +70,7 @@ class ItemsRepositoryTest {
         // Assert
         testObserver.assertResult(arrayListOf())
         testObserver.assertNever(arrayListOf(firstWeatherDataItem))
+        testObserver.assertNoErrors()
         verify(exactly = 1) { dataStorage.weatherDataItems }
         testObserver.dispose()
     }
@@ -100,6 +103,7 @@ class ItemsRepositoryTest {
         // Assert
         testObserver.assertResult(arrayListOf(firstWeatherDataItem, secondWeatherDataItem))
         testObserver.assertNever(arrayListOf(firstWeatherDataItem))
+        testObserver.assertNoErrors()
 
         verify(exactly = 0) { dataStorage.weatherDataItems }
         verify(exactly = 1) { dataStorage.weatherDataItems = arrayListOf(firstWeatherDataItem, secondWeatherDataItem) }
@@ -119,6 +123,7 @@ class ItemsRepositoryTest {
         // Assert
         testObserver.assertResult(arrayListOf())
         testObserver.assertNever(arrayListOf(firstWeatherDataItem))
+        testObserver.assertNoErrors()
 
         verify(exactly = 0) { dataStorage.weatherDataItems }
         verify(exactly = 1) { dataStorage.weatherDataItems = arrayListOf() }

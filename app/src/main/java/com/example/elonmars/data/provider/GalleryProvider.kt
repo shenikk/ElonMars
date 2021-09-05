@@ -5,7 +5,7 @@ import com.bumptech.glide.Glide
 import com.example.elonmars.data.PhotoApiInterface
 import com.example.elonmars.data.exception.RequestException
 import com.example.elonmars.data.model.PhotoItem
-import com.example.elonmars.presentation.extensions.LogError
+import com.example.elonmars.presentation.extensions.logError
 import retrofit2.Retrofit
 
 /**
@@ -30,11 +30,11 @@ class GalleryProvider(private val retrofitClient: Retrofit) : IGalleryProvider {
                 if (response.isSuccessful) {
                     response.body() ?: throw RequestException("Body is null")
                 } else {
-                    LogError("Response code: ${response.code()} ")
+                    logError("Response code: ${response.code()} ")
                     throw RequestException("Response code: ${response.code()}")
                 }
             } catch (e: java.lang.Exception) {
-                LogError("Return failed", e)
+                logError("Return failed", e)
                 throw e
             }
         }

@@ -16,7 +16,7 @@ import com.example.elonmars.R
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.adapter.WeatherAdapter
-import com.example.elonmars.presentation.extensions.LogError
+import com.example.elonmars.presentation.extensions.logError
 import com.example.elonmars.presentation.extensions.showSnackbar
 import com.example.elonmars.presentation.model.WeatherItem
 import com.example.elonmars.presentation.viewmodel.WeatherViewModel
@@ -65,7 +65,7 @@ class WeatherFragment : Fragment() {
 
         // Необходимо для устранения ошибки самого RxJava2 (UndeliverableException)
         RxJavaPlugins.setErrorHandler { throwable: Throwable? ->
-            LogError( "Exception: ${throwable.toString()}")
+            logError( "Exception: ${throwable.toString()}")
         }
     }
 
@@ -143,7 +143,7 @@ class WeatherFragment : Fragment() {
     }
 
     private fun showError(throwable: Throwable) {
-        LogError("showError called with error = $throwable")
+        logError("showError called with error = $throwable")
         showSnackbar(throwable.toString())
     }
 

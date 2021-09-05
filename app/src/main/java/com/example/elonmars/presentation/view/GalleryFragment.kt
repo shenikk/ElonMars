@@ -20,7 +20,7 @@ import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.GalleryType
 import com.example.elonmars.presentation.adapter.PhotoAdapter
-import com.example.elonmars.presentation.extensions.LogError
+import com.example.elonmars.presentation.extensions.logError
 import com.example.elonmars.presentation.extensions.showSnackbar
 import com.example.elonmars.presentation.viewmodel.GalleryViewModel
 
@@ -130,7 +130,7 @@ class GalleryFragment : Fragment() {
     }
 
     private fun showError(throwable: Throwable) {
-        LogError("showError called with error = $throwable")
+        logError("showError called with error = $throwable")
         showSnackbar(throwable.toString())
     }
 

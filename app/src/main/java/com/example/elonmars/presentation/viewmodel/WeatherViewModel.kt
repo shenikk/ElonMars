@@ -7,8 +7,8 @@ import com.example.elonmars.WeatherDataItem
 import com.example.elonmars.data.provider.ISchedulersProvider
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.interactors.IWeatherInteractor
-import com.example.elonmars.presentation.extensions.LogDebug
-import com.example.elonmars.presentation.extensions.LogError
+import com.example.elonmars.presentation.extensions.logDebug
+import com.example.elonmars.presentation.extensions.logError
 import com.example.elonmars.presentation.extensions.getFirstItem
 import com.example.elonmars.presentation.model.WeatherItem
 import io.reactivex.disposables.Disposable
@@ -119,7 +119,7 @@ class WeatherViewModel(
         return try {
             (temperature?.toFloat()?.let { (it * 9f / 5f) + 32f })?.toInt().toString()
         } catch (e: Exception) {
-            LogError("$temperature is not a number")
+            logError("$temperature is not a number")
             null
         }
     }
@@ -127,7 +127,7 @@ class WeatherViewModel(
     override fun onCleared() {
         super.onCleared()
         disposable?.dispose()
-        LogDebug("onCleared() called")
+        logDebug("onCleared() called")
     }
 
     /**

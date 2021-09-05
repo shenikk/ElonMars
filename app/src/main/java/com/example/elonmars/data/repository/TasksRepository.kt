@@ -7,6 +7,13 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import java.util.*
 
+/**
+ * Репозиторий - провайдер данных о задачах.
+ *
+ * @param taskItemsProvider провайдер данных задач
+ *
+ * @testclass unit: TasksRepositoryTest
+ */
 class TasksRepository(private val taskItemsProvider: TaskItemsProvider) : ITasksRepository {
 
     override fun saveDataAsync(taskItem: TaskItem): Completable {

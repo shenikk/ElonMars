@@ -22,7 +22,7 @@ import com.example.elonmars.MyApplication
 import com.example.elonmars.R
 import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.adapter.TaskAdapter
-import com.example.elonmars.presentation.extensions.LogError
+import com.example.elonmars.presentation.extensions.logError
 import com.example.elonmars.presentation.extensions.showSnackbar
 import com.example.elonmars.presentation.model.TaskItem
 import com.example.elonmars.presentation.utils.InputTextWatcher
@@ -116,7 +116,7 @@ class MarsMissionFragment : Fragment() {
     }
 
     private fun showError(throwable: Throwable) {
-        LogError("showError called with error = $throwable")
+        logError("showError called with error = $throwable")
         showSnackbar(throwable.toString())
     }
 
