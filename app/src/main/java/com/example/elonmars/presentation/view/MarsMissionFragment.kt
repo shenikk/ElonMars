@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.CalendarContract
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +22,7 @@ import com.example.elonmars.MyApplication
 import com.example.elonmars.R
 import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.adapter.TaskAdapter
+import com.example.elonmars.presentation.extensions.LogError
 import com.example.elonmars.presentation.extensions.showSnackbar
 import com.example.elonmars.presentation.model.TaskItem
 import com.example.elonmars.presentation.utils.InputTextWatcher
@@ -47,7 +47,6 @@ class MarsMissionFragment : Fragment() {
     private var viewModel: MarsMissionViewModel? = null
 
     companion object {
-        private const val TAG = "MarsMissionFragment"
         private const val REQUEST_CODE_CALENDAR_PERMISSION = 122
     }
 
@@ -117,7 +116,7 @@ class MarsMissionFragment : Fragment() {
     }
 
     private fun showError(throwable: Throwable) {
-        Log.e(TAG, "showError called with error = $throwable")
+        LogError("showError called with error = $throwable")
         showSnackbar(throwable.toString())
     }
 

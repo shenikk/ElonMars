@@ -1,15 +1,13 @@
 package com.example.elonmars.presentation.viewmodel
 
-import android.util.Log
 import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.bumptech.glide.Glide
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.data.provider.ISchedulersProvider
 import com.example.elonmars.domain.interactors.IPhotosInteractor
-import com.example.elonmars.presentation.GalleryType
+import com.example.elonmars.presentation.extensions.LogDebug
 import io.reactivex.disposables.Disposable
 
 /**
@@ -33,10 +31,6 @@ class DetailPhotoViewModel(
     private val favPhotoItemsLiveData = MutableLiveData<ArrayList<PhotoItem>>()
     private val refreshLiveData = MutableLiveData<Boolean>()
 
-    companion object {
-        private const val TAG = "DetailPhotoViewModel"
-    }
-
     /**
      * Метод для асинхронной загрузки фото.
      */
@@ -51,7 +45,7 @@ class DetailPhotoViewModel(
     override fun onCleared() {
         super.onCleared()
         disposable?.dispose()
-        Log.d(TAG, "onCleared() called")
+        LogDebug("onCleared() called")
     }
 
     /**

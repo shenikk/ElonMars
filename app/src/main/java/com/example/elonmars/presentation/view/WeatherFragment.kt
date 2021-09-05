@@ -2,7 +2,6 @@ package com.example.elonmars.presentation.view
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +16,7 @@ import com.example.elonmars.R
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.adapter.WeatherAdapter
+import com.example.elonmars.presentation.extensions.LogError
 import com.example.elonmars.presentation.extensions.showSnackbar
 import com.example.elonmars.presentation.model.WeatherItem
 import com.example.elonmars.presentation.viewmodel.WeatherViewModel
@@ -40,10 +40,6 @@ class WeatherFragment : Fragment() {
 
     private var viewModel: WeatherViewModel? = null
     private var dataSet: List<WeatherItem> = arrayListOf()
-
-    companion object {
-        private const val TAG = "WeatherFragment"
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_weather, container, false)
@@ -69,7 +65,7 @@ class WeatherFragment : Fragment() {
 
         // Необходимо для устранения ошибки самого RxJava2 (UndeliverableException)
         RxJavaPlugins.setErrorHandler { throwable: Throwable? ->
-            Log.e(TAG, "Exception: ${throwable.toString()}")
+            LogError( "Exception: ${throwable.toString()}")
         }
     }
 
@@ -147,7 +143,7 @@ class WeatherFragment : Fragment() {
     }
 
     private fun showError(throwable: Throwable) {
-        Log.e(TAG, "showError called with error = $throwable")
+        LogError("showError called with error = $throwable")
         showSnackbar(throwable.toString())
     }
 

@@ -1,6 +1,5 @@
 package com.example.elonmars.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,8 +7,10 @@ import com.example.elonmars.WeatherDataItem
 import com.example.elonmars.data.provider.ISchedulersProvider
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.interactors.IWeatherInteractor
-import com.example.elonmars.presentation.model.WeatherItem
+import com.example.elonmars.presentation.extensions.LogDebug
+import com.example.elonmars.presentation.extensions.LogError
 import com.example.elonmars.presentation.extensions.getFirstItem
+import com.example.elonmars.presentation.model.WeatherItem
 import io.reactivex.disposables.Disposable
 
 /**
@@ -35,10 +36,6 @@ class WeatherViewModel(
     private val weatherItemsData = mutableListOf<WeatherDataItem>()
     private var latestDayLiveData = MutableLiveData<WeatherItem>()
     private val refreshLiveData = MutableLiveData<Boolean>()
-
-    companion object {
-        private const val TAG = "WeatherViewModel"
-    }
 
     /**
      * Метод для асинхронной загрузки списка фильмов.
@@ -122,7 +119,7 @@ class WeatherViewModel(
         return try {
             (temperature?.toFloat()?.let { (it * 9f / 5f) + 32f })?.toInt().toString()
         } catch (e: Exception) {
-            Log.e(TAG, "$temperature is not a number")
+            LogError("$temperature is not a number")
             null
         }
     }
@@ -130,7 +127,7 @@ class WeatherViewModel(
     override fun onCleared() {
         super.onCleared()
         disposable?.dispose()
-        Log.d(TAG, "onCleared() called")
+        LogDebug("onCleared() called")
     }
 
     /**

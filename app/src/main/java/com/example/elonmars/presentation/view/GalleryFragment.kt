@@ -2,7 +2,6 @@ package com.example.elonmars.presentation.view
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,9 +20,8 @@ import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.GalleryType
 import com.example.elonmars.presentation.adapter.PhotoAdapter
-import com.example.elonmars.presentation.extensions.debug
+import com.example.elonmars.presentation.extensions.LogError
 import com.example.elonmars.presentation.extensions.showSnackbar
-import com.example.elonmars.presentation.model.TaskItem
 import com.example.elonmars.presentation.viewmodel.GalleryViewModel
 
 /** Экран со списком фото */
@@ -41,7 +39,6 @@ class GalleryFragment : Fragment() {
 
     companion object {
         const val BUNDLE_KEY_CURRENT_ITEM = "currentItem"
-        private const val TAG = "GalleryFragment"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -133,7 +130,7 @@ class GalleryFragment : Fragment() {
     }
 
     private fun showError(throwable: Throwable) {
-        Log.e(TAG, "showError called with error = $throwable")
+        LogError("showError called with error = $throwable")
         showSnackbar(throwable.toString())
     }
 

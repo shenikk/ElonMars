@@ -1,10 +1,10 @@
 package com.example.elonmars.data.provider
 
-import android.util.Log
 import com.example.elonmars.WeatherData
 import com.example.elonmars.WeatherDataItem
 import com.example.elonmars.data.WeatherApiInterface
 import com.example.elonmars.data.exception.RequestException
+import com.example.elonmars.presentation.extensions.LogError
 import retrofit2.Response
 import retrofit2.Retrofit
 
@@ -33,11 +33,11 @@ class WeatherItemsProvider(private val retrofitClient: Retrofit) : IWeatherItemP
                 }
                 response.body()?.weatherDataItems ?: throw RequestException("Body is null")
             } else {
-                Log.e("Response code: ", response.code().toString())
+                LogError("Response code: ${response.code()}")
                 throw RequestException("Response code: ${response.code()}")
             }
         } catch (e: java.lang.Exception) {
-            Log.e("Return failed", e.toString())
+            LogError("Return failed", e)
             throw e
         }
     }

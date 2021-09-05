@@ -1,6 +1,5 @@
 package com.example.elonmars.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +7,7 @@ import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.data.provider.ISchedulersProvider
 import com.example.elonmars.domain.interactors.IPhotosInteractor
 import com.example.elonmars.presentation.GalleryType
+import com.example.elonmars.presentation.extensions.LogDebug
 import io.reactivex.disposables.Disposable
 
 /**
@@ -32,10 +32,6 @@ class GalleryViewModel(
     private val refreshLiveData = MutableLiveData<Boolean>()
 
     private var galleryType: GalleryType = GalleryType.RANDOM
-
-    companion object {
-        private const val TAG = "GalleryViewModel"
-    }
 
     /**
      * Метод для асинхронной загрузки списка фото.
@@ -88,7 +84,7 @@ class GalleryViewModel(
     override fun onCleared() {
         super.onCleared()
         disposable?.dispose()
-        Log.d(TAG, "onCleared() called")
+        LogDebug("onCleared() called")
     }
 
     /**

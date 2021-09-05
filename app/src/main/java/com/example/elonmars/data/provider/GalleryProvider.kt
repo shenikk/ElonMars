@@ -1,13 +1,11 @@
 package com.example.elonmars.data.provider
 
-import android.media.Image
-import android.util.Log
-import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.example.elonmars.data.PhotoApiInterface
-import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.data.exception.RequestException
+import com.example.elonmars.data.model.PhotoItem
+import com.example.elonmars.presentation.extensions.LogError
 import retrofit2.Retrofit
 
 /**
@@ -32,11 +30,11 @@ class GalleryProvider(private val retrofitClient: Retrofit) : IGalleryProvider {
                 if (response.isSuccessful) {
                     response.body() ?: throw RequestException("Body is null")
                 } else {
-                    Log.e("Response code: ", response.code().toString())
+                    LogError("Response code: ${response.code()} ")
                     throw RequestException("Response code: ${response.code()}")
                 }
             } catch (e: java.lang.Exception) {
-                Log.e("Return failed", e.toString())
+                LogError("Return failed", e)
                 throw e
             }
         }

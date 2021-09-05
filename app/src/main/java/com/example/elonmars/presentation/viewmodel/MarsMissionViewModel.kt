@@ -1,14 +1,12 @@
 package com.example.elonmars.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.elonmars.R
 import com.example.elonmars.data.provider.ISchedulersProvider
 import com.example.elonmars.domain.interactors.ITaskInteractor
+import com.example.elonmars.presentation.extensions.LogDebug
 import com.example.elonmars.presentation.model.TaskItem
-import com.google.android.material.textfield.TextInputLayout
 import io.reactivex.disposables.Disposable
 import java.util.*
 
@@ -30,14 +28,10 @@ class MarsMissionViewModel(
     private val errorLiveData = MutableLiveData<Throwable>()
     private val taskItemsLiveData = MutableLiveData<ArrayList<TaskItem>>()
 
-    companion object {
-        private const val TAG = "MarsMissionViewModel"
-    }
-
     override fun onCleared() {
         super.onCleared()
         disposable?.dispose()
-        Log.d(TAG, "onCleared() called")
+        LogDebug("onCleared() called")
     }
 
     fun addTaskItemToDataBase(taskItem: TaskItem) {
