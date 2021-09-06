@@ -20,6 +20,7 @@ import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.GalleryType
 import com.example.elonmars.presentation.adapter.PhotoAdapter
+import com.example.elonmars.presentation.extensions.getColorFromAttr
 import com.example.elonmars.presentation.extensions.logError
 import com.example.elonmars.presentation.extensions.showSnackbar
 import com.example.elonmars.presentation.viewmodel.GalleryViewModel
@@ -34,8 +35,8 @@ class GalleryFragment : Fragment() {
     private var viewModel: GalleryViewModel? = null
     private lateinit var swipeRefresh: SwipeRefreshLayout
 
-    private lateinit var stockText: TextView
-    private lateinit var favouriteStockText: TextView
+    private lateinit var photoText: TextView
+    private lateinit var favouritePhotoText: TextView
 
     companion object {
         const val BUNDLE_KEY_CURRENT_ITEM = "currentItem"
@@ -163,24 +164,24 @@ class GalleryFragment : Fragment() {
     }
 
     private fun setUpButtons(view: View) {
-        stockText = view.findViewById<TextView>(R.id.photos).apply {
+        photoText = view.findViewById<TextView>(R.id.photos).apply {
             setOnClickListener {
                 this.textSize = 28f
-                this.setTextColor(ContextCompat.getColor(view.context, R.color.black_title))
-                favouriteStockText.setTextColor(ContextCompat.getColor(view.context, R.color.grey_title))
-                favouriteStockText.textSize = 18f
+                this.setTextColor(this.context.getColorFromAttr(android.R.attr.textColorPrimary))
+                favouritePhotoText.setTextColor(ContextCompat.getColor(view.context, R.color.grey_title))
+                favouritePhotoText.textSize = 18f
 
                 swipeRefresh.isEnabled = true
                 viewModel?.loadDataAsync()
             }
         }
 
-        favouriteStockText = view.findViewById<TextView>(R.id.favourite).apply {
+        favouritePhotoText = view.findViewById<TextView>(R.id.favourite).apply {
             setOnClickListener {
                 this.textSize = 28f
-                stockText.textSize = 18f
-                this.setTextColor(ContextCompat.getColor(view.context, R.color.black_title))
-                stockText.setTextColor(ContextCompat.getColor(view.context, R.color.grey_title))
+                photoText.textSize = 18f
+                this.setTextColor(this.context.getColorFromAttr(android.R.attr.textColorPrimary))
+                photoText.setTextColor(ContextCompat.getColor(view.context, R.color.grey_title))
 
                 swipeRefresh.isEnabled = false
                 viewModel?.getFavouritePhotos()
