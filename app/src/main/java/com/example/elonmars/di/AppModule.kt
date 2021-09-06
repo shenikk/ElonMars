@@ -1,6 +1,7 @@
 package com.example.elonmars.di
 
 import android.content.Context
+import com.example.elonmars.BuildConfig
 import com.example.elonmars.data.database.TasksDbHelper
 import com.example.elonmars.data.provider.*
 import com.example.elonmars.data.repository.ItemsRepository
@@ -69,14 +70,14 @@ class AppModule {
 
     private fun getWeatherRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(WEATHER_BASE_URL)
+            .baseUrl(BuildConfig.WEATHER_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
     private fun getGalleryRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(PHOTOS_BASE_URL)
+            .baseUrl(BuildConfig.PHOTOS_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

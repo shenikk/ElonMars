@@ -1,6 +1,6 @@
 package com.example.elonmars.data.provider
 
-import android.widget.ImageView
+import com.example.elonmars.BuildConfig
 import com.bumptech.glide.Glide
 import com.example.elonmars.data.PhotoApiInterface
 import com.example.elonmars.data.exception.RequestException
@@ -23,7 +23,7 @@ class GalleryProvider(private val retrofitClient: Retrofit) : IGalleryProvider {
     override fun loadPhotoItemsList(): ArrayList<PhotoItem> {
         val weatherRetrofitRequest = retrofitClient.create(PhotoApiInterface::class.java)
 
-        val call = weatherRetrofitRequest.getPhotos(API_KEY, NUMBER_OF_PHOTOS)
+        val call = weatherRetrofitRequest.getPhotos(BuildConfig.API_KEY, NUMBER_OF_PHOTOS)
 
         call.execute().let { response ->
             return try {
