@@ -5,12 +5,15 @@ import com.example.elonmars.data.PhotoApiInterface
 import com.example.elonmars.data.exception.RequestException
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.presentation.extensions.logError
+import retrofit2.Response
 import retrofit2.Retrofit
 
 /**
  * Провайдер данных о загруженных из сети фото.
  *
  * @param retrofitClient клиент для работы с сетью
+ *
+ * @testclass unit: GalleryProviderTest
  */
 class GalleryProvider(private val retrofitClient: Retrofit) : IGalleryProvider {
 
