@@ -6,6 +6,14 @@ import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.repositories.IPhotosRepository
 import io.reactivex.Single
 
+/**
+ * Репозиторий - провайдер данных о фото.
+ *
+ * @param dataStorage хранилище данных
+ * @param galleryProvider провайдер фото
+ *
+ * @testclass unit: PhotosRepositoryTest
+ */
 class PhotosRepository(
     private val dataStorage: IDataStorage,
     private val galleryProvider: IGalleryProvider
