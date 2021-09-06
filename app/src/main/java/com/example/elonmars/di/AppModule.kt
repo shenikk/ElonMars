@@ -60,7 +60,7 @@ class AppModule {
         return TasksDbHelper(context)
     }
 
-    private fun getWeatherItemsProvider(): IWeatherItemProvider {
+    private fun getWeatherItemsProvider(): IWeatherItemsProvider {
         return WeatherItemsProvider(getWeatherRetrofit())
     }
 

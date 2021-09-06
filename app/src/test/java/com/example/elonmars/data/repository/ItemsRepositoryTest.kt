@@ -2,7 +2,7 @@ package com.example.elonmars.data.repository
 
 import com.example.elonmars.WeatherDataItem
 import com.example.elonmars.data.exception.RequestException
-import com.example.elonmars.data.provider.IWeatherItemProvider
+import com.example.elonmars.data.provider.IWeatherItemsProvider
 import com.example.elonmars.data.store.IDataStorage
 import io.mockk.*
 import io.reactivex.observers.TestObserver
@@ -16,7 +16,7 @@ class ItemsRepositoryTest {
     private var thirdWeatherDataItem = WeatherDataItem("3", "3", "22", "-82")
 
     private var dataStorage: IDataStorage = mockk()
-    private var weatherItemsProvider: IWeatherItemProvider = mockk()
+    private var weatherItemsProvider: IWeatherItemsProvider = mockk()
     private var itemsRepository = ItemsRepository(dataStorage, weatherItemsProvider)
 
     @Test

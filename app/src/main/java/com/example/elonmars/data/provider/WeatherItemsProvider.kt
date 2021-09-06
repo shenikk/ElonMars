@@ -15,7 +15,7 @@ import retrofit2.Retrofit
  *
  * @testclass unit: WeatherItemsProviderTest
  */
-class WeatherItemsProvider(private val retrofitClient: Retrofit) : IWeatherItemProvider {
+class WeatherItemsProvider(private val retrofitClient: Retrofit) : IWeatherItemsProvider {
 
     @Throws(java.lang.Exception::class)
     override fun loadWeatherItemsList(): ArrayList<WeatherDataItem> {

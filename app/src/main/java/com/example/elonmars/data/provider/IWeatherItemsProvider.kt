@@ -5,7 +5,7 @@ import com.example.elonmars.WeatherDataItem
 /**
  * Интерфейс провайдера данных об информации о погоде.
  */
-interface IWeatherItemProvider {
+interface IWeatherItemsProvider {
 
     /**
      * Метод для загрузки информации о погоде.

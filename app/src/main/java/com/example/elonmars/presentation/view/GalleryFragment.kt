@@ -40,6 +40,8 @@ class GalleryFragment : Fragment() {
 
     companion object {
         const val BUNDLE_KEY_CURRENT_ITEM = "currentItem"
+        const val PRIMARY_TITLE_SIZE = 28f
+        const val SECONDARY_TITLE_SIZE = 18f
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -166,10 +168,10 @@ class GalleryFragment : Fragment() {
     private fun setUpButtons(view: View) {
         photoText = view.findViewById<TextView>(R.id.photos).apply {
             setOnClickListener {
-                this.textSize = 28f
+                this.textSize = PRIMARY_TITLE_SIZE
                 this.setTextColor(this.context.getColorFromAttr(android.R.attr.textColorPrimary))
                 favouritePhotoText.setTextColor(ContextCompat.getColor(view.context, R.color.grey_title))
-                favouritePhotoText.textSize = 18f
+                favouritePhotoText.textSize = SECONDARY_TITLE_SIZE
 
                 swipeRefresh.isEnabled = true
                 viewModel?.loadDataAsync()
@@ -178,8 +180,8 @@ class GalleryFragment : Fragment() {
 
         favouritePhotoText = view.findViewById<TextView>(R.id.favourite).apply {
             setOnClickListener {
-                this.textSize = 28f
-                photoText.textSize = 18f
+                this.textSize = PRIMARY_TITLE_SIZE
+                photoText.textSize = SECONDARY_TITLE_SIZE
                 this.setTextColor(this.context.getColorFromAttr(android.R.attr.textColorPrimary))
                 photoText.setTextColor(ContextCompat.getColor(view.context, R.color.grey_title))
 

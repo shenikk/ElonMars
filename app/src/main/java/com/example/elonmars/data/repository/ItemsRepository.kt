@@ -1,7 +1,7 @@
 package com.example.elonmars.data.repository
 
 import com.example.elonmars.WeatherDataItem
-import com.example.elonmars.data.provider.IWeatherItemProvider
+import com.example.elonmars.data.provider.IWeatherItemsProvider
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.repositories.IItemsRepository
 import io.reactivex.Single
@@ -16,7 +16,7 @@ import io.reactivex.Single
  */
 class ItemsRepository(
     private val dataStorage: IDataStorage,
-    private val weatherItemsProvider: IWeatherItemProvider
+    private val weatherItemsProvider: IWeatherItemsProvider
 ) : IItemsRepository {
 
     companion object {

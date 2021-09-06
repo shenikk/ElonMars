@@ -1,6 +1,6 @@
 package com.example.elonmars.data.repository
 
-import com.example.elonmars.data.provider.TaskItemsProvider
+import com.example.elonmars.data.provider.ITaskItemsProvider
 import com.example.elonmars.presentation.model.TaskItem
 import io.mockk.*
 import org.junit.Test
@@ -9,7 +9,7 @@ import java.util.*
 /** Класс для тестирования [TasksRepository] */
 class TasksRepositoryTest {
 
-    private var taskItemsProvider: TaskItemsProvider = mockk()
+    private var taskItemsProvider: ITaskItemsProvider = mockk()
     private var tasksRepository = TasksRepository(taskItemsProvider)
 
     @Test

@@ -76,7 +76,9 @@ class DetailPhotoFragment : Fragment() {
                     viewModel?.setFavourite(currentItem)
                     setFabIcon(currentItem, this)
 
-                    val snackbarText =  if (currentItem.isFavourite) R.string.snackbar_message_delete else R.string.snackbar_message_add
+                    val snackbarText =
+                        if (currentItem.isFavourite) R.string.snackbar_message_delete
+                        else R.string.snackbar_message_add
                     showSnackbar(snackbarText)
                 }
             }
