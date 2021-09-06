@@ -25,17 +25,24 @@ class GalleryProvider(private val retrofitClient: Retrofit) : IGalleryProvider {
         val call = weatherRetrofitRequest.getPhotos(BuildConfig.API_KEY, NUMBER_OF_PHOTOS)
 
         call.execute().let { response ->
-            return try {
-                if (response.isSuccessful) {
-                    response.body() ?: throw RequestException("Body is null")
-                } else {
-                    logError("Response code: ${response.code()} ")
-                    throw RequestException("Response code: ${response.code()}")
+            return executeCall(response)
+        }
+    }
+
+    private fun executeCall(response: Response<ArrayList<PhotoItem>>): ArrayList<PhotoItem> {
+        return try {
+            if (response.isSuccessful) {
+                if (response.body().isNullOrEmpty()) {
+                    throw RequestException("body is empty")
                 }
-            } catch (e: java.lang.Exception) {
-                logError("Return failed", e)
-                throw e
+                response.body() ?: throw RequestException("Body is null")
+            } else {
+                logError("Response code: ${response.code()} ")
+                throw RequestException("Response code: ${response.code()}")
             }
+        } catch (e: java.lang.Exception) {
+            logError("Return failed", e)
+            throw e
         }
     }
 }
