@@ -2,7 +2,10 @@ package com.example.elonmars.presentation.view
 
 import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.ScaleGestureDetector
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -51,7 +54,10 @@ class DetailPhotoFragment : Fragment() {
             arguments?.getParcelable<PhotoItem>(GalleryFragment.BUNDLE_KEY_CURRENT_ITEM)
 
         detailPhoto = view.findViewById<ImageView>(R.id.detail_photo).apply {
-            currentItem?.image?.let { viewModel?.loadPhotoAsync(this, it) }
+            Glide.with(view)
+                .load(currentItem?.image)
+                .centerInside()
+                .into(this)
         }
 
         view.findViewById<TextView>(R.id.description).apply {

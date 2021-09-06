@@ -1,7 +1,6 @@
 package com.example.elonmars.data.provider
 
 import com.example.elonmars.BuildConfig
-import com.bumptech.glide.Glide
 import com.example.elonmars.data.PhotoApiInterface
 import com.example.elonmars.data.exception.RequestException
 import com.example.elonmars.data.model.PhotoItem
@@ -38,12 +37,5 @@ class GalleryProvider(private val retrofitClient: Retrofit) : IGalleryProvider {
                 throw e
             }
         }
-    }
-
-    override fun loadPhoto(view: ImageView, image: String) {
-        Glide.with(view)
-            .load(image)
-            .centerInside()
-            .into(view)
     }
 }

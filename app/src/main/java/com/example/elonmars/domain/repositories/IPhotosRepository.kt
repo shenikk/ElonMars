@@ -1,8 +1,6 @@
 package com.example.elonmars.domain.repositories
 
-import android.widget.ImageView
 import com.example.elonmars.data.model.PhotoItem
-import io.reactivex.Completable
 import io.reactivex.Single
 
 /**
@@ -22,6 +20,4 @@ interface IPhotosRepository {
     fun getPhotosFromCache(): ArrayList<PhotoItem>
 
     fun setFavourite(photoItem: PhotoItem)
-
-    fun loadPhoto(view: ImageView, image: String)
 }
