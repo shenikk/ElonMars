@@ -139,7 +139,7 @@ class GalleryFragment : Fragment() {
 
     private fun showError(throwable: Throwable) {
         logError("showError called with error = $throwable")
-        showSnackbar(throwable.toString())
+        showSnackbar(R.string.fragment_error_message)
     }
 
     private fun showProgress(isVisible: Boolean) {

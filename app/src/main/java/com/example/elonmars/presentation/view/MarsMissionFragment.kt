@@ -117,7 +117,7 @@ class MarsMissionFragment : Fragment() {
 
     private fun showError(throwable: Throwable) {
         logError("showError called with error = $throwable")
-        showSnackbar(throwable.toString())
+        showSnackbar(R.string.fragment_error_message)
     }
 
     private fun updateText(noTaskText: TextView, dataSet: ArrayList<TaskItem>) {
