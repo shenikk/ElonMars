@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:text="@string/favourites_subtitle"
             android:textColor="@color/grey_title"
-            android:textSize="18sp"
+            android:textSize="@dimen/sp_18"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/photos"
             app:layout_constraintTop_toTopOf="parent"
@@ -68,9 +68,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:visibility="gone"
-                android:text="Nothing has been added here yet! :("
-                android:textSize="@dimen/dp_20" />
+                android:text="@string/nothing_has_been_added_here_yet"
+                android:textSize="@dimen/dp_20"
+                android:visibility="gone" />
 
         </FrameLayout>
 

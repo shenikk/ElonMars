@@ -9,10 +9,10 @@
     <TextView
         android:id="@+id/title"
         style="@style/Title"
-        android:layout_marginVertical="@dimen/dp_30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Latest Weather" />
+        android:layout_marginVertical="@dimen/dp_30"
+        android:text="@string/latest_weather" />
 
     <include layout="@layout/fragment_weather_main_content" />
 

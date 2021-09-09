@@ -13,7 +13,6 @@
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginBottom="@dimen/dp_16"
         android:src="@mipmap/ic_launcher"
-        android:text="Sol 3183"
         android:textSize="@dimen/dp_30"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/today"
@@ -77,7 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_16"
-        android:text="°C | °F"
+        android:text="@string/temperature"
         app:layout_constraintBottom_toTopOf="@id/temperature_switch"
         app:layout_constraintEnd_toEndOf="@id/temperature_switch"
         app:layout_constraintStart_toStartOf="@id/temperature_switch" />

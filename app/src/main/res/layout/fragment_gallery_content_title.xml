@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:layout_gravity="bottom"
+    android:orientation="vertical"
     tools:context=".presentation.view.MainActivity">
 
     <TextView
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:text="@string/photos_subtitle"
         android:textColor="@color/black_title"
-        android:textSize="28sp"
+        android:textSize="@dimen/sp_28"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:text="@string/favourites_subtitle"
         android:textColor="@color/grey_title"
-        android:textSize="18sp"
+        android:textSize="@dimen/sp_18"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/photos"
         app:layout_constraintTop_toTopOf="parent"

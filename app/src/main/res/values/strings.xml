@@ -11,11 +11,13 @@
     <string name="gallery_title">Gallery</string>
     <string name="photos_subtitle">Photos</string>
     <string name="favourites_subtitle">Favourites</string>
+    <string name="nothing_has_been_added_here_yet">Nothing has been added here yet! :(</string>
     <!--  -->
     <!--  "Mars mission" screen.  -->
     <string name="mars_mission_title">Mars Mission</string>
     <string name="mars_mission_summary">Finish all the tasks before the flight!</string>
     <string name="task_description">Getting ready for a trip to Mars!</string>
+    <string name="no_tasks_for_the_day_n_click_on_the_rocket_to_create_your_task">No tasks for the day. \n Click on the rocket to create your task!</string>
     <!--  -->
     <!--  "Weather" screen.  -->
     <string name="weather_title">Weather</string>
@@ -23,6 +25,8 @@
     <string name="weather_fragment_latest_day">Latest day</string>
     <string name="weather_fragment_high_na">High: NA</string>
     <string name="weather_fragment_low_na">Low: NA</string>
+    <string name="latest_weather">Latest Weather</string>
+    <string name="temperature">°C | °F</string>
     <!--  -->
     <!--  "Settings" screen.  -->
     <string name="settings">Settings</string>
@@ -45,5 +49,11 @@
     <!-- Snackbar phrases -->
     <string name="snackbar_message_add">Photo is added to favourites</string>
     <string name="snackbar_message_delete">Photo is deleted from favourites</string>
+    <!--  -->
+    <!-- Bottom sheet dialog phrases -->
+    <string name="add_a_task">Add a task!</string>
+    <string name="input_new_task_here">Input new task here</string>
+    <string name="save">Save</string>
+    <string name="description">Description</string>
     <!--  -->
 </resources>

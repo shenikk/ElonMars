@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
-    android:layout_height="420dp"
+    android:layout_height="@dimen/dp_420"
     android:background="@drawable/bottom_sheet_background"
     android:orientation="vertical"
     app:behavior_hideable="true"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|top"
         android:layout_marginTop="@dimen/dp_20"
-        android:text="Add a task!"
+        android:text="@string/add_a_task"
         android:textSize="@dimen/dp_20"
         android:textStyle="bold" />
 
@@ -33,7 +33,7 @@
         style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Input new task here">
+        android:hint="@string/input_new_task_here">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_text"
@@ -50,6 +50,6 @@
         android:layout_marginStart="@dimen/dp_30"
         android:layout_marginEnd="@dimen/dp_30"
         android:layout_marginBottom="@dimen/dp_20"
-        android:text="Save" />
+        android:text="@string/save" />
 
 </LinearLayout>

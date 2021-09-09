@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    app:cardCornerRadius="@dimen/dp_8"
+    android:layout_centerHorizontal="true"
     android:layout_margin="@dimen/dp_4"
     android:background="?attr/colorOnPrimary"
-    android:layout_centerHorizontal="true">
+    app:cardCornerRadius="@dimen/dp_8">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,9 +29,9 @@
                 android:id="@+id/star_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:layout_marginTop="@dimen/dp_16"
                 android:layout_marginEnd="@dimen/dp_16"
-                android:layout_gravity="end"
                 android:src="@drawable/ic_fav_star" />
 
         </FrameLayout>
@@ -42,8 +41,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_8"
-            android:layout_marginEnd="@dimen/dp_8"
             android:layout_marginTop="@dimen/dp_4"
+            android:layout_marginEnd="@dimen/dp_8"
             android:textSize="@dimen/dp_20"
             android:textStyle="bold"
             tools:text="Date" />

@@ -134,7 +134,7 @@ class MarsMissionFragment : Fragment() {
                 viewModel?.updateTaskStatus(taskItem)
             }
             holder.itemView.setOnLongClickListener {
-                setUpAlertDialog(taskItem)
+                setUpAlertDialog(taskItem, it.context)
                 true
             }
             holder.calendarImage.setOnClickListener {
@@ -171,8 +171,8 @@ class MarsMissionFragment : Fragment() {
         startActivity(intent)
     }
 
-    private fun setUpAlertDialog(taskItem: TaskItem) {
-        AlertDialog.Builder(this.context)
+    private fun setUpAlertDialog(taskItem: TaskItem, context: Context) {
+        AlertDialog.Builder(context)
             .setTitle(getString(R.string.alert_dialog_title))
             .setMessage(getString(R.string.alert_dialog_summary))
             .setPositiveButton(android.R.string.ok) { _, _ ->

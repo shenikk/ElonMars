@@ -10,7 +10,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/dp_100"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.MaterialComponents.Dark">
 
@@ -18,8 +18,8 @@
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:expandedTitleMarginBottom="20dp"
-            app:expandedTitleMarginStart="15dp"
+            app:expandedTitleMarginBottom="@dimen/dp_20"
+            app:expandedTitleMarginStart="@dimen/dp_16"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:title="@string/mars_mission_title">
 
@@ -60,10 +60,10 @@
                 android:id="@+id/flight_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_marginTop="@dimen/dp_20"
-                android:textSize="@dimen/dp_16"
-                android:text="@string/mars_mission_summary" />
+                android:gravity="center"
+                android:text="@string/mars_mission_summary"
+                android:textSize="@dimen/dp_16" />
 
             <CalendarView
                 android:id="@+id/calendar"
@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="No tasks for the day. \n Click on the rocket to create your task!" />
+                    android:text="@string/no_tasks_for_the_day_n_click_on_the_rocket_to_create_your_task" />
 
             </FrameLayout>
 

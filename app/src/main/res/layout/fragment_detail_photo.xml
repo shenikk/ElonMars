@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,7 +10,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="@dimen/dp_300"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.MaterialComponents.Dark">
 
@@ -19,10 +18,10 @@
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:expandedTitleMarginBottom="20dp"
-            app:expandedTitleMarginStart="15dp"
-            app:title="@string/gallery_title"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+            app:expandedTitleMarginBottom="@dimen/dp_20"
+            app:expandedTitleMarginStart="@dimen/dp_16"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:title="@string/gallery_title">
 
             <ImageView
                 android:id="@+id/detail_photo"
@@ -33,7 +32,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="@dimen/dp_100"
                 android:layout_gravity="bottom"
                 android:background="@drawable/title_background" />
 
@@ -54,8 +53,8 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"
         android:background="@drawable/detail_photo_background"
+        android:overScrollMode="never"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout
@@ -67,9 +66,9 @@
                 android:id="@+id/description_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginStart="@dimen/dp_20"
                 android:layout_marginTop="@dimen/dp_30"
-                android:text="Description"
+                android:text="@string/description"
                 android:textSize="@dimen/dp_20"
                 android:textStyle="bold" />
 
@@ -78,10 +77,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp_16"
-                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginStart="@dimen/dp_20"
                 android:layout_marginTop="@dimen/dp_20"
                 android:scrollbars="vertical"
-                android:textSize="@dimen/dp_20"
+                android:textSize="@dimen/sp_20"
                 tools:text="description" />
 
         </LinearLayout>
