@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mars_mission"
+    app:startDestination="@id/mars_mission_fragment">
+
+    <fragment
+        android:id="@+id/mars_mission_fragment"
+        android:name="com.example.elonmars.presentation.view.MarsMissionFragment"
+        tools:layout="@layout/fragment_mars_mission"
+        android:label="MarsMission" />
+</navigation>

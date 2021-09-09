@@ -38,12 +38,15 @@ class GalleryFragment : Fragment() {
     private lateinit var favouritePhotoText: TextView
 
     companion object {
-        const val BUNDLE_KEY_CURRENT_ITEM = "currentItem"
         const val PRIMARY_TITLE_SIZE = 28f
         const val SECONDARY_TITLE_SIZE = 18f
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_gallery, container, false)
     }
 
@@ -79,9 +82,11 @@ class GalleryFragment : Fragment() {
     private fun setUpAdapter(dataSet: ArrayList<PhotoItem>) {
         photoAdapter = PhotoAdapter(dataSet) { holder, currentItem ->
             holder.itemView.setOnClickListener { view ->
-                // правильный вариант
-                view.findNavController().navigate(R.id.detail_photo_fragment, bundle)
-                findNavController().navigate(GalleryFragmentDirections.actionGalleryFragmentToDetailPhotoFragment(currentItem))
+                findNavController().navigate(
+                    GalleryFragmentDirections.actionGalleryFragmentToDetailPhotoFragment(
+                        currentItem
+                    )
+                )
             }
             holder.starIcon.setOnClickListener {
                 viewModel?.setFavourite(currentItem)
@@ -170,7 +175,12 @@ class GalleryFragment : Fragment() {
             setOnClickListener {
                 this.textSize = PRIMARY_TITLE_SIZE
                 this.setTextColor(this.context.getColorFromAttr(android.R.attr.textColorPrimary))
-                favouritePhotoText.setTextColor(ContextCompat.getColor(view.context, R.color.grey_title))
+                favouritePhotoText.setTextColor(
+                    ContextCompat.getColor(
+                        view.context,
+                        R.color.grey_title
+                    )
+                )
                 favouritePhotoText.textSize = SECONDARY_TITLE_SIZE
 
                 swipeRefresh.isEnabled = true

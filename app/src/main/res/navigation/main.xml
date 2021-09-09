@@ -3,62 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
-    app:startDestination="@id/home_fragment">
+    app:startDestination="@id/home">
 
-    <fragment
-        android:id="@+id/home_fragment"
-        android:name="com.example.elonmars.presentation.view.HomeFragment"
-        tools:layout="@layout/fragment_home"
-        android:label="Home" />
-
-    <fragment
-        android:id="@+id/gallery_fragment"
-        android:name="com.example.elonmars.presentation.view.GalleryFragment"
-        tools:layout="@layout/fragment_gallery"
-        android:label="Gallery" >
-        <action
-            android:id="@+id/action_gallery_fragment_to_detail_photo_fragment"
-            app:destination="@id/detail_photo_fragment"
-            app:enterAnim="@anim/slide_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out">
-            <argument
-                android:name="myArgument"
-                android:defaultValue="@null"
-                app:nullable="true"
-                app:argType="com.example.elonmars.data.model.PhotoItem" />
-        </action>
-    </fragment>
-
-    <fragment
-        android:id="@+id/mars_mission_fragment"
-        android:name="com.example.elonmars.presentation.view.MarsMissionFragment"
-        tools:layout="@layout/fragment_mars_mission"
-        android:label="MarsMission" />
+    <include app:graph="@navigation/home"/>
+    <include app:graph="@navigation/gallery"/>
+    <include app:graph="@navigation/mars_mission"/>
+    <include app:graph="@navigation/weather"/>
 
     <fragment
         android:id="@+id/rover_fragment"
         android:name="com.example.elonmars.presentation.view.RoverFragment"
         tools:layout="@layout/fragment_rover"
         android:label="Rover" />
-
-    <fragment
-        android:id="@+id/weather_fragment"
-        android:name="com.example.elonmars.presentation.view.WeatherFragment"
-        tools:layout="@layout/fragment_weather"
-        android:label="Weather" />
-
-    <fragment
-        android:id="@+id/detail_photo_fragment"
-        android:name="com.example.elonmars.presentation.view.DetailPhotoFragment"
-        tools:layout="@layout/fragment_detail_photo"
-        android:label="DetailPhoto" >
-        <argument
-            android:name="myArgument"
-            android:defaultValue="@null"
-            app:nullable="true"
-            app:argType="com.example.elonmars.data.model.PhotoItem" />
-    </fragment>
-
 </navigation>
