@@ -30,9 +30,17 @@ class DetailPhotoFragment : Fragment() {
     private var scaleFactor: Float = 1.0f
     private var viewModel: DetailPhotoViewModel? = null
 
+    private var currentItem: PhotoItem? = null
+
     companion object {
         private var MIN_SCALE = 0.1f
         private var MAX_SCALE = 10.0f
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val args = requireArguments()
+        currentItem = DetailPhotoFragmentArgs.fromBundle(args).myArgument
     }
 
     override fun onCreateView(
@@ -50,10 +58,8 @@ class DetailPhotoFragment : Fragment() {
 
         createViewModel(view.context)
 
-        val currentItem =
-            arguments?.getParcelable<PhotoItem>(GalleryFragment.BUNDLE_KEY_CURRENT_ITEM)
-
-        detailPhoto = view.findViewById<ImageView>(R.id.detail_photo).apply {
+        detailPhoto = view.findViewById<ImageView>(R.id.detail_photo)
+            .apply {
             Glide.with(view)
                 .load(currentItem?.image)
                 .centerInside()
@@ -73,13 +79,15 @@ class DetailPhotoFragment : Fragment() {
                 setFabIcon(it, this)
 
                 setOnClickListener {
-                    viewModel?.setFavourite(currentItem)
-                    setFabIcon(currentItem, this)
+                    currentItem?.let { currentItem ->
+                        viewModel?.setFavourite(currentItem)
+                        setFabIcon(currentItem, this)
 
-                    val snackbarText =
-                        if (currentItem.isFavourite) R.string.snackbar_message_delete
-                        else R.string.snackbar_message_add
-                    showSnackbar(snackbarText)
+                        val snackbarText =
+                            if (currentItem.isFavourite) R.string.snackbar_message_delete
+                            else R.string.snackbar_message_add
+                        showSnackbar(snackbarText)
+                    }
                 }
             }
         }

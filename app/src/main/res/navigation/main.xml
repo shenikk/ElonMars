@@ -15,7 +15,21 @@
         android:id="@+id/gallery_fragment"
         android:name="com.example.elonmars.presentation.view.GalleryFragment"
         tools:layout="@layout/fragment_gallery"
-        android:label="Gallery" />
+        android:label="Gallery" >
+        <action
+            android:id="@+id/action_gallery_fragment_to_detail_photo_fragment"
+            app:destination="@id/detail_photo_fragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out">
+            <argument
+                android:name="myArgument"
+                android:defaultValue="@null"
+                app:nullable="true"
+                app:argType="com.example.elonmars.data.model.PhotoItem" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/mars_mission_fragment"
@@ -39,6 +53,12 @@
         android:id="@+id/detail_photo_fragment"
         android:name="com.example.elonmars.presentation.view.DetailPhotoFragment"
         tools:layout="@layout/fragment_detail_photo"
-        android:label="DetailPhoto" />
+        android:label="DetailPhoto" >
+        <argument
+            android:name="myArgument"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.example.elonmars.data.model.PhotoItem" />
+    </fragment>
 
 </navigation>

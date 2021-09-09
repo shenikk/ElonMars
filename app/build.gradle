@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 //apply plugin: 'kotlin-parcelize' это то же самое, что и наверху
@@ -42,6 +43,17 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    // IDE somehow is not picking the source folders
+    // where the generated direction classes are being placed by the plugin.
+    // This code helps resolve the issue
+    sourceSets {
+        main {
+            java {
+                srcDirs += 'build/generated/source/navigation-args'
+            }
+        }
     }
 }
 

@@ -8,10 +8,9 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.elonmars.MyApplication
@@ -80,8 +79,9 @@ class GalleryFragment : Fragment() {
     private fun setUpAdapter(dataSet: ArrayList<PhotoItem>) {
         photoAdapter = PhotoAdapter(dataSet) { holder, currentItem ->
             holder.itemView.setOnClickListener { view ->
-                val bundle = bundleOf(BUNDLE_KEY_CURRENT_ITEM to currentItem)
+                // правильный вариант
                 view.findNavController().navigate(R.id.detail_photo_fragment, bundle)
+                findNavController().navigate(GalleryFragmentDirections.actionGalleryFragmentToDetailPhotoFragment(currentItem))
             }
             holder.starIcon.setOnClickListener {
                 viewModel?.setFavourite(currentItem)
