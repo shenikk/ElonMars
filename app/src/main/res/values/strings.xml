@@ -12,6 +12,7 @@
     <string name="photos_subtitle">Photos</string>
     <string name="favourites_subtitle">Favourites</string>
     <string name="nothing_has_been_added_here_yet">Nothing has been added here yet! :(</string>
+    <string name="no_description">There\'s no description for this photo</string>
     <!--  -->
     <!--  "Mars mission" screen.  -->
     <string name="mars_mission_title">Mars Mission</string>

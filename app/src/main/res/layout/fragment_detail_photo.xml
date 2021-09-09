@@ -79,7 +79,6 @@
                 android:layout_margin="@dimen/dp_16"
                 android:layout_marginStart="@dimen/dp_20"
                 android:layout_marginTop="@dimen/dp_20"
-                android:scrollbars="vertical"
                 android:textSize="@dimen/sp_20"
                 tools:text="description" />
 

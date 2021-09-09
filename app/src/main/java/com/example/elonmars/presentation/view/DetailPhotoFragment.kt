@@ -68,6 +68,9 @@ class DetailPhotoFragment : Fragment() {
 
         view.findViewById<TextView>(R.id.description).apply {
             text = currentItem?.explanation
+            if (currentItem?.explanation == "") {
+                text = this.context.getString(R.string.no_description)
+            }
         }
 
         view.findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar).apply {
