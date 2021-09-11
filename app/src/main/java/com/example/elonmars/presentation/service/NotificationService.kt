@@ -31,9 +31,7 @@ class NotificationService : Service() {
         logDebug("onStartCommand() called")
 
         when (intent?.action) {
-            ACTION_DISMISS_NOTIFICATION -> {
-                stopSelf()
-            }
+            ACTION_DISMISS_NOTIFICATION -> stopSelf()
             else -> startForeground(NOTIFICATION_ID, createNotification())
         }
 
