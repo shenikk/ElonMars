@@ -1,34 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory
-        android:title="@string/category_general">
+    <PreferenceCategory android:title="@string/category_general">
 
         <SwitchPreferenceCompat
-            android:key="@string/dark_theme_key"
-            android:title="@string/dark_theme_title"
+            android:defaultValue="MODE_NIGHT_NO"
             android:icon="@drawable/ic_color"
-            android:defaultValue="MODE_NIGHT_NO"/>
+            android:key="@string/dark_theme_key"
+            android:title="@string/dark_theme_title" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/category_about" >
+    <PreferenceCategory android:title="@string/category_about">
         <PreferenceScreen
-            android:title="@string/nasa_api_title"
+            android:icon="@drawable/ic_computer"
             android:summary="https://api.nasa.gov"
-            android:icon="@drawable/ic_computer">
+            android:title="@string/nasa_api_title">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="https://api.nasa.gov/" />
         </PreferenceScreen>
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="@string/category_rate_us">
+    <PreferenceCategory android:title="@string/category_rate_us">
 
         <PreferenceScreen
-            android:title="@string/feedback_title"
+            android:icon="@drawable/ic_star"
             android:summary="@string/feedback_summary"
-            android:icon="@drawable/ic_star">
+            android:title="@string/feedback_title">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="https://t.me/shenikk" />
