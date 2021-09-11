@@ -16,6 +16,8 @@ class DataStorage(private val preferences: SharedPreferences) : DataPreferences(
         private const val FAVOURITE_PHOTOS_KEY = "FAVOURITE_PHOTOS_KEY"
         private const val WEATHER_KEY = "WEATHER_KEY"
         private const val CONVERSION_KEY = "CONVERSION_KEY"
+        private const val END_MILLIS_KEY = "END_MILLIS_KEY"
+        private const val TIMER_STATE_KEY = "TIMER_STATE_KEY"
     }
 
     /** Список с моделями [WeatherDataItem] */
@@ -36,4 +38,12 @@ class DataStorage(private val preferences: SharedPreferences) : DataPreferences(
     override var farenheitEnabled: Boolean
         get() = preferences.getBoolean(CONVERSION_KEY, false)
         set(value) = preferences.edit().putBoolean(CONVERSION_KEY, value).apply()
+
+    override var endMillis: Long
+        get() = preferences.getLong(END_MILLIS_KEY, 0)
+        set(value) = preferences.edit().putLong(END_MILLIS_KEY, value).apply()
+
+    override var timerState: Int
+        get() = preferences.getInt(TIMER_STATE_KEY, 0)
+        set(value) = preferences.edit().putInt(TIMER_STATE_KEY, value).apply()
 }

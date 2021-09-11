@@ -12,14 +12,40 @@
         android:id="@+id/lottie_animation_mars"
         android:layout_width="@dimen/dp_200"
         android:layout_height="@dimen/dp_200"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_above="@id/date_title"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/dp_30"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/mars" />
+
+    <TextView
+        android:id="@+id/date_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/sp_20"
+        android:text="Flight to Mars"
+        android:textSize="@dimen/dp_30" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/date_title"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/sp_16"
+        android:textSize="@dimen/dp_30"
+        tools:text="Flight timer" />
+
+    <Button
+        android:id="@+id/date_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/dp_30"
+        android:text="Choose the flight date" />
 
 </RelativeLayout>

@@ -7,6 +7,9 @@
     <string name="weather_item">Weather</string>
     <string name="rocket_mission_item">Mission</string>
     <!--  -->
+    <!--  "Home" screen.  -->
+    <string name="flight_message">Get ready for the flight!</string>
+    <!--  -->
     <!--  "Gallery" screen.  -->
     <string name="gallery_title">Gallery</string>
     <string name="photos_subtitle">Photos</string>
@@ -56,5 +59,13 @@
     <string name="input_new_task_here">Input new task here</string>
     <string name="save">Save</string>
     <string name="description">Description</string>
+    <!--  -->
+    <string name="notification_channel_name">Channel name</string>
+    <string name="notification_channel_description">Channel description</string>
+
+    <!-- Notification -->
+    <string name="notification_title">It\'s a special day!</string>
+    <string name="notification_summary">Today is your flight</string>
+
     <!--  -->
 </resources>
