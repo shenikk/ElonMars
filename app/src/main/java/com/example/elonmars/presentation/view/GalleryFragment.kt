@@ -23,6 +23,7 @@ import com.example.elonmars.presentation.extensions.getColorFromAttr
 import com.example.elonmars.presentation.extensions.logError
 import com.example.elonmars.presentation.extensions.showSnackbar
 import com.example.elonmars.presentation.viewmodel.GalleryViewModel
+import io.reactivex.plugins.RxJavaPlugins
 
 /** Экран со списком фото */
 class GalleryFragment : Fragment() {
@@ -69,6 +70,11 @@ class GalleryFragment : Fragment() {
         }
         noFavourites = view.findViewById(R.id.no_favourite_photos_text)
         setUpButtons(view)
+
+        // Необходимо для устранения ошибки самого RxJava2 (UndeliverableException)
+        RxJavaPlugins.setErrorHandler { throwable: Throwable? ->
+            logError("Exception: ${throwable.toString()}")
+        }
     }
 
     private fun updateText(noFavourites: TextView, dataSet: ArrayList<PhotoItem>) {
