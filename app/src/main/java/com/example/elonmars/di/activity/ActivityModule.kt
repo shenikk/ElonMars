@@ -6,6 +6,7 @@ import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.interactors.IPhotosInteractor
 import com.example.elonmars.domain.interactors.ITaskInteractor
 import com.example.elonmars.domain.interactors.IWeatherInteractor
+import com.example.elonmars.domain.repositories.IHomeRepository
 import com.example.elonmars.presentation.viewmodel.ViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -19,14 +20,16 @@ class ActivityModule {
         weatherInteractor: IWeatherInteractor,
         photosInteractor: IPhotosInteractor,
         taskInteractor: ITaskInteractor,
-        dataStorage: IDataStorage
+        dataStorage: IDataStorage,
+        homeRepository: IHomeRepository
     ): ViewModelFactory {
         return ViewModelFactory(
             weatherInteractor,
             photosInteractor,
             taskInteractor,
             getSchedulersProvider(),
-            dataStorage
+            dataStorage,
+            homeRepository
         )
     }
 
