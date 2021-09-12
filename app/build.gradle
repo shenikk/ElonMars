@@ -107,4 +107,7 @@ dependencies {
 
     // Lottie animation
     implementation 'com.airbnb.android:lottie:4.1.0'
+
+    // Sentry
+    implementation 'io.sentry:sentry-android:5.1.2'
 }
