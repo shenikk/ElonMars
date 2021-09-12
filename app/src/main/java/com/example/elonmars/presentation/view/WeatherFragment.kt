@@ -14,7 +14,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.elonmars.MyApplication
 import com.example.elonmars.R
 import com.example.elonmars.data.store.IDataStorage
-import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.adapter.WeatherAdapter
 import com.example.elonmars.presentation.extensions.logError
 import com.example.elonmars.presentation.extensions.showSnackbar
@@ -101,11 +100,11 @@ class WeatherFragment : Fragment() {
 
     private fun provideDependencies(context: Context) {
         val appComponent = MyApplication.getAppComponent(context)
-        val activityComponent = DaggerActivityComponent.builder()
-            .appComponent(appComponent)
-            .build()
+//        val activityComponent = DaggerActivityComponent.builder()
+//            .appComponent(appComponent)
+//            .build()
 
-        viewModel = ViewModelProvider(this, activityComponent.getViewModelFactory()).get(
+        viewModel = ViewModelProvider(this, appComponent.getViewModelFactory()).get(
             WeatherViewModel::class.java)
         dataStorage = appComponent.getDataStorage()
     }

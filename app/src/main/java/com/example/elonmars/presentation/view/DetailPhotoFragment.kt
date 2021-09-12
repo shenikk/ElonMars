@@ -16,7 +16,6 @@ import com.bumptech.glide.Glide
 import com.example.elonmars.MyApplication
 import com.example.elonmars.R
 import com.example.elonmars.data.model.PhotoItem
-import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.extensions.showSnackbar
 import com.example.elonmars.presentation.viewmodel.DetailPhotoViewModel
 import com.google.android.material.appbar.CollapsingToolbarLayout
@@ -109,11 +108,11 @@ class DetailPhotoFragment : Fragment() {
 
     private fun createViewModel(context: Context) {
         val appComponent = MyApplication.getAppComponent(context)
-        val activityComponent = DaggerActivityComponent.builder()
-            .appComponent(appComponent)
-            .build()
+//        val activityComponent = DaggerActivityComponent.builder()
+//            .appComponent(appComponent)
+//            .build()
 
-        viewModel = ViewModelProvider(this, activityComponent.getViewModelFactory()).get(
+        viewModel = ViewModelProvider(this, appComponent.getViewModelFactory()).get(
             DetailPhotoViewModel::class.java
         )
     }

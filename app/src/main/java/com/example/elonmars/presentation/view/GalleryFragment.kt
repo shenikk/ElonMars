@@ -2,6 +2,7 @@ package com.example.elonmars.presentation.view
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +17,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.elonmars.MyApplication
 import com.example.elonmars.R
 import com.example.elonmars.data.model.PhotoItem
-import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.GalleryType
 import com.example.elonmars.presentation.adapter.PhotoAdapter
 import com.example.elonmars.presentation.extensions.getColorFromAttr
@@ -105,12 +105,18 @@ class GalleryFragment : Fragment() {
     }
 
     private fun provideDependencies(context: Context) {
-        val appComponent = MyApplication.getAppComponent(context)
-        val activityComponent = DaggerActivityComponent.builder()
-            .appComponent(appComponent)
-            .build()
+        Log.d("HEY", "start provide dependencies")
+//        val appComponent = MyApplication.getAppComponent(context)
+//        val activityComponent = DaggerActivityComponent.builder()
+//            .appComponent(appComponent)
+//            .build()
 
-        viewModel = ViewModelProvider(this, activityComponent.getViewModelFactory()).get(GalleryViewModel::class.java)
+//        val activityComponent = MyApplication.getActivityComponent(context)
+
+//        viewModel = ViewModelProvider(this, appComponent.getViewModelFactory()).get(GalleryViewModel::class.java)
+//        viewModel = ViewModelProvider(this, MyApplication.getViewModelFactory(context)).get(GalleryViewModel::class.java)
+        viewModel = MyApplication.getViewModelFactory(context, this)
+        Log.d("HEY", "end provide dependencies")
     }
 
     private fun observeLiveData() {

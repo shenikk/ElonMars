@@ -20,7 +20,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.elonmars.MyApplication
 import com.example.elonmars.R
-import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.adapter.TaskAdapter
 import com.example.elonmars.presentation.extensions.logError
 import com.example.elonmars.presentation.extensions.showSnackbar
@@ -87,11 +86,11 @@ class MarsMissionFragment : Fragment() {
 
     private fun provideDependencies(context: Context) {
         val appComponent = MyApplication.getAppComponent(context)
-        val activityComponent = DaggerActivityComponent.builder()
-            .appComponent(appComponent)
-            .build()
+//        val activityComponent = DaggerActivityComponent.builder()
+//            .appComponent(appComponent)
+//            .build()
 
-        viewModel = ViewModelProvider(this, activityComponent.getViewModelFactory()).get(
+        viewModel = ViewModelProvider(this, appComponent.getViewModelFactory()).get(
             MarsMissionViewModel::class.java
         )
     }
