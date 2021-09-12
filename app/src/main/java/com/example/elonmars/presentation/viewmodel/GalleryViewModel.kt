@@ -42,6 +42,12 @@ class GalleryViewModel(
                 progressLiveData.postValue(true)
             }
             .doAfterTerminate { progressLiveData.postValue(false) }
+            .map {
+                val filteredList = it.filter { photo ->
+                    photo.media_type == "image"
+                }
+                return@map ArrayList(filteredList)
+            }
             .subscribeOn(schedulersProvider.io())
             .observeOn(schedulersProvider.ui())
             .subscribe(photoItemsLiveData::setValue, errorLiveData::setValue)
@@ -56,6 +62,12 @@ class GalleryViewModel(
                 refreshLiveData.postValue(true)
             }
             .doAfterTerminate { refreshLiveData.postValue(false) }
+            .map {
+                val filteredList = it.filter { photo ->
+                    photo.media_type == "image"
+                }
+                return@map ArrayList(filteredList)
+            }
             .subscribeOn(schedulersProvider.io())
             .observeOn(schedulersProvider.ui())
             .subscribe(photoItemsLiveData::setValue, errorLiveData::setValue)
