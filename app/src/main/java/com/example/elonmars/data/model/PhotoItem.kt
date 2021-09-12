@@ -19,7 +19,8 @@ data class PhotoItem(
     @SerializedName("url")
     var image: String? = null,
     var explanation: String? = null,
-    var isFavourite: Boolean = false) : Parcelable {
+    var isFavourite: Boolean = false,
+    var media_type: String? = null) : Parcelable {
 
     override fun equals(other: Any?): Boolean{
         other as PhotoItem

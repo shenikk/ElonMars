@@ -1,6 +1,7 @@
 package com.example.elonmars.domain.repositories
 
 import com.example.elonmars.data.model.PhotoItem
+import io.reactivex.Observable
 import io.reactivex.Single
 
 /**
@@ -13,7 +14,7 @@ interface IPhotosRepository {
      *
      * @return Single со списком моделей [PhotoItem]
      */
-    fun loadPhotosAsync(): Single<ArrayList<PhotoItem>>
+    fun loadPhotosAsync(): Observable<ArrayList<PhotoItem>>
 
     fun loadPhotosOnCall(): Single<ArrayList<PhotoItem>>
 
