@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.elonmars.MyApplication
 import com.example.elonmars.R
+import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.broadcast.NotificationBroadcastReceiver
 import com.example.elonmars.presentation.enum.TimerState
 import com.example.elonmars.presentation.service.NotificationService
@@ -67,10 +68,12 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
     private fun provideDependencies(context: Context) {
         val appComponent = MyApplication.getAppComponent(context)
+        val activityComponent = DaggerActivityComponent.builder()
+            .appComponent(appComponent)
+            .build()
 
-        viewModel = ViewModelProvider(this, appComponent.getViewModelFactory()).get(
-            HomeViewModel::class.java
-        )
+        viewModel = ViewModelProvider(this, activityComponent.getViewModelFactory()).get(
+            HomeViewModel::class.java)
     }
 
     private fun observeLiveData() {
