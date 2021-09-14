@@ -78,11 +78,8 @@ class GalleryFragment : Fragment() {
     }
 
     private fun updateText(noFavourites: TextView, dataSet: ArrayList<PhotoItem>) {
-        if (dataSet.isEmpty()) {
-            noFavourites.visibility = View.VISIBLE
-        } else {
-            noFavourites.visibility = View.GONE
-        }
+        val visibility = if (dataSet.isEmpty()) View.VISIBLE else View.GONE
+        noFavourites.visibility = visibility
     }
 
     private fun setUpAdapter(dataSet: ArrayList<PhotoItem>) {
@@ -94,7 +91,7 @@ class GalleryFragment : Fragment() {
                     )
                 )
             }
-            holder.starIcon.setOnClickListener {
+            holder.setOnStarClickListener {
                 viewModel?.setFavourite(currentItem)
 
                 // обновляем звездочку после нажатия

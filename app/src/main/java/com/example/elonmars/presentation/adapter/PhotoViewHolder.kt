@@ -13,15 +13,31 @@ import com.example.elonmars.data.model.PhotoItem
  * ViewHolder для [com.example.elonmars.presentation.adapter.PhotoAdapter]
  */
 class PhotoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    var imageView: ImageView = view.findViewById(R.id.image)
-    var titleText: TextView = view.findViewById(R.id.title)
-    var dateText: TextView = view.findViewById(R.id.description)
-    var starIcon: ImageView = view.findViewById(R.id.star_icon)
+    private val imageView: ImageView = view.findViewById(R.id.image)
+    private val titleText: TextView = view.findViewById(R.id.title)
+    private val dateText: TextView = view.findViewById(R.id.description)
+    private val starIcon: ImageView = view.findViewById(R.id.star_icon)
 
-    fun configureImage(currentItem: PhotoItem) {
+    fun configureHolder(currentItem: PhotoItem) {
+        titleText.text = currentItem.date
+        dateText.text = currentItem.title
+        configureImage(currentItem)
+
+        val imageResource =
+            if (currentItem.isFavourite) R.drawable.ic_fav_star_selected else R.drawable.ic_fav_star
+        starIcon.setImageResource(imageResource)
+    }
+
+    fun setOnStarClickListener(click: () -> Unit) {
+        starIcon.setOnClickListener {
+            click()
+        }
+    }
+
+    private fun configureImage(currentItem: PhotoItem) {
         Glide.with(imageView.context)
             .load(currentItem.image)
-                .centerInside()
+            .centerInside()
             .diskCacheStrategy(DiskCacheStrategy.DATA) //FIXME?
             .into(imageView)
     }
