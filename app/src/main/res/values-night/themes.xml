@@ -22,4 +22,8 @@
     <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
     </style>
+
+    <style name="SplashScreenTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
 </resources>
