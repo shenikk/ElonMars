@@ -27,7 +27,7 @@ class TaskItemsProvider(private val tasksDbHelper: TasksDbHelper) : ITaskItemsPr
         db.insert(TasksDbSchema.TasksTable.NAME, null, contentValues)
     }
 
-    override fun getTasksByDate(date: Calendar): ArrayList<TaskItem> {
+    override fun getTasksByDate(date: Calendar): List<TaskItem> {
         val db: SQLiteDatabase = tasksDbHelper.readableDatabase
 
         val projection = arrayOf(
@@ -102,7 +102,7 @@ class TaskItemsProvider(private val tasksDbHelper: TasksDbHelper) : ITaskItemsPr
         )
     }
 
-    private fun readFromCursor(cursor: Cursor, date: Calendar): ArrayList<TaskItem> {
+    private fun readFromCursor(cursor: Cursor, date: Calendar): List<TaskItem> {
         val tasksList = arrayListOf<TaskItem>()
         try {
             while (cursor.moveToNext()) {

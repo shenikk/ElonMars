@@ -18,7 +18,7 @@ import retrofit2.Retrofit
 class WeatherItemsProvider(private val retrofitClient: Retrofit) : IWeatherItemsProvider {
 
     @Throws(java.lang.Exception::class)
-    override fun loadWeatherItemsList(): ArrayList<WeatherDataItem> {
+    override fun loadWeatherItemsList(): List<WeatherDataItem> {
         val weatherRetrofitRequest = retrofitClient.create(WeatherApiInterface::class.java)
         val call = weatherRetrofitRequest.getWeatherData("weather", "msl", "json")
 
@@ -27,7 +27,7 @@ class WeatherItemsProvider(private val retrofitClient: Retrofit) : IWeatherItems
         }
     }
 
-    private fun executeCall(response: Response<WeatherData>): ArrayList<WeatherDataItem> {
+    private fun executeCall(response: Response<WeatherData>): List<WeatherDataItem> {
         return try {
             if (response.isSuccessful) {
                 if (response.body()?.weatherDataItems.isNullOrEmpty()) {

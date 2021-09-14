@@ -10,7 +10,7 @@ class TaskInteractor(private val tasksRepository: ITasksRepository) : ITaskInter
 
     override fun saveDataAsync(taskItem: TaskItem): Completable = tasksRepository.saveDataAsync(taskItem)
 
-    override fun getDataAsync(date: Calendar): Single<ArrayList<TaskItem>> = tasksRepository.getDataAsync(date)
+    override fun getDataAsync(date: Calendar): Single<List<TaskItem>> = tasksRepository.getDataAsync(date)
 
     override fun updateDataAsync(taskItem: TaskItem): Completable = tasksRepository.updateDataAsync(taskItem)
 

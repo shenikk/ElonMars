@@ -26,7 +26,7 @@ class MarsMissionViewModel(
     private var disposable: Disposable? = null
 
     private val errorLiveData = MutableLiveData<Throwable>()
-    private val taskItemsLiveData = MutableLiveData<ArrayList<TaskItem>>()
+    private val taskItemsLiveData = MutableLiveData<List<TaskItem>>()
 
     override fun onCleared() {
         super.onCleared()
@@ -62,7 +62,7 @@ class MarsMissionViewModel(
             .subscribe()
     }
 
-    fun getTaskItemLiveData(): LiveData<ArrayList<TaskItem>> {
+    fun getTaskItemLiveData(): LiveData<List<TaskItem>> {
         return taskItemsLiveData
     }
 

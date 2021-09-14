@@ -20,7 +20,7 @@ class PhotosRepository(
     private val galleryProvider: IGalleryProvider
 ) : IPhotosRepository {
 
-    override fun loadPhotosAsync(): Observable<ArrayList<PhotoItem>> {
+    override fun loadPhotosAsync(): Observable<List<PhotoItem>> {
         return Observable.fromCallable {
             dataStorage.photos
                 ?: galleryProvider.loadPhotoItemsList()
@@ -29,28 +29,30 @@ class PhotosRepository(
     }
 
     @Throws(java.lang.Exception::class)
-    override fun loadPhotosOnCall(): Single<ArrayList<PhotoItem>> {
+    override fun loadPhotosOnCall(): Single<List<PhotoItem>> {
         return Single.fromCallable {
             galleryProvider.loadPhotoItemsList().also { dataStorage.photos = it }
         }
     }
 
-    override fun getPhotosFromCache(): ArrayList<PhotoItem> {
+    override fun getPhotosFromCache(): List<PhotoItem> {
         return dataStorage.favouritePhotos ?: arrayListOf()
     }
 
     override fun setFavourite(photoItem: PhotoItem) {
         if (dataStorage.favouritePhotos?.contains(photoItem) == true) {
 
-            val newList = dataStorage.favouritePhotos ?: arrayListOf()
-            newList.remove(photoItem)
+            val newList: List<PhotoItem> = dataStorage.favouritePhotos ?: arrayListOf()
+            val mutableList = newList.toMutableList()
+            mutableList.remove(photoItem)
 
-            dataStorage.favouritePhotos = newList
+            dataStorage.favouritePhotos = mutableList
         } else {
-            val newList = dataStorage.favouritePhotos ?: arrayListOf()
-            newList.add(photoItem)
+            val newList: List<PhotoItem> = dataStorage.favouritePhotos ?: arrayListOf()
+            val mutableList = newList.toMutableList()
+            mutableList.add(photoItem)
 
-            dataStorage.favouritePhotos = newList
+            dataStorage.favouritePhotos = mutableList
         }
     }
 }

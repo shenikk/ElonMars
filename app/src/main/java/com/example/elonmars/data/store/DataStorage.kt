@@ -21,16 +21,16 @@ class DataStorage(private val preferences: SharedPreferences) : DataPreferences(
     }
 
     /** Список с моделями [WeatherDataItem] */
-    override var weatherDataItems: ArrayList<WeatherDataItem>?
+    override var weatherDataItems: List<WeatherDataItem>?
         get() = preferences.getString(WEATHER_KEY, null)?.let { getDataFromJson(it) }
         set(value) = preferences.edit().putString(WEATHER_KEY, convertDataToJson(value)).apply()
 
     /** Список с моделями [PhotoItem] */
-    override var photos: ArrayList<PhotoItem>?
+    override var photos: List<PhotoItem>?
         get() = preferences.getString(PHOTOS_KEY, null)?.let { getDataFromJson(it) }
         set(value) = preferences.edit().putString(PHOTOS_KEY, convertDataToJson(value)).apply()
 
-    override var favouritePhotos: ArrayList<PhotoItem>?
+    override var favouritePhotos: List<PhotoItem>?
         get() = preferences.getString(FAVOURITE_PHOTOS_KEY, null)?.let { getDataFromJson(it) }
         set(value) = preferences.edit().putString(FAVOURITE_PHOTOS_KEY, convertDataToJson(value)).apply()
 

@@ -22,7 +22,7 @@ class GalleryProvider(private val retrofitClient: Retrofit) : IGalleryProvider {
     }
 
     @Throws(java.lang.Exception::class)
-    override fun loadPhotoItemsList(): ArrayList<PhotoItem> {
+    override fun loadPhotoItemsList(): List<PhotoItem> {
         val weatherRetrofitRequest = retrofitClient.create(PhotoApiInterface::class.java)
 
         val call = weatherRetrofitRequest.getPhotos(BuildConfig.API_KEY, NUMBER_OF_PHOTOS)
@@ -32,7 +32,7 @@ class GalleryProvider(private val retrofitClient: Retrofit) : IGalleryProvider {
         }
     }
 
-    private fun executeCall(response: Response<ArrayList<PhotoItem>>): ArrayList<PhotoItem> {
+    private fun executeCall(response: Response<List<PhotoItem>>): List<PhotoItem> {
         return try {
             if (response.isSuccessful) {
                 if (response.body().isNullOrEmpty()) {

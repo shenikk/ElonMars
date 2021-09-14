@@ -27,8 +27,8 @@ class GalleryViewModel(
 
     private val progressLiveData = MutableLiveData<Boolean>()
     private val errorLiveData = MutableLiveData<Throwable>()
-    private val photoItemsLiveData = MutableLiveData<ArrayList<PhotoItem>>()
-    private val favPhotoItemsLiveData = MutableLiveData<ArrayList<PhotoItem>>()
+    private val photoItemsLiveData = MutableLiveData<List<PhotoItem>>()
+    private val favPhotoItemsLiveData = MutableLiveData<List<PhotoItem>>()
     private val refreshLiveData = MutableLiveData<Boolean>()
 
     private var galleryType: GalleryType = GalleryType.RANDOM
@@ -46,7 +46,7 @@ class GalleryViewModel(
                 val filteredList = it.filter { photo ->
                     photo.media_type == "image"
                 }
-                return@map ArrayList(filteredList)
+                return@map filteredList
             }
             .subscribeOn(schedulersProvider.io())
             .observeOn(schedulersProvider.ui())
@@ -66,7 +66,7 @@ class GalleryViewModel(
                 val filteredList = it.filter { photo ->
                     photo.media_type == "image"
                 }
-                return@map ArrayList(filteredList)
+                return@map filteredList
             }
             .subscribeOn(schedulersProvider.io())
             .observeOn(schedulersProvider.ui())
@@ -122,11 +122,11 @@ class GalleryViewModel(
      *
      * @return LiveData со списком моделей [PhotoItem]
      */
-    fun getPhotoItemsLiveData(): LiveData<ArrayList<PhotoItem>> {
+    fun getPhotoItemsLiveData(): LiveData<List<PhotoItem>> {
         return photoItemsLiveData
     }
 
-    fun getFavPhotoItemsLiveData(): LiveData<ArrayList<PhotoItem>> {
+    fun getFavPhotoItemsLiveData(): LiveData<List<PhotoItem>> {
         return favPhotoItemsLiveData
     }
     /**

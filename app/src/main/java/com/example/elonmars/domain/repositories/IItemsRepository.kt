@@ -14,7 +14,7 @@ interface IItemsRepository {
      *
      * @return Single со списком моделей [WeatherDataItem]
      */
-    fun loadDataAsync(): Single<ArrayList<WeatherDataItem>>
+    fun loadDataAsync(): Single<List<WeatherDataItem>>
 
-    fun loadDataAsyncOnCall(): Single<ArrayList<WeatherDataItem>>
+    fun loadDataAsyncOnCall(): Single<List<WeatherDataItem>>
 }

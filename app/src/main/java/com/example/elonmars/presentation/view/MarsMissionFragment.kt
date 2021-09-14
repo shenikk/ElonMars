@@ -32,6 +32,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import java.util.*
+import kotlin.collections.ArrayList
 
 /** Экран с задачами, добавляемые пользователем */
 class MarsMissionFragment : Fragment() {
@@ -43,7 +44,7 @@ class MarsMissionFragment : Fragment() {
     private lateinit var noTaskText: TextView
     private lateinit var chosenTaskDate: Calendar
 
-    private var dataSet: ArrayList<TaskItem> = arrayListOf()
+    private var dataSet: List<TaskItem> = arrayListOf()
     private var viewModel: MarsMissionViewModel? = null
 
     companion object {
@@ -110,7 +111,7 @@ class MarsMissionFragment : Fragment() {
         }
     }
 
-    private fun showData(list: ArrayList<TaskItem>) {
+    private fun showData(list: List<TaskItem>) {
         setUpAdapter(list)
         updateText(noTaskText, list)
     }
@@ -120,7 +121,7 @@ class MarsMissionFragment : Fragment() {
         showSnackbar(R.string.fragment_error_message)
     }
 
-    private fun updateText(noTaskText: TextView, dataSet: ArrayList<TaskItem>) {
+    private fun updateText(noTaskText: TextView, dataSet: List<TaskItem>) {
         if (dataSet.isEmpty()) {
             noTaskText.visibility = View.VISIBLE
         } else {
@@ -128,8 +129,8 @@ class MarsMissionFragment : Fragment() {
         }
     }
 
-    private fun setUpAdapter(dataSet: ArrayList<TaskItem>) {
-        taskAdapter = TaskAdapter(dataSet) { holder, taskItem ->
+    private fun setUpAdapter(dataSet: List<TaskItem>) {
+        taskAdapter = TaskAdapter(ArrayList(dataSet)) { holder, taskItem ->
             holder.itemView.setOnLongClickListener {
                 setUpAlertDialog(taskItem, it.context)
                 true

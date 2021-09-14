@@ -7,7 +7,7 @@ import java.util.*
 
 interface ITasksRepository {
     fun saveDataAsync(taskItem: TaskItem): Completable
-    fun getDataAsync(date: Calendar): Single<ArrayList<TaskItem>>
+    fun getDataAsync(date: Calendar): Single<List<TaskItem>>
     fun updateDataAsync(taskItem: TaskItem): Completable
     fun deleteTask(taskItem: TaskItem): Completable
 }

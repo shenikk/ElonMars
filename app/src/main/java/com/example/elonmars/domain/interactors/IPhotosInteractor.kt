@@ -5,8 +5,8 @@ import io.reactivex.Observable
 import io.reactivex.Single
 
 interface IPhotosInteractor {
-    fun loadPhotosAsync(): Observable<ArrayList<PhotoItem>>
-    fun loadPhotosOnCall(): Single<ArrayList<PhotoItem>>
-    fun getFavouritePhotos(): ArrayList<PhotoItem>
+    fun loadPhotosAsync(): Observable<List<PhotoItem>>
+    fun loadPhotosOnCall(): Single<List<PhotoItem>>
+    fun getFavouritePhotos(): List<PhotoItem>
     fun setFavourite(photoItem: PhotoItem)
 }

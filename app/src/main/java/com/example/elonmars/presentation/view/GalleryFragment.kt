@@ -77,12 +77,12 @@ class GalleryFragment : Fragment() {
         }
     }
 
-    private fun updateText(noFavourites: TextView, dataSet: ArrayList<PhotoItem>) {
+    private fun updateText(noFavourites: TextView, dataSet: List<PhotoItem>) {
         val visibility = if (dataSet.isEmpty()) View.VISIBLE else View.GONE
         noFavourites.visibility = visibility
     }
 
-    private fun setUpAdapter(dataSet: ArrayList<PhotoItem>) {
+    private fun setUpAdapter(dataSet: List<PhotoItem>) {
         photoAdapter = PhotoAdapter(dataSet) { holder, currentItem ->
             holder.itemView.setOnClickListener { view ->
                 findNavController().navigate(
@@ -153,7 +153,7 @@ class GalleryFragment : Fragment() {
         }
     }
 
-    private fun showData(list: ArrayList<PhotoItem>) {
+    private fun showData(list: List<PhotoItem>) {
         setUpAdapter(list)
         recyclerView.adapter = photoAdapter
         viewModel?.setContentType(GalleryType.RANDOM)
@@ -161,7 +161,7 @@ class GalleryFragment : Fragment() {
         updateText(noFavourites, list)
     }
 
-    private fun showFavData(list: ArrayList<PhotoItem>) {
+    private fun showFavData(list: List<PhotoItem>) {
         setUpAdapter(list)
         recyclerView.adapter = photoAdapter
         viewModel?.setContentType(GalleryType.FAVOURITE)

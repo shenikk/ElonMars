@@ -21,7 +21,7 @@ class TasksRepository(private val taskItemsProvider: ITaskItemsProvider) : ITask
         return Completable.fromCallable { taskItemsProvider.saveTask(taskItem) }
     }
 
-    override fun getDataAsync(date: Calendar): Single<ArrayList<TaskItem>> {
+    override fun getDataAsync(date: Calendar): Single<List<TaskItem>> {
         return Single.fromCallable { taskItemsProvider.getTasksByDate(date) }
     }
 

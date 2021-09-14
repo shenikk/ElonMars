@@ -5,7 +5,7 @@ import java.util.*
 
 interface ITaskItemsProvider {
     fun saveTask(taskItem: TaskItem)
-    fun getTasksByDate(date: Calendar): ArrayList<TaskItem>
+    fun getTasksByDate(date: Calendar): List<TaskItem>
     fun updateTaskStatus(taskItem: TaskItem)
     fun deleteTask(taskItem: TaskItem)
 }

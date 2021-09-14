@@ -9,24 +9,24 @@ import java.lang.reflect.Type
 abstract class DataPreferences {
 
     /** Метод для парсинга данных из формата Json */
-    protected inline fun <reified T> getDataFromJson(input: String): ArrayList<T> {
+    protected inline fun <reified T> getDataFromJson(input: String): List<T> {
         val moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()
         val type: Type = Types.newParameterizedType(MutableList::class.java, T::class.java)
-        val jsonAdapter: JsonAdapter<ArrayList<T>> = moshi.adapter(type)
+        val jsonAdapter: JsonAdapter<List<T>> = moshi.adapter(type)
 
         return jsonAdapter.fromJson(input)!!
     }
 
     /** Метод для парсинга данных в формат Json */
-    protected inline fun <reified T> convertDataToJson(input: ArrayList<T>?): String? {
+    protected inline fun <reified T> convertDataToJson(input: List<T>?): String? {
         return input?.let {
             val moshi = Moshi.Builder()
                 .add(KotlinJsonAdapterFactory())
                 .build()
             val type: Type = Types.newParameterizedType(MutableList::class.java, T::class.java)
-            val jsonAdapter: JsonAdapter<ArrayList<T>> = moshi.adapter(type)
+            val jsonAdapter: JsonAdapter<List<T>> = moshi.adapter(type)
 
             return jsonAdapter.toJson(it)
         }

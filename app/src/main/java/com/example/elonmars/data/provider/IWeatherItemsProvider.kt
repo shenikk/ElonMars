@@ -12,5 +12,5 @@ interface IWeatherItemsProvider {
      *
      * @return список моделей [WeatherDataItem] описывающих информацию о погоде за конкретный день.
      */
-    fun loadWeatherItemsList(): ArrayList<WeatherDataItem>
+    fun loadWeatherItemsList(): List<WeatherDataItem>
 }

@@ -13,7 +13,7 @@ import com.example.elonmars.R
  * @param onItemBind лямбда с полезной нагрузкой, которая выполняется при биндинга холдера
  */
 class PhotoAdapter(
-    private val dataSet: ArrayList<PhotoItem>,
+    private val dataSet: List<PhotoItem>,
     private val onItemBind: (PhotoViewHolder, PhotoItem) -> Unit
 ) : RecyclerView.Adapter<PhotoViewHolder>() {
 

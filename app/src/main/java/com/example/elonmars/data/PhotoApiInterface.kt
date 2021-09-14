@@ -19,5 +19,5 @@ interface PhotoApiInterface {
     fun getPhotos(
             @Query("api_key") apiKey: String,
             @Query("count") count: Int
-    ) : Call<ArrayList<PhotoItem>>
+    ) : Call<List<PhotoItem>>
 }

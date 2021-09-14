@@ -7,7 +7,7 @@ import io.reactivex.Single
 
 class PhotosInteractor(private val photosRepository: IPhotosRepository) : IPhotosInteractor {
 
-    override fun loadPhotosAsync(): Observable<ArrayList<PhotoItem>> {
+    override fun loadPhotosAsync(): Observable<List<PhotoItem>> {
         val favPhotos = photosRepository.getPhotosFromCache()
 
         return photosRepository.loadPhotosAsync().map {
@@ -20,16 +20,16 @@ class PhotosInteractor(private val photosRepository: IPhotosRepository) : IPhoto
         }
     }
 
-    override fun loadPhotosOnCall(): Single<ArrayList<PhotoItem>> {
+    override fun loadPhotosOnCall(): Single<List<PhotoItem>> {
         return photosRepository.loadPhotosOnCall()
     }
 
-    override fun getFavouritePhotos(): ArrayList<PhotoItem> {
-        return ArrayList(photosRepository.getPhotosFromCache().map {
+    override fun getFavouritePhotos(): List<PhotoItem> {
+        return photosRepository.getPhotosFromCache().map {
             it.isFavourite = true
 
             return@map it
-        })
+        }
     }
 
     override fun setFavourite(photoItem: PhotoItem) {

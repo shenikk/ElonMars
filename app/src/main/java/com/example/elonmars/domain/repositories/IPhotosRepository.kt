@@ -14,11 +14,11 @@ interface IPhotosRepository {
      *
      * @return Single со списком моделей [PhotoItem]
      */
-    fun loadPhotosAsync(): Observable<ArrayList<PhotoItem>>
+    fun loadPhotosAsync(): Observable<List<PhotoItem>>
 
-    fun loadPhotosOnCall(): Single<ArrayList<PhotoItem>>
+    fun loadPhotosOnCall(): Single<List<PhotoItem>>
 
-    fun getPhotosFromCache(): ArrayList<PhotoItem>
+    fun getPhotosFromCache(): List<PhotoItem>
 
     fun setFavourite(photoItem: PhotoItem)
 }

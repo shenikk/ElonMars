@@ -6,11 +6,11 @@ import io.reactivex.Single
 
 class WeatherInteractor(private val itemsRepository: IItemsRepository) : IWeatherInteractor {
 
-    override fun loadDataAsync(): Single<ArrayList<WeatherDataItem>> {
+    override fun loadDataAsync(): Single<List<WeatherDataItem>> {
         return itemsRepository.loadDataAsync()
     }
 
-    override fun loadDataAsyncOnCall(): Single<ArrayList<WeatherDataItem>> {
+    override fun loadDataAsyncOnCall(): Single<List<WeatherDataItem>> {
         return itemsRepository.loadDataAsyncOnCall()
     }
 }

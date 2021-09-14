@@ -12,5 +12,5 @@ interface IGalleryProvider {
      *
      * @return список моделей [PhotoItem] описывающих загруженные из сети фото на космическую тему.
      */
-    fun loadPhotoItemsList(): ArrayList<PhotoItem>
+    fun loadPhotoItemsList(): List<PhotoItem>
 }
