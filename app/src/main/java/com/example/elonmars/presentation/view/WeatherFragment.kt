@@ -28,9 +28,8 @@ class WeatherFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var weatherAdapter: WeatherAdapter
-    private lateinit var mShimmerViewContainer: ShimmerFrameLayout
+    private lateinit var shimmerViewContainer: ShimmerFrameLayout
     private lateinit var weatherDay: TextView
-    private lateinit var title: TextView
     private lateinit var today: TextView
     private lateinit var highTemp: TextView
     private lateinit var lowTemp: TextView
@@ -71,13 +70,13 @@ class WeatherFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        mShimmerViewContainer.startShimmerAnimation()
+        shimmerViewContainer.startShimmerAnimation()
     }
 
     private fun init() {
         view?.let {
             recyclerView = it.findViewById(R.id.weather_recycler)
-            mShimmerViewContainer = it.findViewById(R.id.shimmer_view_container)
+            shimmerViewContainer = it.findViewById(R.id.shimmer_view_container)
             weatherDay = it.findViewById(R.id.weather_day)
             today = it.findViewById(R.id.today)
             highTemp = it.findViewById(R.id.temp_high)
@@ -149,10 +148,10 @@ class WeatherFragment : Fragment() {
 
     private fun showProgress(isVisible: Boolean) {
         if (isVisible) {
-            mShimmerViewContainer.startShimmerAnimation()
+            shimmerViewContainer.startShimmerAnimation()
         } else {
-            mShimmerViewContainer.stopShimmerAnimation()
-            mShimmerViewContainer.visibility = View.GONE
+            shimmerViewContainer.stopShimmerAnimation()
+            shimmerViewContainer.visibility = View.GONE
         }
     }
 

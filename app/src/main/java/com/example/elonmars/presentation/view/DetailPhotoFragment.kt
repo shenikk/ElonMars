@@ -3,7 +3,6 @@ package com.example.elonmars.presentation.view
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.ScaleGestureDetector
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -24,18 +23,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 /** Экран с детальной информацией о выбранном фото */
 class DetailPhotoFragment : Fragment() {
-
-    private lateinit var scaleGestureDetector: ScaleGestureDetector
+    
     private lateinit var detailPhoto: ImageView
-    private var scaleFactor: Float = 1.0f
     private var viewModel: DetailPhotoViewModel? = null
 
     private var currentItem: PhotoItem? = null
-
-    companion object {
-        private var MIN_SCALE = 0.1f
-        private var MAX_SCALE = 10.0f
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,9 +40,7 @@ class DetailPhotoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_detail_photo, container, false)
-//        setZoom(view)
-        return view
+        return inflater.inflate(R.layout.fragment_detail_photo, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -94,15 +84,13 @@ class DetailPhotoFragment : Fragment() {
                 }
             }
         }
-
-//        setScaleGestureDetector()
         setUpToolBar(view)
     }
 
     private fun setFabIcon(currentItem: PhotoItem, fab: FloatingActionButton) {
-        val resourse = if (currentItem.isFavourite) R.drawable.ic_done else R.drawable.ic_fav_star
+        val resource = if (currentItem.isFavourite) R.drawable.ic_done else R.drawable.ic_fav_star
         fab.hide()
-        fab.setImageResource(resourse)
+        fab.setImageResource(resource)
         fab.show()
         currentItem.isFavourite = !currentItem.isFavourite
     }
@@ -127,33 +115,4 @@ class DetailPhotoFragment : Fragment() {
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar)
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar)
     }
-
-//    private fun setScaleGestureDetector() {
-//        scaleGestureDetector = ScaleGestureDetector(
-//            context,
-//            object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
-//                override fun onScale(detector: ScaleGestureDetector?): Boolean {
-//                    detector?.let {
-//                        scaleFactor *= detector.scaleFactor
-//
-//                        scaleFactor = Math.max(MIN_SCALE, Math.min(scaleFactor, MAX_SCALE))
-//
-//                        detailPhoto.scaleX = scaleFactor
-//                        detailPhoto.scaleY = scaleFactor
-//                    }
-//                    return true
-//                }
-//            })
-//    }
-//
-//    private fun setZoom(view: View) {
-//        view.setOnTouchListener(object : View.OnTouchListener {
-//            override fun onTouch(v: View?, event: MotionEvent): Boolean {
-//                if (scaleGestureDetector.onTouchEvent(event)) {
-//                    return true
-//                }
-//                return false
-//            }
-//        })
-//    }
 }
