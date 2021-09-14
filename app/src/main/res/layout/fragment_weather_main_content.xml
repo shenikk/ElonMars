@@ -8,53 +8,41 @@
 
     <TextView
         android:id="@+id/weather_day"
+        style="@style/WeatherTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_16"
         android:layout_marginBottom="@dimen/dp_16"
         android:src="@mipmap/ic_launcher"
-        android:textSize="@dimen/dp_30"
-        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/today"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/today"
+        style="@style/WeatherTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_16"
         android:src="@mipmap/ic_launcher"
         android:text="@string/weather_fragment_latest_day"
-        android:textSize="@dimen/dp_30"
-        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/previous_days"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/weather_day" />
 
     <TextView
         android:id="@+id/temp_high"
+        style="@style/TemperatureTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_4"
-        android:layout_marginLeft="@dimen/dp_4"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:layout_marginRight="@dimen/dp_4"
         android:text="@string/weather_fragment_high_na"
-        android:textSize="@dimen/dp_30"
         app:layout_constraintBaseline_toBaselineOf="@id/weather_day"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/temp_low"
+        style="@style/TemperatureTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_4"
-        android:layout_marginLeft="@dimen/dp_4"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:layout_marginRight="@dimen/dp_4"
         android:text="@string/weather_fragment_low_na"
-        android:textSize="@dimen/dp_30"
         app:layout_constraintBaseline_toBaselineOf="@id/today"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -62,7 +50,7 @@
         android:id="@+id/previous_days"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginStart="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_50"
         android:layout_marginBottom="@dimen/dp_16"
         android:text="@string/previous_days"

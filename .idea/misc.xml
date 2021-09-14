@@ -7,13 +7,20 @@
         <entry key="app/src/main/res/drawable/bottom_sheet_background.xml" value="0.2898148148148148" />
         <entry key="app/src/main/res/drawable/detail_photo_background.xml" value="0.1421875" />
         <entry key="app/src/main/res/drawable/gallery_background.xml" value="0.24114583333333334" />
+        <entry key="app/src/main/res/drawable/gradient1.xml" value="0.17083333333333334" />
+        <entry key="app/src/main/res/drawable/gradient3.xml" value="0.17083333333333334" />
+        <entry key="app/src/main/res/drawable/ic_close.xml" value="0.2601851851851852" />
         <entry key="app/src/main/res/drawable/ic_fav_star.xml" value="0.30925925925925923" />
         <entry key="app/src/main/res/drawable/ic_fav_star_selected.xml" value="0.30925925925925923" />
         <entry key="app/src/main/res/drawable/ic_star.xml" value="0.30925925925925923" />
+        <entry key="app/src/main/res/drawable/shimmer_gradient1.xml" value="0.17083333333333334" />
+        <entry key="app/src/main/res/drawable/shimmer_gradient2.xml" value="0.17083333333333334" />
+        <entry key="app/src/main/res/drawable/shimmer_gradient3.xml" value="0.17083333333333334" />
         <entry key="app/src/main/res/drawable/title_background.xml" value="0.24114583333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1524822695035461" />
         <entry key="app/src/main/res/layout/activity_preference.xml" value="0.23867753623188406" />
         <entry key="app/src/main/res/layout/bottom_sheet.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/cutom_notification.xml" value="0.23505434782608695" />
         <entry key="app/src/main/res/layout/data_placeholder_weather.xml" value="0.1524822695035461" />
         <entry key="app/src/main/res/layout/fragment_detail_photo.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.335" />
@@ -23,12 +30,15 @@
         <entry key="app/src/main/res/layout/fragment_rover.xml" value="0.1524822695035461" />
         <entry key="app/src/main/res/layout/fragment_weather.xml" value="0.1524822695035461" />
         <entry key="app/src/main/res/layout/fragment_weather_list_content.xml" value="0.1524822695035461" />
-        <entry key="app/src/main/res/layout/fragment_weather_main_content.xml" value="0.1524822695035461" />
-        <entry key="app/src/main/res/layout/photo_item.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_weather_main_content.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/photo_item.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/shimmer_photo_item.xml" value="0.2608695652173913" />
         <entry key="app/src/main/res/layout/task_item.xml" value="0.1524822695035461" />
         <entry key="app/src/main/res/layout/weather_item.xml" value="0.25" />
         <entry key="app/src/main/res/menu/bottom_nav_bar.xml" value="0.24814814814814815" />
         <entry key="app/src/main/res/menu/settings_menu.xml" value="0.31354166666666666" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.17083333333333334" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.17083333333333334" />
         <entry key="app/src/main/res/xml/main_preference.xml" value="0.23867753623188406" />
       </map>
     </option>
