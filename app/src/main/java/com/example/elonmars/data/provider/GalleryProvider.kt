@@ -46,7 +46,7 @@ class GalleryProvider(private val retrofitClient: Retrofit) : IGalleryProvider {
             }
         } catch (e: java.lang.Exception) {
             logError("Return failed", e)
-            throw e
+            listOf()
         }
     }
 }

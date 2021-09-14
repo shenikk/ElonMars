@@ -41,7 +41,7 @@ class WeatherItemsProvider(private val retrofitClient: Retrofit) : IWeatherItems
             }
         } catch (e: java.lang.Exception) {
             logError("Return failed", e)
-            throw e
+            listOf()
         }
     }
 }
