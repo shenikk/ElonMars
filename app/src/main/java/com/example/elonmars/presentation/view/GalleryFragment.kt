@@ -203,16 +203,4 @@ class GalleryFragment : Fragment() {
             }
         }
     }
-
-    // TODO delete it later
-//    private fun processScrollToEnd(recyclerView: RecyclerView) {
-//        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-//                super.onScrollStateChanged(recyclerView, newState)
-//                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-//                    setUpRetrofit(photoAdapter)
-//                }
-//            }
-//        })
-//    }
 }

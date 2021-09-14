@@ -172,22 +172,4 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             }
         }
     }
-
-    //TODO that's just one more variant for animation
-//    private fun startBackgroundAnimation(view: View) {
-//        val animator = ValueAnimator.ofInt(Color.BLUE, Color.RED, Color.YELLOW, Color.MAGENTA)
-//
-//        animator.setEvaluator(ArgbEvaluator())
-//        animator.repeatCount = ValueAnimator.INFINITE
-//        animator.repeatMode = ValueAnimator.REVERSE
-//        animator.duration = 10000
-//        animator.interpolator = LinearInterpolator()
-//
-//        animator.addUpdateListener {
-//            val value = it.animatedValue as Int
-//
-//            view.setBackgroundColor(value)
-//        }
-//        animator.start()
-//    }
 }
