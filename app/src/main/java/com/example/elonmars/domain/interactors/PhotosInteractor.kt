@@ -27,15 +27,6 @@ class PhotosInteractor(private val photosRepository: IPhotosRepository) : IPhoto
         }
     }
 
-    /** Возвращает данные с медиатипом "image" */
-    private fun filterMediaType(data: Single<List<PhotoItem>>): Single<List<PhotoItem>> {
-        return data.map {
-            return@map it.filter { photo ->
-                photo.media_type == "image"
-            }
-        }
-    }
-
     override fun getFavouritePhotos(): List<PhotoItem> {
         return photosRepository.getPhotosFromCache().map {
             it.isFavourite = true
@@ -46,5 +37,14 @@ class PhotosInteractor(private val photosRepository: IPhotosRepository) : IPhoto
 
     override fun setFavourite(photoItem: PhotoItem) {
         photosRepository.setFavourite(photoItem)
+    }
+
+    /** Возвращает данные с медиатипом "image" */
+    private fun filterMediaType(data: Single<List<PhotoItem>>): Single<List<PhotoItem>> {
+        return data.map {
+            return@map it.filter { photo ->
+                photo.media_type == "image"
+            }
+        }
     }
 }

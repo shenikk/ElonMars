@@ -20,7 +20,6 @@ class ViewModelFactory(
     private val photosInteractor: IPhotosInteractor,
     private val taskInteractor: ITaskInteractor,
     private val schedulersProvider: ISchedulersProvider,
-    private val dataStorage: IDataStorage,
     private val homeRepository: IHomeRepository
 ) : ViewModelProvider.Factory {
 
@@ -33,7 +32,7 @@ class ViewModelFactory(
                 DetailPhotoViewModel(photosInteractor, schedulersProvider) as T
 
             modelClass.isAssignableFrom(WeatherViewModel::class.java) ->
-                WeatherViewModel(weatherInteractor, schedulersProvider, dataStorage) as T
+                WeatherViewModel(weatherInteractor, schedulersProvider) as T
 
             modelClass.isAssignableFrom(MarsMissionViewModel::class.java) ->
                 MarsMissionViewModel(taskInteractor, schedulersProvider) as T

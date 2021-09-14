@@ -38,7 +38,7 @@ class AppModule {
 
     @Provides
     fun getWeatherInteractor(context: Context): IWeatherInteractor {
-        return WeatherInteractor(getItemsRepository(context))
+        return WeatherInteractor(getItemsRepository(context), getDataStorage(context))
     }
 
     @Provides

@@ -1,5 +1,6 @@
 package com.example.elonmars.data.store
 
+import com.google.gson.Gson
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -30,5 +31,16 @@ abstract class DataPreferences {
 
             return jsonAdapter.toJson(it)
         }
+    }
+
+    protected inline fun <reified T> getItemFromJson(input: String): T {
+        val gson = Gson()
+        return gson.fromJson(input, T::class.java)
+
+    }
+
+    protected inline fun <reified T> convertItemToJson(input: T?): String? {
+        val gson = Gson()
+        return gson.toJson(input)
     }
 }

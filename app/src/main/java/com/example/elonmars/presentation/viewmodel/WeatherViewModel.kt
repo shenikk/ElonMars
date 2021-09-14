@@ -5,11 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.elonmars.WeatherDataItem
 import com.example.elonmars.data.provider.ISchedulersProvider
-import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.interactors.IWeatherInteractor
 import com.example.elonmars.presentation.extensions.logDebug
-import com.example.elonmars.presentation.extensions.logError
-import com.example.elonmars.presentation.extensions.getFirstItem
 import com.example.elonmars.presentation.model.WeatherItem
 import io.reactivex.disposables.Disposable
 
@@ -23,8 +20,7 @@ import io.reactivex.disposables.Disposable
  */
 class WeatherViewModel(
     private val weatherInteractor: IWeatherInteractor,
-    private val schedulersProvider: ISchedulersProvider,
-    private val dataStorage: IDataStorage
+    private val schedulersProvider: ISchedulersProvider
 ) : ViewModel() {
 
     private var disposable: Disposable? = null
@@ -33,7 +29,6 @@ class WeatherViewModel(
     private val errorLiveData = MutableLiveData<Throwable>()
     private val weatherItemsLiveData = MutableLiveData<List<WeatherItem>>()
 
-    private val weatherItemsData = mutableListOf<WeatherDataItem>()
     private var latestDayLiveData = MutableLiveData<WeatherItem>()
     private val refreshLiveData = MutableLiveData<Boolean>()
 
@@ -63,65 +58,17 @@ class WeatherViewModel(
     }
 
     fun convertTemperature() {
-        weatherItemsData.getFirstItem()?.let { item ->
-            if (dataStorage.farenheitEnabled) {
-                weatherItemsLiveData.value = weatherItemsData.map { convertFarenheit(it) }
-                latestDayLiveData.value = convertFarenheit(item)
+        weatherInteractor.convertTempreature()
 
-            } else {
-                weatherItemsLiveData.value = weatherItemsData.map { convertCelsius(it) }
-                latestDayLiveData.value = convertCelsius(item)
-            }
-        }
+        weatherItemsLiveData.value = weatherInteractor.getWeatherItems()
+        latestDayLiveData.value = weatherInteractor.getLatestWeatherDay()
     }
 
     private fun doOnSuccess(weatherDataItemList: List<WeatherDataItem>) {
-        weatherItemsData.addAll(weatherDataItemList)
-        val convertedValues = weatherDataItemList.map { convertAfterServerDownload(it) }
-        weatherItemsLiveData.value = convertedValues
-        latestDayLiveData.value =
-            convertedValues.getFirstItem() ?: WeatherItem("NA", "NA", "NA", "NA")
-    }
+        weatherInteractor.doOnSuccess(weatherDataItemList)
 
-    private fun convertAfterServerDownload(weatherDataItem: WeatherDataItem): WeatherItem {
-        return if (dataStorage.farenheitEnabled) {
-            convertFarenheit(weatherDataItem)
-        } else {
-            convertCelsius(weatherDataItem)
-        }
-    }
-
-    // TODO избавиться от null в WeatherData
-    private fun convertFarenheit(weatherDataItem: WeatherDataItem): WeatherItem {
-
-        val highTemp = convertToFarenheit(weatherDataItem.highTemp) ?: "NA"
-        val lowTemp = convertToFarenheit(weatherDataItem.lowTemp) ?: "NA"
-
-        return WeatherItem(
-            "Sol ${weatherDataItem.weatherDay}",
-            weatherDataItem.earthDate,
-            "High: $highTemp °F",
-            "Low: $lowTemp °F"
-        )
-    }
-
-    private fun convertCelsius(weatherDataItem: WeatherDataItem): WeatherItem {
-
-        return WeatherItem(
-            "Sol ${weatherDataItem.weatherDay}",
-            weatherDataItem.earthDate,
-            "High: ${weatherDataItem.highTemp} °C",
-            "Low: ${weatherDataItem.lowTemp} °C"
-        )
-    }
-
-    private fun convertToFarenheit(temperature: String?): String? {
-        return try {
-            (temperature?.toFloat()?.let { (it * 9f / 5f) + 32f })?.toInt().toString()
-        } catch (e: Exception) {
-            logError("$temperature is not a number")
-            null
-        }
+        weatherItemsLiveData.value = weatherInteractor.getWeatherItems()
+        latestDayLiveData.value = weatherInteractor.getLatestWeatherDay()
     }
 
     override fun onCleared() {

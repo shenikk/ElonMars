@@ -20,7 +20,6 @@ class ActivityModule {
         weatherInteractor: IWeatherInteractor,
         photosInteractor: IPhotosInteractor,
         taskInteractor: ITaskInteractor,
-        dataStorage: IDataStorage,
         homeRepository: IHomeRepository
     ): ViewModelFactory {
         return ViewModelFactory(
@@ -28,7 +27,6 @@ class ActivityModule {
             photosInteractor,
             taskInteractor,
             getSchedulersProvider(),
-            dataStorage,
             homeRepository
         )
     }
