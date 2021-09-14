@@ -3,7 +3,7 @@ package com.example.elonmars.presentaton.viewModelTest
 import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.example.elonmars.data.provider.ISchedulersProvider
+import com.example.elonmars.domain.provider.ISchedulersProvider
 import com.example.elonmars.domain.interactors.ITaskInteractor
 import com.example.elonmars.presentation.model.TaskItem
 import com.example.elonmars.presentation.viewmodel.MarsMissionViewModel

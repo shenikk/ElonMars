@@ -1,10 +1,9 @@
 package com.example.elonmars.data.repository
 
 import com.example.elonmars.data.model.PhotoItem
-import com.example.elonmars.data.provider.IGalleryProvider
+import com.example.elonmars.domain.provider.IGalleryProvider
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.repositories.IPhotosRepository
-import io.reactivex.Observable
 import io.reactivex.Single
 
 /**

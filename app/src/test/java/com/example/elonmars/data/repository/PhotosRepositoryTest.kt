@@ -2,7 +2,7 @@ package com.example.elonmars.data.repository
 
 import com.example.elonmars.data.exception.RequestException
 import com.example.elonmars.data.model.PhotoItem
-import com.example.elonmars.data.provider.IGalleryProvider
+import com.example.elonmars.domain.provider.IGalleryProvider
 import com.example.elonmars.data.store.IDataStorage
 import io.mockk.*
 import org.junit.Assert

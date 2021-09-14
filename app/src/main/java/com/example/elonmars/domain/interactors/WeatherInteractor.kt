@@ -15,12 +15,18 @@ class WeatherInteractor(
 
     private val weatherItemsData = mutableListOf<WeatherDataItem>()
 
-    override fun loadDataAsync(): Single<List<WeatherDataItem>> {
+    override fun loadDataAsync(): Single<Unit> {
         return itemsRepository.loadDataAsync()
+            .map {
+                doOnSuccess(it)
+            }
     }
 
-    override fun loadDataAsyncOnCall(): Single<List<WeatherDataItem>> {
+    override fun loadDataAsyncOnCall(): Single<Unit> {
         return itemsRepository.loadDataAsyncOnCall()
+            .map {
+                doOnSuccess(it)
+            }
     }
 
     override fun convertTempreature() {
@@ -37,7 +43,7 @@ class WeatherInteractor(
         }
     }
 
-    override fun doOnSuccess(weatherDataItemList: List<WeatherDataItem>) {
+    private fun doOnSuccess(weatherDataItemList: List<WeatherDataItem>) {
         weatherItemsData.addAll(weatherDataItemList)
         val convertedValues = weatherDataItemList.map { convertAfterServerDownload(it) }
 

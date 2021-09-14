@@ -5,7 +5,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.elonmars.WeatherDataItem
 import com.example.elonmars.data.exception.RequestException
-import com.example.elonmars.data.provider.ISchedulersProvider
+import com.example.elonmars.domain.provider.ISchedulersProvider
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.interactors.IWeatherInteractor
 import com.example.elonmars.presentation.model.WeatherItem

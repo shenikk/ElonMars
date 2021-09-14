@@ -1,7 +1,7 @@
 package com.example.elonmars.data.repository
 
 import com.example.elonmars.WeatherDataItem
-import com.example.elonmars.data.provider.IWeatherItemsProvider
+import com.example.elonmars.domain.provider.IWeatherItemsProvider
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.repositories.IItemsRepository
 import io.reactivex.Single

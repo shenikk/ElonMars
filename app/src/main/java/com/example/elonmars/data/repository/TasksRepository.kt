@@ -1,7 +1,6 @@
 package com.example.elonmars.data.repository
 
-import com.example.elonmars.data.provider.ITaskItemsProvider
-import com.example.elonmars.data.provider.TaskItemsProvider
+import com.example.elonmars.domain.provider.ITaskItemsProvider
 import com.example.elonmars.domain.repositories.ITasksRepository
 import com.example.elonmars.presentation.model.TaskItem
 import io.reactivex.Completable

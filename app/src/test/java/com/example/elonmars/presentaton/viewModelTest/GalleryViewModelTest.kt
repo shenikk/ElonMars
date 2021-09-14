@@ -5,7 +5,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.elonmars.data.exception.RequestException
 import com.example.elonmars.data.model.PhotoItem
-import com.example.elonmars.data.provider.ISchedulersProvider
+import com.example.elonmars.domain.provider.ISchedulersProvider
 import com.example.elonmars.domain.interactors.IPhotosInteractor
 import com.example.elonmars.presentation.viewmodel.GalleryViewModel
 import io.mockk.*

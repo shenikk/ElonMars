@@ -10,6 +10,8 @@ import com.example.elonmars.data.repository.TasksRepository
 import com.example.elonmars.data.store.DataStorage
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.interactors.*
+import com.example.elonmars.domain.provider.IGalleryProvider
+import com.example.elonmars.domain.provider.IWeatherItemsProvider
 import com.example.elonmars.domain.repositories.IHomeRepository
 import com.example.elonmars.domain.repositories.IPhotosRepository
 import dagger.Module

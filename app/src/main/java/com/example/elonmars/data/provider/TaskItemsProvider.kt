@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.provider.BaseColumns
 import com.example.elonmars.data.database.TasksDbHelper
 import com.example.elonmars.data.database.TasksDbSchema
+import com.example.elonmars.domain.provider.ITaskItemsProvider
 import com.example.elonmars.presentation.model.TaskItem
 import java.util.*
 

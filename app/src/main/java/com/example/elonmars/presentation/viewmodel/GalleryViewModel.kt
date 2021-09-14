@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.elonmars.data.model.PhotoItem
-import com.example.elonmars.data.provider.ISchedulersProvider
+import com.example.elonmars.domain.provider.ISchedulersProvider
 import com.example.elonmars.domain.interactors.IPhotosInteractor
 import com.example.elonmars.presentation.GalleryType
 import com.example.elonmars.presentation.extensions.logDebug

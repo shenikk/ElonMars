@@ -4,6 +4,7 @@ import com.example.elonmars.WeatherData
 import com.example.elonmars.WeatherDataItem
 import com.example.elonmars.data.WeatherApiInterface
 import com.example.elonmars.data.exception.RequestException
+import com.example.elonmars.domain.provider.IWeatherItemsProvider
 import com.example.elonmars.presentation.extensions.logError
 import retrofit2.Response
 import retrofit2.Retrofit

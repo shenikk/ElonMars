@@ -1,4 +1,4 @@
-package com.example.elonmars.data.provider
+package com.example.elonmars.domain.provider
 
 import com.example.elonmars.WeatherDataItem
 

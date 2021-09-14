@@ -4,6 +4,7 @@ import com.example.elonmars.BuildConfig
 import com.example.elonmars.data.PhotoApiInterface
 import com.example.elonmars.data.exception.RequestException
 import com.example.elonmars.data.model.PhotoItem
+import com.example.elonmars.domain.provider.IGalleryProvider
 import com.example.elonmars.presentation.extensions.logError
 import retrofit2.Response
 import retrofit2.Retrofit

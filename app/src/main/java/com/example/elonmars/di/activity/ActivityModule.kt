@@ -1,8 +1,7 @@
 package com.example.elonmars.di.activity
 
-import com.example.elonmars.data.provider.ISchedulersProvider
+import com.example.elonmars.domain.provider.ISchedulersProvider
 import com.example.elonmars.data.provider.SchedulersProvider
-import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.interactors.IPhotosInteractor
 import com.example.elonmars.domain.interactors.ITaskInteractor
 import com.example.elonmars.domain.interactors.IWeatherInteractor

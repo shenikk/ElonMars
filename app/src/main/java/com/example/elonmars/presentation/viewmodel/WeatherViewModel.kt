@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.elonmars.WeatherDataItem
-import com.example.elonmars.data.provider.ISchedulersProvider
+import com.example.elonmars.domain.provider.ISchedulersProvider
 import com.example.elonmars.domain.interactors.IWeatherInteractor
 import com.example.elonmars.presentation.extensions.logDebug
 import com.example.elonmars.presentation.model.WeatherItem
@@ -43,7 +43,7 @@ class WeatherViewModel(
             .doAfterTerminate { shimmerLiveData.postValue(false) }
             .subscribeOn(schedulersProvider.io())
             .observeOn(schedulersProvider.ui())
-            .subscribe({ doOnSuccess(it) }, errorLiveData::setValue)
+            .subscribe({ doOnSuccess() }, errorLiveData::setValue)
     }
 
     fun loadDataOnForceAsync() {
@@ -54,7 +54,7 @@ class WeatherViewModel(
             .doAfterTerminate { refreshLiveData.postValue(false) }
             .subscribeOn(schedulersProvider.io())
             .observeOn(schedulersProvider.ui())
-            .subscribe({ doOnSuccess(it) }, errorLiveData::setValue)
+            .subscribe({ doOnSuccess() }, errorLiveData::setValue)
     }
 
     fun convertTemperature() {
@@ -64,9 +64,7 @@ class WeatherViewModel(
         latestDayLiveData.value = weatherInteractor.getLatestWeatherDay()
     }
 
-    private fun doOnSuccess(weatherDataItemList: List<WeatherDataItem>) {
-        weatherInteractor.doOnSuccess(weatherDataItemList)
-
+    private fun doOnSuccess() {
         weatherItemsLiveData.value = weatherInteractor.getWeatherItems()
         latestDayLiveData.value = weatherInteractor.getLatestWeatherDay()
     }
