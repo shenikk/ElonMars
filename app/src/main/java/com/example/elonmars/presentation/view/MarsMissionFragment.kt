@@ -130,15 +130,15 @@ class MarsMissionFragment : Fragment() {
 
     private fun setUpAdapter(dataSet: ArrayList<TaskItem>) {
         taskAdapter = TaskAdapter(dataSet) { holder, taskItem ->
-            holder.taskCheckBox.setOnClickListener {
-                viewModel?.updateTaskStatus(taskItem)
-            }
             holder.itemView.setOnLongClickListener {
                 setUpAlertDialog(taskItem, it.context)
                 true
             }
-            holder.calendarImage.setOnClickListener {
+            holder.setOnCalendarImageClickListener {
                 checkPermissionToInsertToCalendar(holder.itemView.context, taskItem.title)
+            }
+            holder.setOnTaskCheckBoxClickListener {
+                viewModel?.updateTaskStatus(taskItem)
             }
         }
         recyclerView.adapter = taskAdapter

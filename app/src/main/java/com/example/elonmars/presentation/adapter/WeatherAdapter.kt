@@ -11,19 +11,18 @@ import com.example.elonmars.presentation.model.WeatherItem
  *
  * @param dataSet список погодных дней [WeatherItem]
  */
-class WeatherAdapter(private val dataSet: List<WeatherItem>) : RecyclerView.Adapter<WeatherViewHolder>() {
+class WeatherAdapter(private val dataSet: List<WeatherItem>) :
+    RecyclerView.Adapter<WeatherViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {
-        return WeatherViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.weather_item, parent, false))
+        return WeatherViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.weather_item, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: WeatherViewHolder, position: Int) {
         val currentItem = dataSet[position]
-
-        holder.weatherDay.text = currentItem.weatherDay
-        holder.earthDay.text = currentItem.earthDate
-        holder.tempHigh.text = currentItem.highTemp
-        holder.tempLow.text = currentItem.lowTemp
+        holder.configureHolder(currentItem)
     }
 
     override fun getItemCount(): Int = dataSet.size

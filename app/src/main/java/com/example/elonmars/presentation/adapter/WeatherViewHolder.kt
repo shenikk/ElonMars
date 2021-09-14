@@ -4,13 +4,21 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.elonmars.R
+import com.example.elonmars.presentation.model.WeatherItem
 
 /**
  * ViewHolder для [com.example.elonmars.presentation.adapter.WeatherAdapter]
  */
 class WeatherViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    var weatherDay: TextView = view.findViewById(R.id.weather_day)
-    var earthDay: TextView = view.findViewById(R.id.earth_day)
-    var tempHigh: TextView = view.findViewById(R.id.temp_high)
-    var tempLow: TextView = view.findViewById(R.id.temp_low)
+    private val weatherDay: TextView = view.findViewById(R.id.weather_day)
+    private val earthDay: TextView = view.findViewById(R.id.earth_day)
+    private val tempHigh: TextView = view.findViewById(R.id.temp_high)
+    private val tempLow: TextView = view.findViewById(R.id.temp_low)
+
+    fun configureHolder(currentItem: WeatherItem) {
+        weatherDay.text = currentItem.weatherDay
+        earthDay.text = currentItem.earthDate
+        tempHigh.text = currentItem.highTemp
+        tempLow.text = currentItem.lowTemp
+    }
 }
