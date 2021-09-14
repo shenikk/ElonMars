@@ -14,7 +14,7 @@ interface IPhotosRepository {
      *
      * @return Single со списком моделей [PhotoItem]
      */
-    fun loadPhotosAsync(): Observable<List<PhotoItem>>
+    fun loadPhotosAsync(): Single<List<PhotoItem>>
 
     fun loadPhotosOnCall(): Single<List<PhotoItem>>
 

@@ -20,8 +20,8 @@ class PhotosRepository(
     private val galleryProvider: IGalleryProvider
 ) : IPhotosRepository {
 
-    override fun loadPhotosAsync(): Observable<List<PhotoItem>> {
-        return Observable.fromCallable {
+    override fun loadPhotosAsync(): Single<List<PhotoItem>> {
+        return Single.fromCallable {
             dataStorage.photos
                 ?: galleryProvider.loadPhotoItemsList()
                     .also { dataStorage.photos = it }

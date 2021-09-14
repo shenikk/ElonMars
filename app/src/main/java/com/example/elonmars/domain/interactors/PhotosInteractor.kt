@@ -7,7 +7,7 @@ import io.reactivex.Single
 
 class PhotosInteractor(private val photosRepository: IPhotosRepository) : IPhotosInteractor {
 
-    override fun loadPhotosAsync(): Observable<List<PhotoItem>> {
+    override fun loadPhotosAsync(): Single<List<PhotoItem>> {
         val favPhotos = photosRepository.getPhotosFromCache()
 
         return photosRepository.loadPhotosAsync().map {
