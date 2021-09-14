@@ -38,15 +38,8 @@ class GalleryViewModel(
      */
     fun loadDataAsync() {
         disposable = photosInteractor.loadPhotosAsync()
-            .doOnSubscribe {
-                progressLiveData.postValue(true)
-            }
+            .doOnSubscribe { progressLiveData.postValue(true) }
             .doAfterTerminate { progressLiveData.postValue(false) }
-            .map {
-                return@map it.filter { photo ->
-                    photo.media_type == "image"
-                }
-            }
             .subscribeOn(schedulersProvider.io())
             .observeOn(schedulersProvider.ui())
             .subscribe(photoItemsLiveData::setValue, errorLiveData::setValue)
@@ -57,15 +50,8 @@ class GalleryViewModel(
      */
     fun loadDataOnForceAsync() {
         disposable = photosInteractor.loadPhotosOnCall()
-            .doOnSubscribe {
-                refreshLiveData.postValue(true)
-            }
+            .doOnSubscribe { refreshLiveData.postValue(true) }
             .doAfterTerminate { refreshLiveData.postValue(false) }
-            .map {
-                return@map it.filter { photo ->
-                    photo.media_type == "image"
-                }
-            }
             .subscribeOn(schedulersProvider.io())
             .observeOn(schedulersProvider.ui())
             .subscribe(photoItemsLiveData::setValue, errorLiveData::setValue)
