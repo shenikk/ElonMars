@@ -14,13 +14,14 @@ import java.util.concurrent.TimeUnit
 class HomeViewModel(private val homeInteractor: IHomeInteractor) : ViewModel() {
 
     private val timerText = MutableLiveData<String>()
+    private val timerState = MutableLiveData<Int>()
     private var timer: CountDownTimer? = null
 
     companion object {
         private const val COUNT_DOWN_INTERVAL = 1000L
     }
 
-    fun startTimer(context: Context) {
+    fun startTimer() {
         val currentMillis = Calendar.getInstance().timeInMillis
         val endMillis = homeInteractor.getEndMillis()
         val totalMillis = endMillis - currentMillis
@@ -44,8 +45,8 @@ class HomeViewModel(private val homeInteractor: IHomeInteractor) : ViewModel() {
             }
 
             override fun onFinish() {
-                timerText.value =  context.getString(R.string.flight_message)
                 homeInteractor.setTimerState(TimerState.NOT_STARTED)
+                timerState.value = TimerState.NOT_STARTED.ordinal
             }
         }
         timer?.start()
@@ -67,5 +68,9 @@ class HomeViewModel(private val homeInteractor: IHomeInteractor) : ViewModel() {
 
     fun getTimerTextLiveData(): LiveData<String> {
         return timerText
+    }
+
+    fun getTimerStateLiveData(): LiveData<Int> {
+        return timerState
     }
 }

@@ -81,11 +81,20 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             it.getTimerTextLiveData().observe(viewLifecycleOwner, { text ->
                 showData(text)
             })
+            it.getTimerStateLiveData().observe(viewLifecycleOwner, { timerState ->
+                setTextOnTimerFinish(timerState)
+            })
         }
     }
 
     private fun showData(text: String) {
         dateText.text = text
+    }
+
+    private fun setTextOnTimerFinish(timerState: Int) {
+        if (timerState == TimerState.NOT_STARTED.ordinal) {
+            dateText.text = getString(R.string.flight_message)
+        }
     }
 
     private fun startBackgroundAnimation(view: View) {
@@ -132,13 +141,13 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
         viewModel?.setEndMillis(calendar.timeInMillis)
 
-        view?.context?.let { viewModel?.startTimer(it) }
+        view?.context?.let { viewModel?.startTimer() }
         view?.context?.let { startAlarmManager(it) }
     }
 
     private fun startTimerOnCreate(context: Context) {
         if (viewModel?.getTimerState() == TimerState.STARTED.ordinal) {
-            viewModel?.startTimer(context)
+            viewModel?.startTimer()
         }
     }
 
