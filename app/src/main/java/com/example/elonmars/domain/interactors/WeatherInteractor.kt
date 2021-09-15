@@ -37,7 +37,7 @@ class WeatherInteractor(
             }
     }
 
-    override fun convertTempreature() {
+    override fun convertTemperature() {
         weatherItemsData.getFirstItem()?.let { item ->
             if (dataStorage.farenheitEnabled) {
 

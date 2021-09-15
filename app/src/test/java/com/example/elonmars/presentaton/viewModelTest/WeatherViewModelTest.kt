@@ -3,7 +3,7 @@ package com.example.elonmars.presentaton.viewModelTest
 import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.example.elonmars.WeatherDataItem
+import com.example.elonmars.data.model.WeatherDataItem
 import com.example.elonmars.data.exception.RequestException
 import com.example.elonmars.domain.provider.ISchedulersProvider
 import com.example.elonmars.data.store.IDataStorage

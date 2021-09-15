@@ -6,7 +6,7 @@ import io.reactivex.Single
 interface IWeatherInteractor {
     fun loadDataAsync(): Single<Unit>
     fun loadDataAsyncOnCall(): Single<Unit>
-    fun convertTempreature()
+    fun convertTemperature()
     fun getWeatherItems(): List<WeatherItem>?
     fun getLatestWeatherDay(): WeatherItem?
 }

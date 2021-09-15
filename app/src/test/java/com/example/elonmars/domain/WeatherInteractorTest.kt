@@ -78,7 +78,7 @@ class WeatherInteractorTest {
         every { dataStorage.weatherItems = fahrenheitWeatherItemList() } just Runs
         every { dataStorage.latestWeatherDay = latestWeatherDayFahrenheit } just Runs
 
-        weatherInteractor.convertTempreature()
+        weatherInteractor.convertTemperature()
 
         verify(exactly = 0) { dataStorage.farenheitEnabled }
         verify(exactly = 0) { dataStorage.weatherItems = fahrenheitWeatherItemList() }

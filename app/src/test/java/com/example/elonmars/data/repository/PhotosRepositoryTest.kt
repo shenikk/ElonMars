@@ -9,11 +9,17 @@ import org.junit.Assert
 import org.junit.Test
 
 /** Класс для тестирования [PhotosRepository] */
-class PhotosRepositoryTest {
+class PhotosRepositoryTest { //FIXME
 
-    private val photo1 = PhotoItem("title1", isFavourite = true)
-    private val photo2 = PhotoItem("title2", "19280", isFavourite = true)
-    private val photo3 = PhotoItem("title3", "date", explanation = "explanation", isFavourite = true)
+    private val photo1 = PhotoItem("title1", isFavourite = true, media_type = "image")
+    private val photo2 = PhotoItem("title2", "19280", isFavourite = true, media_type = "image")
+    private val photo3 = PhotoItem(
+        "title3",
+        "date",
+        explanation = "explanation",
+        isFavourite = true,
+        media_type = "image"
+    )
 
     private val dataStorage: IDataStorage = mockk()
     private val galleryProvider: IGalleryProvider = mockk()
@@ -101,7 +107,7 @@ class PhotosRepositoryTest {
         every { dataStorage.favouritePhotos } returns getPhotos()
 
         // Act
-        val result = photosRepository.getPhotosFromCache()
+        val result = photosRepository.getFavouritePhotosFromCache()
 
         // Assert
         Assert.assertEquals(getPhotos(), result)
@@ -117,10 +123,10 @@ class PhotosRepositoryTest {
         every { dataStorage.favouritePhotos } returns null
 
         // Act
-        val result = photosRepository.getPhotosFromCache()
+        val result = photosRepository.getFavouritePhotosFromCache()
 
         // Assert
-        Assert.assertEquals(arrayListOf<PhotoItem>(), result)
+        Assert.assertEquals(listOf<PhotoItem>(), result)
         Assert.assertEquals(0, result.size)
     }
 
@@ -128,42 +134,29 @@ class PhotosRepositoryTest {
     fun setFavouriteRemoveTest() {
         // Arrange
         every { dataStorage.favouritePhotos } returns getPhotos()
-        every { dataStorage.favouritePhotos = arrayListOf(photo1, photo2) } just Runs
+        every { dataStorage.favouritePhotos = listOf(photo1, photo2) } just Runs
 
         // Act
         photosRepository.setFavourite(photo3)
 
         // Assert
-        Assert.assertEquals(arrayListOf(photo1, photo2), dataStorage.favouritePhotos)
-    }
-
-    @Test
-    fun setFavouriteAddTest() {
-        // Arrange
-        every { dataStorage.favouritePhotos } returns arrayListOf(photo1, photo2)
-        every { dataStorage.favouritePhotos = arrayListOf(photo1, photo2, photo3) } just Runs
-
-        // Act
-        photosRepository.setFavourite(photo3)
-
-        // Assert
-        Assert.assertEquals(arrayListOf(photo1, photo2, photo3), dataStorage.favouritePhotos)
+        verify(exactly = 1) { dataStorage.favouritePhotos = listOf(photo1, photo2) }
     }
 
     @Test
     fun setFavouriteEmptyTest() {
         // Arrange
-        every { dataStorage.favouritePhotos } returns arrayListOf()
-        every { dataStorage.favouritePhotos = arrayListOf(photo1) } just Runs
+        every { dataStorage.favouritePhotos } returns listOf()
+        every { dataStorage.favouritePhotos = listOf(photo1) } just Runs
 
         // Act
         photosRepository.setFavourite(photo1)
 
         // Assert
-        Assert.assertEquals(arrayListOf(photo1), dataStorage.favouritePhotos)
+        verify(exactly = 1) { dataStorage.favouritePhotos = listOf(photo1) }
     }
 
-    private fun getPhotos(): ArrayList<PhotoItem> {
-        return arrayListOf(photo1, photo2, photo3)
+    private fun getPhotos(): List<PhotoItem> {
+        return listOf(photo1, photo2, photo3)
     }
 }

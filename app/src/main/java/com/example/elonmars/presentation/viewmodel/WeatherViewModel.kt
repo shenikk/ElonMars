@@ -58,7 +58,7 @@ class WeatherViewModel(
     }
 
     fun convertTemperature() {
-        weatherInteractor.convertTempreature()
+        weatherInteractor.convertTemperature()
 
         weatherItemsLiveData.value = weatherInteractor.getWeatherItems()
         latestDayLiveData.value = weatherInteractor.getLatestWeatherDay()
