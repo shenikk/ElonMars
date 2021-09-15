@@ -1,9 +1,16 @@
-package com.example.elonmars.domain.interactors
+package com.example.elonmars.data.repository
 
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.repositories.IHomeRepository
 import com.example.elonmars.presentation.enum.TimerState
 
+/**
+ * Репозиторий - провайдер данных о состоянии таймера и конечном времени события.
+ *
+ * @param dataStorage хранилище данных
+ *
+ * @testclass unit: HomeRepositoryTest
+ */
 class HomeRepository(private val dataStorage: IDataStorage): IHomeRepository {
 
     override fun getEndMillis() = dataStorage.endMillis
