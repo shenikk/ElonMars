@@ -2,11 +2,11 @@ package com.example.elonmars.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.elonmars.domain.provider.ISchedulersProvider
+import com.example.elonmars.domain.interactors.IHomeInteractor
 import com.example.elonmars.domain.interactors.IPhotosInteractor
 import com.example.elonmars.domain.interactors.ITaskInteractor
 import com.example.elonmars.domain.interactors.IWeatherInteractor
-import com.example.elonmars.domain.repositories.IHomeRepository
+import com.example.elonmars.domain.provider.ISchedulersProvider
 
 /**
  * Класс фабрика для получения инстансов вьюмоделей
@@ -19,7 +19,7 @@ class ViewModelFactory(
     private val photosInteractor: IPhotosInteractor,
     private val taskInteractor: ITaskInteractor,
     private val schedulersProvider: ISchedulersProvider,
-    private val homeRepository: IHomeRepository
+    private val homeInteractor: IHomeInteractor
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -37,7 +37,7 @@ class ViewModelFactory(
                 MarsMissionViewModel(taskInteractor, schedulersProvider) as T
 
             modelClass.isAssignableFrom(HomeViewModel::class.java) ->
-                HomeViewModel(homeRepository) as T
+                HomeViewModel(homeInteractor) as T
 
             else -> throw IllegalArgumentException("Unknown ViewModel class")
         }

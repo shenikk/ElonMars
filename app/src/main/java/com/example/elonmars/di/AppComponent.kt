@@ -1,13 +1,11 @@
 package com.example.elonmars.di
 
 import android.content.Context
-import com.example.elonmars.data.repository.ItemsRepository
 import com.example.elonmars.data.store.IDataStorage
+import com.example.elonmars.domain.interactors.IHomeInteractor
 import com.example.elonmars.domain.interactors.IPhotosInteractor
 import com.example.elonmars.domain.interactors.ITaskInteractor
 import com.example.elonmars.domain.interactors.IWeatherInteractor
-import com.example.elonmars.domain.repositories.IHomeRepository
-import com.example.elonmars.domain.repositories.IPhotosRepository
 import dagger.BindsInstance
 import dagger.Component
 
@@ -31,5 +29,6 @@ interface AppComponent {
     fun getTaskInteractor(): ITaskInteractor
 
     fun getWeatherInteractor(): IWeatherInteractor
-    fun getHomeRepository(): IHomeRepository
+
+    fun getHomeInteractor(): IHomeInteractor
 }

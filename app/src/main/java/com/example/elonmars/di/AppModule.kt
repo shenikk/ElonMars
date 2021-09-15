@@ -3,7 +3,9 @@ package com.example.elonmars.di
 import android.content.Context
 import com.example.elonmars.BuildConfig
 import com.example.elonmars.data.database.TasksDbHelper
-import com.example.elonmars.data.provider.*
+import com.example.elonmars.data.provider.GalleryProvider
+import com.example.elonmars.data.provider.TaskItemsProvider
+import com.example.elonmars.data.provider.WeatherItemsProvider
 import com.example.elonmars.data.repository.ItemsRepository
 import com.example.elonmars.data.repository.PhotosRepository
 import com.example.elonmars.data.repository.TasksRepository
@@ -44,7 +46,11 @@ class AppModule {
     }
 
     @Provides
-    fun getHomeRepository(context: Context): IHomeRepository {
+    fun getHomeInteractor(context: Context): IHomeInteractor {
+        return HomeInteractor(getHomeRepository(context))
+    }
+
+    private fun getHomeRepository(context: Context): IHomeRepository {
         return HomeRepository(getDataStorage(context))
     }
 

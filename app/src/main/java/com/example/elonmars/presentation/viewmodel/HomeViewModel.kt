@@ -6,12 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.elonmars.R
-import com.example.elonmars.domain.repositories.IHomeRepository
+import com.example.elonmars.domain.interactors.IHomeInteractor
 import com.example.elonmars.presentation.enum.TimerState
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class HomeViewModel(private val homeRepository: IHomeRepository) : ViewModel() {
+class HomeViewModel(private val homeInteractor: IHomeInteractor) : ViewModel() {
 
     private val timerText = MutableLiveData<String>()
     private var timer: CountDownTimer? = null
@@ -22,7 +22,7 @@ class HomeViewModel(private val homeRepository: IHomeRepository) : ViewModel() {
 
     fun startTimer(context: Context) {
         val currentMillis = Calendar.getInstance().timeInMillis
-        val endMillis = homeRepository.getEndMillis()
+        val endMillis = homeInteractor.getEndMillis()
         val totalMillis = endMillis - currentMillis
 
         timer = object : CountDownTimer(totalMillis, COUNT_DOWN_INTERVAL) {
@@ -45,25 +45,25 @@ class HomeViewModel(private val homeRepository: IHomeRepository) : ViewModel() {
 
             override fun onFinish() {
                 timerText.value =  context.getString(R.string.flight_message)
-                homeRepository.setTimerState(TimerState.NOT_STARTED)
+                homeInteractor.setTimerState(TimerState.NOT_STARTED)
             }
         }
         timer?.start()
 
-        homeRepository.setTimerState(TimerState.STARTED)
+        homeInteractor.setTimerState(TimerState.STARTED)
     }
 
     fun cancelTimer() {
         timer?.cancel()
     }
 
-    fun getTimerState() = homeRepository.getTimerState()
+    fun getTimerState() = homeInteractor.getTimerState()
 
     fun setEndMillis(endMillis: Long) {
-        homeRepository.setEndMillis(endMillis)
+        homeInteractor.setEndMillis(endMillis)
     }
 
-    fun getEndMillis() = homeRepository.getEndMillis()
+    fun getEndMillis() = homeInteractor.getEndMillis()
 
     fun getTimerTextLiveData(): LiveData<String> {
         return timerText
