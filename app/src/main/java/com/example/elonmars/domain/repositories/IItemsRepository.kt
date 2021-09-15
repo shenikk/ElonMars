@@ -1,7 +1,6 @@
 package com.example.elonmars.domain.repositories
 
-import com.example.elonmars.WeatherDataItem
-import com.example.elonmars.data.model.PhotoItem
+import com.example.elonmars.data.model.WeatherDataItem
 import io.reactivex.Single
 
 /**

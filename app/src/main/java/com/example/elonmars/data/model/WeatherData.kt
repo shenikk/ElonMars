@@ -1,4 +1,4 @@
-package com.example.elonmars
+package com.example.elonmars.data.model
 
 import com.google.gson.annotations.SerializedName
 

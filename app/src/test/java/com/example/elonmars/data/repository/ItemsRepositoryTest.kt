@@ -1,6 +1,6 @@
 package com.example.elonmars.data.repository
 
-import com.example.elonmars.WeatherDataItem
+import com.example.elonmars.data.model.WeatherDataItem
 import com.example.elonmars.data.exception.RequestException
 import com.example.elonmars.domain.provider.IWeatherItemsProvider
 import com.example.elonmars.data.store.IDataStorage

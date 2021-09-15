@@ -1,7 +1,7 @@
 package com.example.elonmars.data.store
 
 import android.content.SharedPreferences
-import com.example.elonmars.WeatherDataItem
+import com.example.elonmars.data.model.WeatherDataItem
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.presentation.model.WeatherItem
 

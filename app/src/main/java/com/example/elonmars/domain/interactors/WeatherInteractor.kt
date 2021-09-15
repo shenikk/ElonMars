@@ -1,6 +1,6 @@
 package com.example.elonmars.domain.interactors
 
-import com.example.elonmars.WeatherDataItem
+import com.example.elonmars.data.model.WeatherDataItem
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.repositories.IItemsRepository
 import com.example.elonmars.presentation.extensions.getFirstItem
@@ -8,6 +8,14 @@ import com.example.elonmars.presentation.extensions.logError
 import com.example.elonmars.presentation.model.WeatherItem
 import io.reactivex.Single
 
+/**
+ * Интерактор для экрана с погодой.
+ *
+ * @param itemsRepository репозиторий с погодными данными
+ * @param dataStorage хранилище данных
+ *
+ * @testclass unit: TaskInteractorTest
+ */
 class WeatherInteractor(
     private val itemsRepository: IItemsRepository,
     private val dataStorage: IDataStorage
@@ -43,6 +51,10 @@ class WeatherInteractor(
         }
     }
 
+    override fun getLatestWeatherDay() = dataStorage.latestWeatherDay
+
+    override fun getWeatherItems() = dataStorage.weatherItems
+
     private fun doOnSuccess(weatherDataItemList: List<WeatherDataItem>) {
         weatherItemsData.addAll(weatherDataItemList)
         val convertedValues = weatherDataItemList.map { convertAfterServerDownload(it) }
@@ -51,10 +63,6 @@ class WeatherInteractor(
         dataStorage.latestWeatherDay =
             convertedValues.getFirstItem() ?: WeatherItem("NA", "NA", "NA", "NA")
     }
-
-    override fun getLatestWeatherDay() = dataStorage.latestWeatherDay
-
-    override fun getWeatherItems() = dataStorage.weatherItems
 
     private fun convertAfterServerDownload(weatherDataItem: WeatherDataItem): WeatherItem {
         return if (dataStorage.farenheitEnabled) {

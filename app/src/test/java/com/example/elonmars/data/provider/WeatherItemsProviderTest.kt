@@ -1,8 +1,8 @@
 package com.example.elonmars.data.provider
 
 import android.util.Log
-import com.example.elonmars.WeatherData
-import com.example.elonmars.WeatherDataItem
+import com.example.elonmars.data.model.WeatherData
+import com.example.elonmars.data.model.WeatherDataItem
 import com.example.elonmars.data.WeatherApiInterface
 import com.example.elonmars.data.exception.RequestException
 import io.mockk.*

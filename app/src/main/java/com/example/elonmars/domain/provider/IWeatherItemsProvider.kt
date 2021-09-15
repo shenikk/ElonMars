@@ -1,6 +1,6 @@
 package com.example.elonmars.domain.provider
 
-import com.example.elonmars.WeatherDataItem
+import com.example.elonmars.data.model.WeatherDataItem
 
 /**
  * Интерфейс провайдера данных об информации о погоде.
