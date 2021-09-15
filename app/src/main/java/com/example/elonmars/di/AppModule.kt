@@ -6,6 +6,7 @@ import com.example.elonmars.data.database.TasksDbHelper
 import com.example.elonmars.data.provider.GalleryProvider
 import com.example.elonmars.data.provider.TaskItemsProvider
 import com.example.elonmars.data.provider.WeatherItemsProvider
+import com.example.elonmars.data.repository.HomeRepository
 import com.example.elonmars.data.repository.ItemsRepository
 import com.example.elonmars.data.repository.PhotosRepository
 import com.example.elonmars.data.repository.TasksRepository

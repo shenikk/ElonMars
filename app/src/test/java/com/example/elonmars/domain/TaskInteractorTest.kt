@@ -37,7 +37,7 @@ class TaskInteractorTest {
         every { taskRepository.getDataAsync(date) } returns Single.just(listOf(taskItem))
 
         val testObserver = taskInteractor.getDataAsync(date).test()
-        
+
         verify(exactly = 1) { taskRepository.getDataAsync(date) }
         testObserver.assertResult(listOf(taskItem))
         testObserver.assertValueAt(0, listOf(taskItem))

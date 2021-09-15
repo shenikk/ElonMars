@@ -25,7 +25,7 @@ class MarsMissionViewModelTest {
 
     private lateinit var marsMissionViewModel: MarsMissionViewModel
     private var errorLiveDataObserver: Observer<Throwable> = mockk()
-    private var taskItemsLiveDataObserver: Observer<ArrayList<TaskItem>> = mockk()
+    private var taskItemsLiveDataObserver: Observer<List<TaskItem>> = mockk()
 
     private val schedulersProvider: ISchedulersProvider = mockk()
     private val taskInteractor: ITaskInteractor = mockk()

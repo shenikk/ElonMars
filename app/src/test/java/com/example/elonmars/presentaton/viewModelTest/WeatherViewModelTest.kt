@@ -37,7 +37,7 @@ class WeatherViewModelTest {
     @Before
     fun setUp() {
         mockkStatic(Log::class)
-        weatherViewModel = WeatherViewModel(weatherInteractor, schedulersProvider, dataStorage)
+        weatherViewModel = WeatherViewModel(weatherInteractor, schedulersProvider)
         weatherViewModel.getShimmerLiveData().observeForever(shimmerLiveDataObserver)
         weatherViewModel.getErrorLiveData().observeForever(errorLiveDataObserver)
         weatherViewModel.getWeatherItemsLiveData().observeForever(weatherItemsLiveDataObserver)
@@ -56,7 +56,7 @@ class WeatherViewModelTest {
     @Test
     fun loadDataAsync() {
         // Arrange
-        every { weatherInteractor.loadDataAsync() } returns Single.just(createData())
+        every { weatherInteractor.loadDataAsync() } returns Single.just(Unit)
         every { dataStorage.farenheitEnabled } returns true
 
         // Act
@@ -76,7 +76,7 @@ class WeatherViewModelTest {
     @Test
     fun loadDataAsyncFarnheitEnabled() {
         // Arrange
-        every { weatherInteractor.loadDataAsync() } returns Single.just(createData())
+        every { weatherInteractor.loadDataAsync() } returns Single.just(Unit)
         every { dataStorage.farenheitEnabled } returns false
 
         // Act
@@ -117,7 +117,7 @@ class WeatherViewModelTest {
     @Test
     fun loadDataAsyncDataEmpty() {
         // Arrange
-        every { weatherInteractor.loadDataAsync() } returns Single.just(arrayListOf())
+        every { weatherInteractor.loadDataAsync() } returns Single.just(Unit)
 
         // Act
         weatherViewModel.loadDataAsync()
@@ -131,7 +131,7 @@ class WeatherViewModelTest {
     @Test
     fun convertTemperatureTest() {
         // Arrange
-        every { weatherInteractor.loadDataAsync() } returns Single.just(createData())
+        every { weatherInteractor.loadDataAsync() } returns Single.just(Unit)
         every { dataStorage.farenheitEnabled } returns false
         weatherViewModel.loadDataAsync()
 
@@ -148,7 +148,7 @@ class WeatherViewModelTest {
     @Test
     fun convertTemperatureDataEmpty() {
         // Arrange
-        every { weatherInteractor.loadDataAsync() } returns Single.just(arrayListOf())
+        every { weatherInteractor.loadDataAsync() } returns Single.just(Unit)
         weatherViewModel.loadDataAsync()
 
         // Act
@@ -159,7 +159,7 @@ class WeatherViewModelTest {
         verify(exactly = 1) { latestDayLiveDataObserver.onChanged(any()) }
     }
 
-    private fun createData(): ArrayList<WeatherDataItem> {
+    private fun createData(): List<WeatherDataItem> {
         val list = arrayListOf<WeatherDataItem>()
         list.add(WeatherDataItem("1", "1", "23", "45"))
         list.add(WeatherDataItem("2", "2", "45", "-67"))

@@ -25,7 +25,7 @@ class GalleryViewModelTest {
     private var progressLiveDataObserver: Observer<Boolean> = mockk()
     private var refreshLiveDataObserver: Observer<Boolean> = mockk()
     private var errorLiveDataObserver: Observer<Throwable> = mockk()
-    private var photoItemsLiveDataObserver: Observer<ArrayList<PhotoItem>> = mockk()
+    private var photoItemsLiveDataObserver: Observer<List<PhotoItem>> = mockk()
 
     private val schedulersProvider: ISchedulersProvider = mockk()
     private val photosInteractor: IPhotosInteractor = mockk()

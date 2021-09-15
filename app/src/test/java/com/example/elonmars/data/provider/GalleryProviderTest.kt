@@ -22,13 +22,13 @@ class GalleryProviderTest {
     private val mockRetrofitClient: Retrofit = mockk()
     private val galleryProvider = GalleryProvider(mockRetrofitClient)
     private val photoApi: PhotoApiInterface = mockk()
-    private val mockCall: Call<ArrayList<PhotoItem>> = mockk()
+    private val mockCall: Call<List<PhotoItem>> = mockk()
 
     @Test
     fun loadPhotoItemsListTest() {
         // Arrange
         mockkStatic(Log::class)
-        val data = arrayListOf(photo1, photo2, photo3)
+        val data = listOf(photo1, photo2, photo3)
 
         every { Log.e(any(), any()) } returns 0
         every { mockRetrofitClient.create(PhotoApiInterface::class.java) } returns photoApi

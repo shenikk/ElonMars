@@ -26,7 +26,7 @@ class ItemsRepositoryTest {
         every { weatherItemsProvider.loadWeatherItemsList() } returns arrayListOf(firstWeatherDataItem)
 
         // Act
-        val testObserver: TestObserver<ArrayList<WeatherDataItem>> = itemsRepository.loadDataAsync().test()
+        val testObserver: TestObserver<List<WeatherDataItem>> = itemsRepository.loadDataAsync().test()
 
         // Assert
         testObserver.assertResult(arrayListOf(firstWeatherDataItem, secondWeatherDataItem, thirdWeatherDataItem))
@@ -46,7 +46,7 @@ class ItemsRepositoryTest {
         every { dataStorage.weatherDataItems = arrayListOf(firstWeatherDataItem) } just Runs
 
         // Act
-        val testObserver: TestObserver<ArrayList<WeatherDataItem>> = itemsRepository.loadDataAsync().test()
+        val testObserver: TestObserver<List<WeatherDataItem>> = itemsRepository.loadDataAsync().test()
 
         // Assert
         testObserver.assertResult(arrayListOf(firstWeatherDataItem))
@@ -65,7 +65,7 @@ class ItemsRepositoryTest {
         every { dataStorage.weatherDataItems } returns arrayListOf()
 
         // Act
-        val testObserver: TestObserver<ArrayList<WeatherDataItem>> = itemsRepository.loadDataAsync().test()
+        val testObserver: TestObserver<List<WeatherDataItem>> = itemsRepository.loadDataAsync().test()
 
         // Assert
         testObserver.assertResult(arrayListOf())
@@ -82,7 +82,7 @@ class ItemsRepositoryTest {
         every { dataStorage.weatherDataItems } returns null
 
         // Act
-        val testObserver: TestObserver<ArrayList<WeatherDataItem>> = itemsRepository.loadDataAsync().test()
+        val testObserver: TestObserver<List<WeatherDataItem>> = itemsRepository.loadDataAsync().test()
 
         // Assert
         testObserver.assertNever(arrayListOf(firstWeatherDataItem))
@@ -98,7 +98,7 @@ class ItemsRepositoryTest {
         every { dataStorage.weatherDataItems = arrayListOf(firstWeatherDataItem, secondWeatherDataItem) } just Runs
 
         // Act
-        val testObserver: TestObserver<ArrayList<WeatherDataItem>> = itemsRepository.loadDataAsyncOnCall().test()
+        val testObserver: TestObserver<List<WeatherDataItem>> = itemsRepository.loadDataAsyncOnCall().test()
 
         // Assert
         testObserver.assertResult(arrayListOf(firstWeatherDataItem, secondWeatherDataItem))
@@ -118,7 +118,7 @@ class ItemsRepositoryTest {
         every { dataStorage.weatherDataItems = arrayListOf() } just Runs
 
         // Act
-        val testObserver: TestObserver<ArrayList<WeatherDataItem>> = itemsRepository.loadDataAsyncOnCall().test()
+        val testObserver: TestObserver<List<WeatherDataItem>> = itemsRepository.loadDataAsyncOnCall().test()
 
         // Assert
         testObserver.assertResult(arrayListOf())
@@ -138,7 +138,7 @@ class ItemsRepositoryTest {
         every { dataStorage.weatherDataItems = arrayListOf() } just Runs
 
         // Act
-        val testObserver: TestObserver<ArrayList<WeatherDataItem>> = itemsRepository.loadDataAsyncOnCall().test()
+        val testObserver: TestObserver<List<WeatherDataItem>> = itemsRepository.loadDataAsyncOnCall().test()
 
         // Assert
         testObserver.assertNever(arrayListOf(firstWeatherDataItem))
