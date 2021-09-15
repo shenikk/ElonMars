@@ -34,20 +34,20 @@ class PhotosRepository(
         }
     }
 
-    override fun getPhotosFromCache(): List<PhotoItem> {
-        return dataStorage.favouritePhotos ?: arrayListOf()
+    override fun getFavouritePhotosFromCache(): List<PhotoItem> {
+        return dataStorage.favouritePhotos ?: listOf()
     }
 
     override fun setFavourite(photoItem: PhotoItem) {
         if (dataStorage.favouritePhotos?.contains(photoItem) == true) {
 
-            val newList: List<PhotoItem> = dataStorage.favouritePhotos ?: arrayListOf()
+            val newList: List<PhotoItem> = dataStorage.favouritePhotos ?: listOf()
             val mutableList = newList.toMutableList()
             mutableList.remove(photoItem)
 
             dataStorage.favouritePhotos = mutableList
         } else {
-            val newList: List<PhotoItem> = dataStorage.favouritePhotos ?: arrayListOf()
+            val newList: List<PhotoItem> = dataStorage.favouritePhotos ?: listOf()
             val mutableList = newList.toMutableList()
             mutableList.add(photoItem)
 

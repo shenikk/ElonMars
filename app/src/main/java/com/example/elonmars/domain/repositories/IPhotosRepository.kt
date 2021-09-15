@@ -18,7 +18,7 @@ interface IPhotosRepository {
 
     fun loadPhotosOnCall(): Single<List<PhotoItem>>
 
-    fun getPhotosFromCache(): List<PhotoItem>
+    fun getFavouritePhotosFromCache(): List<PhotoItem>
 
     fun setFavourite(photoItem: PhotoItem)
 }

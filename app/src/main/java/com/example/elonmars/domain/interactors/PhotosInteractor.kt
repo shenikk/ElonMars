@@ -4,10 +4,17 @@ import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.domain.repositories.IPhotosRepository
 import io.reactivex.Single
 
+/**
+ * Интерактор для экрана галереи с фото.
+ *
+ * @param photosRepository хранилище данных
+ *
+ * @testclass unit: PhotosInteractorTest
+ */
 class PhotosInteractor(private val photosRepository: IPhotosRepository) : IPhotosInteractor {
 
     override fun loadPhotosAsync(): Single<List<PhotoItem>> {
-        val favPhotos = photosRepository.getPhotosFromCache()
+        val favPhotos = photosRepository.getFavouritePhotosFromCache()
 
         return photosRepository.loadPhotosAsync().map {
             it.forEach { photo ->
@@ -28,7 +35,7 @@ class PhotosInteractor(private val photosRepository: IPhotosRepository) : IPhoto
     }
 
     override fun getFavouritePhotos(): List<PhotoItem> {
-        return photosRepository.getPhotosFromCache().map {
+        return photosRepository.getFavouritePhotosFromCache().map {
             it.isFavourite = true
 
             return@map it
