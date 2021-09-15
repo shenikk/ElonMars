@@ -6,6 +6,13 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import java.util.*
 
+/**
+ * Интерактор для экрана задач.
+ *
+ * @param tasksRepository хранилище данных
+ *
+ * @testclass unit: TaskInteractorTest
+ */
 class TaskInteractor(private val tasksRepository: ITasksRepository) : ITaskInteractor {
 
     override fun saveDataAsync(taskItem: TaskItem): Completable = tasksRepository.saveDataAsync(taskItem)
