@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -84,7 +82,6 @@ class DetailPhotoFragment : Fragment() {
                 }
             }
         }
-        setUpToolBar(view)
     }
 
     private fun setFabIcon(currentItem: PhotoItem, fab: FloatingActionButton) {
@@ -104,15 +101,5 @@ class DetailPhotoFragment : Fragment() {
         viewModel = ViewModelProvider(this, activityComponent.getViewModelFactory()).get(
             DetailPhotoViewModel::class.java
         )
-    }
-
-    private fun setUpToolBar(view: View) {
-        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-
-        val collapsingToolbarLayout =
-            view.findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar)
-        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar)
-        collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar)
     }
 }

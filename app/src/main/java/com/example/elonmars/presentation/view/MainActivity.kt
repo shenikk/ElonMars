@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         // Setup the ActionBar with navController and 5 top level destinations
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.home_fragment, R.id.gallery_fragment,  R.id.mars_mission_fragment, R.id.rover_fragment, R.id.weather_fragment)
+            setOf(R.id.home_fragment, R.id.gallery_fragment,  R.id.mars_mission_fragment, R.id.weather_fragment)
         )
         NavigationUI.setupWithNavController(bottomNavigationView, navController)
     }

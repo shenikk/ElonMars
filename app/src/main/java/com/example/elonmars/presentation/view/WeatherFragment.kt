@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +23,7 @@ import com.example.elonmars.presentation.extensions.showSnackbar
 import com.example.elonmars.presentation.model.WeatherItem
 import com.example.elonmars.presentation.viewmodel.WeatherViewModel
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import io.reactivex.plugins.RxJavaPlugins
 
 /** Экран с информацией о погоде за последние 10 доступных дней */
@@ -66,6 +69,7 @@ class WeatherFragment : Fragment() {
         RxJavaPlugins.setErrorHandler { throwable: Throwable? ->
             logError( "Exception: ${throwable.toString()}")
         }
+        setUpToolBar(view)
     }
 
     override fun onResume() {
@@ -164,5 +168,11 @@ class WeatherFragment : Fragment() {
         weatherDay.text = weatherItem.weatherDay
         highTemp.text = weatherItem.highTemp
         lowTemp.text = weatherItem.lowTemp
+    }
+
+    private fun setUpToolBar(view: View) {
+        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 }

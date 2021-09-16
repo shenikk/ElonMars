@@ -17,11 +17,6 @@
         android:icon="@drawable/ic_rocket"/>
 
     <item
-        android:id="@+id/rover"
-        android:title="@string/rover_gifs_item"
-        android:icon="@drawable/ic_mars_rover" />
-
-    <item
         android:id="@+id/weather"
         android:title="@string/weather_item"
         android:icon="@drawable/ic_weather" />
