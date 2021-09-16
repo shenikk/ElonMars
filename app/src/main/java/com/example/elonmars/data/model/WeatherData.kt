@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Модель списка дней с информацией о погоде.
  *
- * @param weatherDataItems список дней с информацией о погоде
+ * @param weatherDataItems список дней с информацией о погоде.
  */
 data class WeatherData(
     @SerializedName("soles")
@@ -14,10 +14,10 @@ data class WeatherData(
 /**
  * Модель, для описания данных о погоде за конкретный день.
  *
- * @param weatherDay дата на Марсе
- * @param earthDate дата на Земле
- * @param highTemp максимальная температура
- * @param lowTemp минимальная температура
+ * @param weatherDay дата на Марсе.
+ * @param earthDate дата на Земле.
+ * @param highTemp максимальная температура.
+ * @param lowTemp минимальная температура.
  */
 data class WeatherDataItem(
                  @SerializedName("sol")

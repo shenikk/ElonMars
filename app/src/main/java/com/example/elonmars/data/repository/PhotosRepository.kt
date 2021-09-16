@@ -12,7 +12,7 @@ import io.reactivex.Single
  * @param dataStorage хранилище данных
  * @param galleryProvider провайдер фото
  *
- * @testclass unit: PhotosRepositoryTest
+ * @testClass unit: PhotosRepositoryTest
  */
 class PhotosRepository(
     private val dataStorage: IDataStorage,

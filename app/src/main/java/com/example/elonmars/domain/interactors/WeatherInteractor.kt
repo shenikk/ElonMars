@@ -14,7 +14,7 @@ import io.reactivex.Single
  * @param itemsRepository репозиторий с погодными данными
  * @param dataStorage хранилище данных
  *
- * @testclass unit: TaskInteractorTest
+ * @testClass unit: TaskInteractorTest
  */
 class WeatherInteractor(
     private val itemsRepository: IItemsRepository,
@@ -39,7 +39,7 @@ class WeatherInteractor(
 
     override fun convertTemperature() {
         weatherItemsData.getFirstItem()?.let { item ->
-            if (dataStorage.farenheitEnabled) {
+            if (dataStorage.fahrenheitEnabled) {
 
                 dataStorage.weatherItems = weatherItemsData.map { convertFarenheit(it) }
                 dataStorage.latestWeatherDay = convertFarenheit(item)
@@ -65,7 +65,7 @@ class WeatherInteractor(
     }
 
     private fun convertAfterServerDownload(weatherDataItem: WeatherDataItem): WeatherItem {
-        return if (dataStorage.farenheitEnabled) {
+        return if (dataStorage.fahrenheitEnabled) {
             convertFarenheit(weatherDataItem)
         } else {
             convertCelsius(weatherDataItem)

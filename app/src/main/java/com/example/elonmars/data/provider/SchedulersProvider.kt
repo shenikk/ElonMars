@@ -5,7 +5,11 @@ import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
+/**
+ * Провайдер для работы на разных потоках.
+ */
 class SchedulersProvider : ISchedulersProvider {
+
     override fun io(): Scheduler {
         return Schedulers.io()
     }

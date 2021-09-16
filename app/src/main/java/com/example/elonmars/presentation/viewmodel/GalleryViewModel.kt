@@ -13,8 +13,8 @@ import io.reactivex.disposables.Disposable
 /**
  * ViewModel экрана со списком фильмов.
  *
- * @param itemsRepository репозиторий с данными о фото
- * @param schedulersProvider
+ * @param photosInteractor интерактор, обрабатывающий данные с фото.
+ * @param schedulersProvider провайдер с Scheduler для работы на разных потоках.
  *
  * @testClass unit: GalleryViewModelTest
  */
@@ -62,51 +62,65 @@ class GalleryViewModel(
             .subscribe(photoItemsLiveData::setValue, errorLiveData::setValue)
     }
 
+    /** Возвращает список фото, помеченные как 'любимые' */
     fun getFavouritePhotos() {
         favPhotoItemsLiveData.value = photosInteractor.getFavouritePhotos()
     }
 
+    /** Устанавливает значение фото, как 'любимое' */
     fun setFavourite(photoItem: PhotoItem) {
         photosInteractor.setFavourite(photoItem)
         updateContent()
     }
 
+    /** Устанавливает тип экрана галереи */
     fun setContentType(galleryType: GalleryType) {
         photosInteractor.setGalleryType(galleryType.ordinal)
         contentTypeLiveData.value = galleryType.ordinal
     }
 
+    /**
+     * Метод для получения инстанса LiveData с типом экрана.
+     * Состояние экрана представлено порядковым номером константы перечисления [GalleryType].
+     *
+     * @return LiveData с [Int].
+     */
     fun getContentTypeLiveData(): LiveData<Int> {
         return contentTypeLiveData
     }
 
     /**
-     * Метод для получения инстанса LiveData
+     * Метод для получения инстанса LiveData.
      *
-     * @return LiveData с [Boolean]
+     * @return LiveData с [Boolean].
      */
     fun getProgressLiveData(): LiveData<Boolean> {
         return progressLiveData
     }
 
     /**
-     * Метод для получения инстанса LiveData
+     * Метод для получения инстанса LiveData с ошибкой.
      *
-     * @return LiveData с [Throwable]
+     * @return LiveData с ошибкой [Throwable].
      */
     fun getErrorLiveData(): LiveData<Throwable> {
         return errorLiveData
     }
 
     /**
-     * Метод для получения инстанса LiveData
+     * Метод для получения инстанса LiveData со списком фото.
      *
-     * @return LiveData со списком моделей [PhotoItem]
+     * @return LiveData со списком моделей [PhotoItem].
      */
     fun getPhotoItemsLiveData(): LiveData<List<PhotoItem>> {
         return photoItemsLiveData
     }
 
+    /**
+     * Метод для получения инстанса LiveData со списком любимых фото.
+     *
+     * @return LiveData со списком моделей [PhotoItem].
+     */
     fun getFavPhotoItemsLiveData(): LiveData<List<PhotoItem>> {
         return favPhotoItemsLiveData
     }
@@ -114,7 +128,7 @@ class GalleryViewModel(
     /**
      * Метод для получения инстанса LiveData.
      *
-     * @return LiveData с [Boolean]
+     * @return LiveData с [Boolean].
      */
     fun getRefreshingProgressLiveData(): LiveData<Boolean> {
         return refreshLiveData

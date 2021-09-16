@@ -14,7 +14,7 @@ import retrofit2.Retrofit
  *
  * @param retrofitClient клиент для работы с сетью
  *
- * @testclass unit: GalleryProviderTest
+ * @testClass unit: GalleryProviderTest
  */
 class GalleryProvider(private val retrofitClient: Retrofit) : IGalleryProvider {
 

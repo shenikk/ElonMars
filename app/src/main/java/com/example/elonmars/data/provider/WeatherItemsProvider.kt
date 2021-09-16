@@ -14,7 +14,7 @@ import retrofit2.Retrofit
  *
  * @param retrofitClient клиент для работы с сетью
  *
- * @testclass unit: WeatherItemsProviderTest
+ * @testClass unit: WeatherItemsProviderTest
  */
 class WeatherItemsProvider(private val retrofitClient: Retrofit) : IWeatherItemsProvider {
 

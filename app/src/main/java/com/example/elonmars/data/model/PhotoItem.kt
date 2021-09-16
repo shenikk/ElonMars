@@ -7,10 +7,10 @@ import kotlinx.parcelize.Parcelize
 /**
  * Модель, для отображения данных о фото.
  *
- * @param title название фото
- * @param date дата создания
- * @param image адрес фото
- * @param explanation описание фото
+ * @param title название фото.
+ * @param date дата создания.
+ * @param image адрес фото.
+ * @param explanation описание фото.
  */
 @Parcelize
 data class PhotoItem(

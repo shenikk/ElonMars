@@ -10,7 +10,7 @@ import com.example.elonmars.presentation.enum.TimerState
  *
  * @param homeRepository хранилище данных
  *
- * @testclass unit: HomeInteractorTest
+ * @testClass unit: HomeInteractorTest
  */
 class HomeInteractor(private val homeRepository: IHomeRepository) : IHomeInteractor {
 

@@ -33,12 +33,14 @@ abstract class DataPreferences {
         }
     }
 
+    /** Метод для парсинга данных из формата Json */
     protected inline fun <reified T> getItemFromJson(input: String): T {
         val gson = Gson()
         return gson.fromJson(input, T::class.java)
 
     }
 
+    /** Метод для парсинга данных в формат Json */
     protected inline fun <reified T> convertItemToJson(input: T?): String? {
         val gson = Gson()
         return gson.toJson(input)

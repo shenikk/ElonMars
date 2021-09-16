@@ -23,7 +23,6 @@ import com.example.elonmars.presentation.extensions.showSnackbar
 import com.example.elonmars.presentation.model.WeatherItem
 import com.example.elonmars.presentation.viewmodel.WeatherViewModel
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.google.android.material.appbar.CollapsingToolbarLayout
 import io.reactivex.plugins.RxJavaPlugins
 
 /** Экран с информацией о погоде за последние 10 доступных дней */
@@ -87,10 +86,10 @@ class WeatherFragment : Fragment() {
             lowTemp = it.findViewById(R.id.temp_low)
 
             temperatureSwitch = it.findViewById<SwitchCompat>(R.id.temperature_switch).apply {
-                this.isChecked = dataStorage.farenheitEnabled
+                this.isChecked = dataStorage.fahrenheitEnabled
 
                 setOnCheckedChangeListener { _, isChecked ->
-                    dataStorage.farenheitEnabled = isChecked
+                    dataStorage.fahrenheitEnabled = isChecked
                     viewModel?.convertTemperature()
                 }
             }

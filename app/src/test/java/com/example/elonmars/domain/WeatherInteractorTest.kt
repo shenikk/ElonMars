@@ -24,7 +24,7 @@ class WeatherInteractorTest {
         every { itemsRepository.loadDataAsync() } returns Single.just(createData())
         every { dataStorage.weatherItems = celsiusWeatherItemList() } just Runs
         every { dataStorage.latestWeatherDay = latestWeatherDay } just Runs
-        every { dataStorage.farenheitEnabled } returns false
+        every { dataStorage.fahrenheitEnabled } returns false
 
         val testObserver = weatherInteractor.loadDataAsync().test()
 
@@ -37,7 +37,7 @@ class WeatherInteractorTest {
         every { itemsRepository.loadDataAsync() } returns Single.just(createData())
         every { dataStorage.weatherItems = fahrenheitWeatherItemList() } just Runs
         every { dataStorage.latestWeatherDay = latestWeatherDayFahrenheit } just Runs
-        every { dataStorage.farenheitEnabled } returns true
+        every { dataStorage.fahrenheitEnabled } returns true
 
         val testObserver = weatherInteractor.loadDataAsync().test()
 
@@ -50,7 +50,7 @@ class WeatherInteractorTest {
         every { itemsRepository.loadDataAsyncOnCall() } returns Single.just(createData())
         every { dataStorage.weatherItems = celsiusWeatherItemList() } just Runs
         every { dataStorage.latestWeatherDay = latestWeatherDay } just Runs
-        every { dataStorage.farenheitEnabled } returns false
+        every { dataStorage.fahrenheitEnabled } returns false
 
         val testObserver = weatherInteractor.loadDataAsyncOnCall().test()
 
@@ -63,7 +63,7 @@ class WeatherInteractorTest {
         every { itemsRepository.loadDataAsyncOnCall() } returns Single.just(createData())
         every { dataStorage.weatherItems = fahrenheitWeatherItemList() } just Runs
         every { dataStorage.latestWeatherDay = latestWeatherDayFahrenheit } just Runs
-        every { dataStorage.farenheitEnabled } returns true
+        every { dataStorage.fahrenheitEnabled } returns true
 
         val testObserver = weatherInteractor.loadDataAsyncOnCall().test()
 
@@ -74,13 +74,13 @@ class WeatherInteractorTest {
     /** No method is invoked because 'weatherItemsData' is empty */
     @Test
     fun convertTemperatureTest() {
-        every { dataStorage.farenheitEnabled } returns true
+        every { dataStorage.fahrenheitEnabled } returns true
         every { dataStorage.weatherItems = fahrenheitWeatherItemList() } just Runs
         every { dataStorage.latestWeatherDay = latestWeatherDayFahrenheit } just Runs
 
         weatherInteractor.convertTemperature()
 
-        verify(exactly = 0) { dataStorage.farenheitEnabled }
+        verify(exactly = 0) { dataStorage.fahrenheitEnabled }
         verify(exactly = 0) { dataStorage.weatherItems = fahrenheitWeatherItemList() }
         verify(exactly = 0) { dataStorage.latestWeatherDay = latestWeatherDayFahrenheit }
     }

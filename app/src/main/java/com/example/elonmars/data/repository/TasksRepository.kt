@@ -12,7 +12,7 @@ import java.util.*
  *
  * @param taskItemsProvider провайдер данных задач
  *
- * @testclass unit: TasksRepositoryTest
+ * @testClass unit: TasksRepositoryTest
  */
 class TasksRepository(private val taskItemsProvider: ITaskItemsProvider) : ITasksRepository {
 

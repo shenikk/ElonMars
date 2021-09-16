@@ -178,7 +178,6 @@ class MarsMissionFragment : Fragment() {
             .setMessage(getString(R.string.alert_dialog_summary))
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 viewModel?.deleteTaskItemFromDataBase(taskItem)
-                // FIXME подумать, как можно улучшить этот момент (убрать мерцание текста при удалении айтема)
                 viewModel?.getTaskItemFromDataBase(chosenTaskDate)
                 taskAdapter.dataSet.remove(taskItem)
                 taskAdapter.notifyDataSetChanged()

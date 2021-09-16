@@ -9,8 +9,8 @@ import com.example.elonmars.presentation.model.TaskItem
 /**
  * Адаптер для отображения списка задач.
  *
- * @param dataSet список элементов [TaskItem]
- * @param onItemBind лямбда с полезной нагрузкой, которая выполняется при биндинга холдера
+ * @param dataSet список элементов [TaskItem].
+ * @param onItemBind лямбда с полезной нагрузкой, которая выполняется при биндинга холдера.
  */
 class TaskAdapter(
     var dataSet: ArrayList<TaskItem>,

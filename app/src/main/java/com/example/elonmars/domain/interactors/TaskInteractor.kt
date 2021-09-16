@@ -11,7 +11,7 @@ import java.util.*
  *
  * @param tasksRepository хранилище данных
  *
- * @testclass unit: TaskInteractorTest
+ * @testClass unit: TaskInteractorTest
  */
 class TaskInteractor(private val tasksRepository: ITasksRepository) : ITaskInteractor {
 

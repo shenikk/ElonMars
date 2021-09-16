@@ -1,8 +1,8 @@
 package com.example.elonmars.data.exception
 
 /**
- * Класс, описывающий ошибки при загрузки данных из сети
+ * Класс, описывающий ошибки при загрузки данных из сети.
  *
- * @testlack класс не требует теста
+ * @testLack класс не требует теста.
  */
 class RequestException(message:String): Exception(message)

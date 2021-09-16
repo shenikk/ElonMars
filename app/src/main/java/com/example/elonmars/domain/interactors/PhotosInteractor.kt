@@ -9,7 +9,7 @@ import io.reactivex.Single
  *
  * @param photosRepository хранилище данных
  *
- * @testclass unit: PhotosInteractorTest
+ * @testClass unit: PhotosInteractorTest
  */
 class PhotosInteractor(private val photosRepository: IPhotosRepository) : IPhotosInteractor {
 

@@ -13,8 +13,8 @@ import io.reactivex.disposables.Disposable
 /**
  * ViewModel экрана с информацией о погоде за последние 10 дней.
  *
- * @param itemsRepository репозиторий с данными о погоде
- * @param schedulersProvider
+ * @param weatherInteractor интерактор обрабатывающий данные о погоде.
+ * @param schedulersProvider провайдер с Scheduler для работы на разных потоках.
  *
  * @testClass unit: WeatherViewModelTest
  */
@@ -39,7 +39,7 @@ class WeatherViewModel(
     }
 
     /**
-     * Метод для асинхронной загрузки списка фильмов.
+     * Метод для асинхронной загрузки погодных данных.
      */
     fun loadDataAsync() {
         disposable = weatherInteractor.loadDataAsync()
@@ -52,6 +52,9 @@ class WeatherViewModel(
             .subscribe({ doOnSuccess() }, errorLiveData::setValue)
     }
 
+    /**
+     * Метод для асинхронной загрузки погодных данных по действию пользователя pull to refresh.
+     */
     fun loadDataOnForceAsync() {
         disposable = weatherInteractor.loadDataAsyncOnCall()
             .doOnSubscribe {
@@ -63,6 +66,9 @@ class WeatherViewModel(
             .subscribe({ doOnSuccess() }, errorLiveData::setValue)
     }
 
+    /**
+     * Метод конвертируют температуру в определенную единицу измерения.
+     */
     fun convertTemperature() {
         weatherInteractor.convertTemperature()
 
@@ -71,41 +77,46 @@ class WeatherViewModel(
     }
 
     /**
-     * Метод для получения инстанса LiveData
+     * Метод для получения инстанса LiveData.
      *
-     * @return LiveData с [Boolean]
+     * @return LiveData с [Boolean].
      */
     fun getShimmerLiveData(): LiveData<Boolean> {
         return shimmerLiveData
     }
 
     /**
-     * Метод для получения инстанса LiveData
+     * Метод для получения инстанса LiveData.
      *
-     * @return LiveData с [Throwable]
+     * @return LiveData с [Throwable].
      */
     fun getErrorLiveData(): LiveData<Throwable> {
         return errorLiveData
     }
 
     /**
-     * Метод для получения инстанса LiveData
+     * Метод для получения инстанса LiveData.
      *
-     * @return LiveData со списком моделей [WeatherDataItem]
+     * @return LiveData со списком моделей [WeatherDataItem].
      */
     fun getWeatherItemsLiveData(): LiveData<List<WeatherItem>> {
         return weatherItemsLiveData
     }
 
     /**
-     * Метод для получения инстанса LiveData
+     * Метод для получения инстанса LiveData.
      *
-     * @return LiveData с моделью [WeatherItem]
+     * @return LiveData с моделью [WeatherItem].
      */
     fun getLatestDayLiveData(): LiveData<WeatherItem> {
         return latestDayLiveData
     }
 
+    /**
+     * Метод для получения инстанса LiveData.
+     *
+     * @return LiveData с [Boolean].
+     */
     fun getRefreshLiveData(): LiveData<Boolean> {
         return refreshLiveData
     }

@@ -8,7 +8,7 @@ import com.example.elonmars.presentation.model.WeatherItem
 /**
  * Реализация хранилища данных.
  *
- * @param preferences преференсы для хранения данных
+ * @param preferences преференсы для хранения данных.
  */
 class DataStorage(private val preferences: SharedPreferences) : DataPreferences(), IDataStorage {
 
@@ -24,7 +24,6 @@ class DataStorage(private val preferences: SharedPreferences) : DataPreferences(
         private const val GALLERY_TYPE_KEY = "GALLERY_TYPE_KEY"
     }
 
-    /** Список с моделями [WeatherDataItem] */
     override var weatherDataItems: List<WeatherDataItem>?
         get() = preferences.getString(WEATHER_KEY, null)?.let { getDataFromJson(it) }
         set(value) = preferences.edit().putString(WEATHER_KEY, convertDataToJson(value)).apply()
@@ -39,7 +38,6 @@ class DataStorage(private val preferences: SharedPreferences) : DataPreferences(
         set(value) = preferences.edit().putString(LATEST_WEATHER_DAY_KEY, convertItemToJson(value))
             .apply()
 
-    /** Список с моделями [PhotoItem] */
     override var photos: List<PhotoItem>?
         get() = preferences.getString(PHOTOS_KEY, null)?.let { getDataFromJson(it) }
         set(value) = preferences.edit().putString(PHOTOS_KEY, convertDataToJson(value)).apply()
@@ -49,8 +47,7 @@ class DataStorage(private val preferences: SharedPreferences) : DataPreferences(
         set(value) = preferences.edit().putString(FAVOURITE_PHOTOS_KEY, convertDataToJson(value))
             .apply()
 
-    /** Флаг для обозначения выбранного режима конвертации температуры */
-    override var farenheitEnabled: Boolean
+    override var fahrenheitEnabled: Boolean
         get() = preferences.getBoolean(CONVERSION_KEY, false)
         set(value) = preferences.edit().putBoolean(CONVERSION_KEY, value).apply()
 

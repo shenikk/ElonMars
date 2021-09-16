@@ -13,8 +13,8 @@ import java.util.*
 /**
  * ViewModel экрана со списком задач, добавляемые пользователем.
  *
- * @param tasksInteractor интерактор с данными о задачах
- * @param schedulersProvider
+ * @param tasksInteractor интерактор с данными о задачах.
+ * @param schedulersProvider провайдер с Scheduler для работы на разных потоках.
  *
  * @testClass unit: MarsMissionViewModelTest
  */
@@ -34,6 +34,11 @@ class MarsMissionViewModel(
         logDebug("onCleared() called")
     }
 
+    /**
+     * Добавляет задачу в базу данных.
+     *
+     * @param taskItem задача, которая берется из базы данных.
+     */
     fun addTaskItemToDataBase(taskItem: TaskItem) {
         disposable = tasksInteractor.saveDataAsync(taskItem)
             .subscribeOn(schedulersProvider.io())
@@ -41,6 +46,11 @@ class MarsMissionViewModel(
             .subscribe()
     }
 
+    /**
+     * Достает задачи из базы данных.
+     *
+     * @param date дата, по которой нужно достать задачи.
+     */
     fun getTaskItemFromDataBase(date: Calendar) {
         disposable = tasksInteractor.getDataAsync(date)
             .subscribeOn(schedulersProvider.io())
@@ -48,6 +58,11 @@ class MarsMissionViewModel(
             .subscribe(taskItemsLiveData::setValue, errorLiveData::setValue)
     }
 
+    /**
+     * Обновляет статус задачи в базе данных.
+     *
+     * @param taskItem задача, которая берется из базы данных.
+     */
     fun updateTaskStatus(taskItem: TaskItem) {
         disposable = tasksInteractor.updateDataAsync(taskItem)
             .subscribeOn(schedulersProvider.io())
@@ -55,6 +70,11 @@ class MarsMissionViewModel(
             .subscribe()
     }
 
+    /**
+     * Удаляет задачу из базы данных.
+     *
+     * @param taskItem задача, которую нужно удалить из базы данных.
+     */
     fun deleteTaskItemFromDataBase(taskItem: TaskItem) {
         disposable = tasksInteractor.deleteTask(taskItem)
             .subscribeOn(schedulersProvider.io())
@@ -62,10 +82,20 @@ class MarsMissionViewModel(
             .subscribe()
     }
 
+    /**
+     * Метод для получения инстанса LiveData со списком задач.
+     *
+     * @return LiveData со списком задач.
+     */
     fun getTaskItemLiveData(): LiveData<List<TaskItem>> {
         return taskItemsLiveData
     }
 
+    /**
+     * Метод для получения инстанса LiveData с ошибкой.
+     *
+     * @return LiveData с ошибкой [Throwable].
+     */
     fun getErrorLiveData(): LiveData<Throwable> {
         return errorLiveData
     }

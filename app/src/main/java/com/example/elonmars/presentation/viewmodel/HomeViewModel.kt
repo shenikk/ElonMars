@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
 /**
  * ViewModel главного экрана.
  *
- * @param homeInteractor интерактор главного экрана
+ * @param homeInteractor интерактор главного экрана.
  *
  * @testClass unit: HomeViewModelTest
  */
@@ -26,6 +26,7 @@ class HomeViewModel(private val homeInteractor: IHomeInteractor) : ViewModel() {
         private const val COUNT_DOWN_INTERVAL = 1000L
     }
 
+    /** Запускает таймер с обратным отсчетом до выбранной даты и времени */
     fun startTimer() {
         val currentMillis = Calendar.getInstance().timeInMillis
         val endMillis = homeInteractor.getEndMillis()
@@ -59,22 +60,37 @@ class HomeViewModel(private val homeInteractor: IHomeInteractor) : ViewModel() {
         homeInteractor.setTimerState(TimerState.STARTED)
     }
 
+    /** Отменяет таймер с обратным отсчетом до выбранной даты и времени */
     fun cancelTimer() {
         timer?.cancel()
     }
 
+    /** Возвращает состояние таймера */
     fun getTimerState() = homeInteractor.getTimerState()
 
+    /** Устанавливает время до события в миллисекундах */
     fun setEndMillis(endMillis: Long) {
         homeInteractor.setEndMillis(endMillis)
     }
 
+    /** Возвращает время до события в миллисекундах */
     fun getEndMillis() = homeInteractor.getEndMillis()
 
+    /**
+     * Метод для получения инстанса LiveData с тектом.
+     *
+     * @return LiveData с текстом.
+     */
     fun getTimerTextLiveData(): LiveData<String> {
         return timerText
     }
 
+    /**
+     * Метод для получения инстанса LiveData с состоянием таймера.
+     * Состояние таймера представлено порядковым номером константы перечисления [TimerState].
+     *
+     * @return LiveData с состоянием таймера.
+     */
     fun getTimerStateLiveData(): LiveData<Int> {
         return timerState
     }

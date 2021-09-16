@@ -9,7 +9,7 @@ import com.example.elonmars.presentation.model.WeatherItem
 /**
  * Адаптер для отображения списка погодных дней.
  *
- * @param dataSet список погодных дней [WeatherItem]
+ * @param dataSet список погодных дней [WeatherItem].
  */
 class WeatherAdapter(private val dataSet: List<WeatherItem>) :
     RecyclerView.Adapter<WeatherViewHolder>() {

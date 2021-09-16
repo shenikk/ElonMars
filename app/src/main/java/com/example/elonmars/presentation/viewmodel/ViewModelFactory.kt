@@ -9,10 +9,13 @@ import com.example.elonmars.domain.interactors.IWeatherInteractor
 import com.example.elonmars.domain.provider.ISchedulersProvider
 
 /**
- * Класс фабрика для получения инстансов вьюмоделей
+ * Класс фабрика для получения инстансов вьюмоделей.
  *
- * @param itemsRepository репозиторий с данными
- * @param schedulersProvider
+ * @param weatherInteractor интерактор, обрабатыващий погодные данные.
+ * @param photosInteractor интерактор, обрабатывающий данные с фото.
+ * @param taskInteractor интерактор, обрабатывающий данные с задачами.
+ * @param schedulersProvider провайдер с Scheduler для работы на разных потоках.
+ * @param homeInteractor интерактор главного экрана.
  */
 class ViewModelFactory(
     private val weatherInteractor: IWeatherInteractor,

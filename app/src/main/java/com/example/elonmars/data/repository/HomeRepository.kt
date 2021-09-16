@@ -9,7 +9,7 @@ import com.example.elonmars.presentation.enum.TimerState
  *
  * @param dataStorage хранилище данных
  *
- * @testclass unit: HomeRepositoryTest
+ * @testClass unit: HomeRepositoryTest
  */
 class HomeRepository(private val dataStorage: IDataStorage): IHomeRepository {
 

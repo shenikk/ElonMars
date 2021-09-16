@@ -9,8 +9,8 @@ import com.example.elonmars.R
 /**
  * Адаптер для отображения элементов списка на главном экране.
  *
- * @param dataSet список элементов [PhotoItem]
- * @param onItemBind лямбда с полезной нагрузкой, которая выполняется при биндинга холдера
+ * @param dataSet список элементов [PhotoItem].
+ * @param onItemBind лямбда с полезной нагрузкой, которая выполняется при биндинга холдера.
  */
 class PhotoAdapter(
     private val dataSet: List<PhotoItem>,

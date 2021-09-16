@@ -9,8 +9,8 @@ import com.example.elonmars.presentation.extensions.logDebug
 /**
  * ViewModel экрана со списком фильмов.
  *
- * @param itemsRepository репозиторий с данными о фото
- * @param schedulersProvider
+ * @param photosInteractor интерактор, обрабатывающий данные с фото.
+ * @param schedulersProvider провайдер с Scheduler для работы на разных потоках.
  *
  * @testClass unit: DetailPhotoViewModelTest
  */
@@ -24,6 +24,7 @@ class DetailPhotoViewModel(
         logDebug("onCleared() called")
     }
 
+    /** Устанавливает значение фото, как 'любимое' */
     fun setFavourite(photoItem: PhotoItem) {
         photosInteractor.setFavourite(photoItem)
     }

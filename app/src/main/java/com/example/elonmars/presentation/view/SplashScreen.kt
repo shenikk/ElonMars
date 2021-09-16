@@ -9,6 +9,7 @@ import com.example.elonmars.R
 import kotlin.concurrent.thread
 import android.os.Looper
 
+/** Экран с логотипом приложения, который показывается при запуске приложения */
 class SplashScreen : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
