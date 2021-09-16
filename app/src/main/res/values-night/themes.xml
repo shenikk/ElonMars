@@ -2,12 +2,12 @@
     <!-- Base application theme. -->
     <style name="Theme.ElonMars" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#d32f2f</item>
-        <item name="colorPrimaryVariant">#9a0007</item>
+        <item name="colorPrimary">@color/persianRed</item>
+        <item name="colorPrimaryVariant">@color/sangria</item>
         <item name="colorOnPrimary">@color/outer_space</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">#d32f2f</item>
-        <item name="colorSecondaryVariant">#ff6659</item>
+        <item name="colorSecondary">@color/persianRed</item>
+        <item name="colorSecondaryVariant">@color/persimmon</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>

@@ -16,4 +16,8 @@
 
     <color name="black_title">#1A1A1A</color>
     <color name="grey_title">#BABABA</color>
+
+    <color name="sangria">#9A0007</color>
+    <color name="persianRed">#d32f2f</color>
+    <color name="persimmon">#ff6659</color>
 </resources>

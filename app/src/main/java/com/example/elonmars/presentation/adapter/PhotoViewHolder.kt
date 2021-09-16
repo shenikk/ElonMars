@@ -4,10 +4,12 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.elonmars.R
 import com.example.elonmars.data.model.PhotoItem
+import com.google.android.material.progressindicator.CircularProgressIndicator
 
 /**
  * ViewHolder для [com.example.elonmars.presentation.adapter.PhotoAdapter]
@@ -17,6 +19,7 @@ class PhotoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val titleText: TextView = view.findViewById(R.id.title)
     private val dateText: TextView = view.findViewById(R.id.description)
     private val starIcon: ImageView = view.findViewById(R.id.star_icon)
+    private var progressDrawable = CircularProgressDrawable(imageView.context)
 
     fun configureHolder(currentItem: PhotoItem) {
         titleText.text = currentItem.date
@@ -35,10 +38,18 @@ class PhotoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     private fun configureImage(currentItem: PhotoItem) {
+        setupProgress()
         Glide.with(imageView.context)
             .load(currentItem.image)
             .centerInside()
-            .diskCacheStrategy(DiskCacheStrategy.DATA) //FIXME?
+            .placeholder(progressDrawable)
             .into(imageView)
+    }
+
+    private fun setupProgress() {
+        progressDrawable.apply {
+            centerRadius = 30f
+            strokeWidth = 5f
+        }.start()
     }
 }
