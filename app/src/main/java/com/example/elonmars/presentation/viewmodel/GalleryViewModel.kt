@@ -30,8 +30,7 @@ class GalleryViewModel(
     private val photoItemsLiveData = MutableLiveData<List<PhotoItem>>()
     private val favPhotoItemsLiveData = MutableLiveData<List<PhotoItem>>()
     private val refreshLiveData = MutableLiveData<Boolean>()
-
-    private var galleryType: GalleryType = GalleryType.RANDOM
+    private val contentTypeLiveData = MutableLiveData<Int>()
 
     override fun onCleared() {
         super.onCleared()
@@ -73,7 +72,12 @@ class GalleryViewModel(
     }
 
     fun setContentType(galleryType: GalleryType) {
-        this.galleryType = galleryType
+        photosInteractor.setGalleryType(galleryType.ordinal)
+        contentTypeLiveData.value = galleryType.ordinal
+    }
+
+    fun getContentTypeLiveData(): LiveData<Int> {
+        return contentTypeLiveData
     }
 
     /**
@@ -106,6 +110,7 @@ class GalleryViewModel(
     fun getFavPhotoItemsLiveData(): LiveData<List<PhotoItem>> {
         return favPhotoItemsLiveData
     }
+
     /**
      * Метод для получения инстанса LiveData.
      *
@@ -116,9 +121,9 @@ class GalleryViewModel(
     }
 
     private fun updateContent() {
-        when(galleryType) {
-            GalleryType.RANDOM -> null
-            GalleryType.FAVOURITE -> getFavouritePhotos()
+        when(photosInteractor.getGalleryType()) {
+            GalleryType.RANDOM.ordinal -> null
+            GalleryType.FAVOURITE.ordinal -> getFavouritePhotos()
         }
     }
 }

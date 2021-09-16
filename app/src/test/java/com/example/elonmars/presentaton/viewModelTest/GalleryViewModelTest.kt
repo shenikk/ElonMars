@@ -5,13 +5,13 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.elonmars.data.exception.RequestException
 import com.example.elonmars.data.model.PhotoItem
-import com.example.elonmars.domain.provider.ISchedulersProvider
 import com.example.elonmars.domain.interactors.IPhotosInteractor
+import com.example.elonmars.domain.provider.ISchedulersProvider
+import com.example.elonmars.presentation.GalleryType
 import com.example.elonmars.presentation.viewmodel.GalleryViewModel
 import io.mockk.*
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -25,6 +25,7 @@ class GalleryViewModelTest {
     private lateinit var galleryViewModel: GalleryViewModel
     private var progressLiveDataObserver: Observer<Boolean> = mockk()
     private var refreshLiveDataObserver: Observer<Boolean> = mockk()
+    private var contentTypeLiveDataObserver: Observer<Int> = mockk()
     private var errorLiveDataObserver: Observer<Throwable> = mockk()
     private var favPhotoItemsLiveDataObserver: Observer<List<PhotoItem>> = mockk()
     private var photoItemsLiveDataObserver: Observer<List<PhotoItem>> = mockk()
@@ -41,6 +42,7 @@ class GalleryViewModelTest {
         galleryViewModel.getPhotoItemsLiveData().observeForever(photoItemsLiveDataObserver)
         galleryViewModel.getRefreshingProgressLiveData().observeForever(refreshLiveDataObserver)
         galleryViewModel.getFavPhotoItemsLiveData().observeForever(favPhotoItemsLiveDataObserver)
+        galleryViewModel.getContentTypeLiveData().observeForever(contentTypeLiveDataObserver)
 
         every { Log.e(any(), any()) } returns 0
         every { schedulersProvider.io() } returns Schedulers.trampoline()
@@ -51,6 +53,7 @@ class GalleryViewModelTest {
         every { photoItemsLiveDataObserver.onChanged(any()) } just Runs
         every { refreshLiveDataObserver.onChanged(any()) } just Runs
         every { favPhotoItemsLiveDataObserver.onChanged(any()) } just Runs
+        every { contentTypeLiveDataObserver.onChanged(any()) } just Runs
     }
 
     @Test
@@ -156,16 +159,47 @@ class GalleryViewModelTest {
     }
 
     @Test
-    fun setFavouriteTest() {
+    fun setFavouriteGalleryTypeRandomTest() {
         // Arrange
         val favouritePhoto = PhotoItem("title")
         every { photosInteractor.setFavourite(favouritePhoto) } just Runs
+        every { photosInteractor.getGalleryType() } returns GalleryType.RANDOM.ordinal
 
         // Act
         galleryViewModel.setFavourite(favouritePhoto)
 
         // Assert
         verify(exactly = 1) { photosInteractor.setFavourite(favouritePhoto) }
+        verify(exactly = 0) { favPhotoItemsLiveDataObserver.onChanged(any()) }
+    }
+
+    @Test
+    fun setFavouriteGalleryTypeFavouriteTest() {
+        // Arrange
+        val favouritePhoto = PhotoItem("title")
+        every { photosInteractor.setFavourite(favouritePhoto) } just Runs
+        every { photosInteractor.getGalleryType() } returns GalleryType.FAVOURITE.ordinal
+        every { photosInteractor.getFavouritePhotos() } returns getFavouritePhotos()
+
+        // Act
+        galleryViewModel.setFavourite(favouritePhoto)
+
+        // Assert
+        verify(exactly = 1) { photosInteractor.setFavourite(favouritePhoto) }
+        verify(exactly = 1) { favPhotoItemsLiveDataObserver.onChanged(any()) }
+    }
+
+    @Test
+    fun setContentTypeTest() {
+        // Arrange
+        every { photosInteractor.setGalleryType(GalleryType.FAVOURITE.ordinal) } just Runs
+
+        // Act
+        galleryViewModel.setContentType(GalleryType.FAVOURITE)
+
+        // Assert
+        verify(exactly = 1) { photosInteractor.setGalleryType(GalleryType.FAVOURITE.ordinal) }
+        verify(exactly = 1) { contentTypeLiveDataObserver.onChanged(any()) }
     }
 
     private fun createData(): List<PhotoItem> {
@@ -185,5 +219,4 @@ class GalleryViewModelTest {
 
         return list
     }
-
 }

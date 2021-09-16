@@ -46,6 +46,14 @@ class PhotosInteractor(private val photosRepository: IPhotosRepository) : IPhoto
         photosRepository.setFavourite(photoItem)
     }
 
+    override fun setGalleryType(type: Int) {
+        photosRepository.setGalleryType(type)
+    }
+
+    override fun getGalleryType(): Int {
+        return photosRepository.getGalleryType()
+    }
+
     /** Возвращает данные с медиатипом "image" */
     private fun filterMediaType(data: Single<List<PhotoItem>>): Single<List<PhotoItem>> {
         return data.map {

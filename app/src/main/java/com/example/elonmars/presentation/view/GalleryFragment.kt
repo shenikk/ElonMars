@@ -37,6 +37,7 @@ class GalleryFragment : Fragment() {
 
     private lateinit var photoText: TextView
     private lateinit var favouritePhotoText: TextView
+    private var galleryType: GalleryType = GalleryType.RANDOM
 
     companion object {
         const val PRIMARY_TITLE_SIZE = 28f
@@ -137,6 +138,20 @@ class GalleryFragment : Fragment() {
             it.getRefreshingProgressLiveData().observe(viewLifecycleOwner, { isRefreshing ->
                 showRefreshProgress(isRefreshing)
             })
+
+            it.getContentTypeLiveData().observe(viewLifecycleOwner, { type ->
+                setType(type)
+            })
+        }
+    }
+
+    private fun setType(contentType: Int) {
+        galleryType = if (contentType == GalleryType.RANDOM.ordinal) {
+            viewModel?.loadDataAsync()
+            GalleryType.RANDOM
+        } else {
+            viewModel?.getFavouritePhotos()
+            GalleryType.FAVOURITE
         }
     }
 
@@ -154,17 +169,16 @@ class GalleryFragment : Fragment() {
     }
 
     private fun showData(list: List<PhotoItem>) {
-        setUpAdapter(list)
-        recyclerView.adapter = photoAdapter
-        viewModel?.setContentType(GalleryType.RANDOM)
-
-        updateText(noFavourites, list)
+        if (GalleryType.RANDOM == galleryType) {
+            setUpAdapter(list)
+            recyclerView.adapter = photoAdapter
+            updateText(noFavourites, list)
+        }
     }
 
     private fun showFavData(list: List<PhotoItem>) {
         setUpAdapter(list)
         recyclerView.adapter = photoAdapter
-        viewModel?.setContentType(GalleryType.FAVOURITE)
 
         updateText(noFavourites, list)
     }
@@ -187,7 +201,7 @@ class GalleryFragment : Fragment() {
                 favouritePhotoText.textSize = SECONDARY_TITLE_SIZE
 
                 swipeRefresh.isEnabled = true
-                viewModel?.loadDataAsync()
+                viewModel?.setContentType(GalleryType.RANDOM)
             }
         }
 
@@ -199,7 +213,7 @@ class GalleryFragment : Fragment() {
                 photoText.setTextColor(ContextCompat.getColor(view.context, R.color.grey_title))
 
                 swipeRefresh.isEnabled = false
-                viewModel?.getFavouritePhotos()
+                viewModel?.setContentType(GalleryType.FAVOURITE)
             }
         }
     }

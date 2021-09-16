@@ -21,4 +21,8 @@ interface IPhotosRepository {
     fun getFavouritePhotosFromCache(): List<PhotoItem>
 
     fun setFavourite(photoItem: PhotoItem)
+
+    fun setGalleryType(type: Int)
+
+    fun getGalleryType(): Int
 }

@@ -13,4 +13,5 @@ interface IDataStorage {
     var farenheitEnabled: Boolean
     var endMillis: Long
     var timerState: Int
+    var contentType: Int
 }

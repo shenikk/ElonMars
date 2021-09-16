@@ -54,4 +54,12 @@ class PhotosRepository(
             dataStorage.favouritePhotos = mutableList
         }
     }
+
+    override fun setGalleryType(type: Int) {
+        dataStorage.contentType = type
+    }
+
+    override fun getGalleryType(): Int {
+        return dataStorage.contentType
+    }
 }

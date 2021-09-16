@@ -21,6 +21,7 @@ class DataStorage(private val preferences: SharedPreferences) : DataPreferences(
         private const val CONVERSION_KEY = "CONVERSION_KEY"
         private const val END_MILLIS_KEY = "END_MILLIS_KEY"
         private const val TIMER_STATE_KEY = "TIMER_STATE_KEY"
+        private const val GALLERY_TYPE_KEY = "GALLERY_TYPE_KEY"
     }
 
     /** Список с моделями [WeatherDataItem] */
@@ -60,4 +61,8 @@ class DataStorage(private val preferences: SharedPreferences) : DataPreferences(
     override var timerState: Int
         get() = preferences.getInt(TIMER_STATE_KEY, 0)
         set(value) = preferences.edit().putInt(TIMER_STATE_KEY, value).apply()
+
+    override var contentType: Int
+        get() = preferences.getInt(GALLERY_TYPE_KEY, 0)
+        set(value) = preferences.edit().putInt(GALLERY_TYPE_KEY, value).apply()
 }

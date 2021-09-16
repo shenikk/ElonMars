@@ -9,4 +9,6 @@ interface IPhotosInteractor {
     fun loadPhotosOnCall(): Single<List<PhotoItem>>
     fun getFavouritePhotos(): List<PhotoItem>
     fun setFavourite(photoItem: PhotoItem)
+    fun setGalleryType(type: Int)
+    fun getGalleryType(): Int
 }
