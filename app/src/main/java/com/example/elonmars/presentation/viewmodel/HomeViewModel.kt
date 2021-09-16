@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.elonmars.domain.interactors.IHomeInteractor
-import com.example.elonmars.presentation.enum.TimerState
+import com.example.elonmars.presentation.enums.TimerState
 import java.util.*
 import java.util.concurrent.TimeUnit
 

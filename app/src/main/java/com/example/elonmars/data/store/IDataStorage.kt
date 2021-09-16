@@ -2,7 +2,7 @@ package com.example.elonmars.data.store
 
 import com.example.elonmars.data.model.WeatherDataItem
 import com.example.elonmars.data.model.PhotoItem
-import com.example.elonmars.presentation.enum.TimerState
+import com.example.elonmars.presentation.enums.TimerState
 import com.example.elonmars.presentation.model.WeatherItem
 
 /** Интерфейс хранилища данных */

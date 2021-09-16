@@ -3,8 +3,8 @@ package com.example.elonmars.presentation.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.elonmars.domain.provider.ISchedulersProvider
 import com.example.elonmars.domain.interactors.ITaskInteractor
+import com.example.elonmars.domain.provider.ISchedulersProvider
 import com.example.elonmars.presentation.extensions.logDebug
 import com.example.elonmars.presentation.model.TaskItem
 import io.reactivex.disposables.Disposable

@@ -19,7 +19,7 @@ import com.example.elonmars.MyApplication
 import com.example.elonmars.R
 import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.broadcast.NotificationBroadcastReceiver
-import com.example.elonmars.presentation.enum.TimerState
+import com.example.elonmars.presentation.enums.TimerState
 import com.example.elonmars.presentation.service.NotificationService
 import com.example.elonmars.presentation.viewmodel.HomeViewModel
 import java.util.*

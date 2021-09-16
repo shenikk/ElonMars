@@ -58,7 +58,7 @@ class PhotosInteractor(private val photosRepository: IPhotosRepository) : IPhoto
     private fun filterMediaType(data: Single<List<PhotoItem>>): Single<List<PhotoItem>> {
         return data.map {
             return@map it.filter { photo ->
-                photo.media_type == "image"
+                photo.mediaType == "image"
             }
         }
     }

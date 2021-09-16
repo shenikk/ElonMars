@@ -17,7 +17,7 @@ import com.example.elonmars.MyApplication
 import com.example.elonmars.R
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.di.activity.DaggerActivityComponent
-import com.example.elonmars.presentation.GalleryType
+import com.example.elonmars.presentation.enums.GalleryType
 import com.example.elonmars.presentation.adapter.PhotoAdapter
 import com.example.elonmars.presentation.extensions.getColorFromAttr
 import com.example.elonmars.presentation.extensions.logError

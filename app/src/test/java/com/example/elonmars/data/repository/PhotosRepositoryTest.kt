@@ -4,7 +4,7 @@ import com.example.elonmars.data.exception.RequestException
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.domain.provider.IGalleryProvider
 import com.example.elonmars.data.store.IDataStorage
-import com.example.elonmars.presentation.GalleryType
+import com.example.elonmars.presentation.enums.GalleryType
 import io.mockk.*
 import org.junit.Assert
 import org.junit.Test
@@ -12,14 +12,14 @@ import org.junit.Test
 /** Класс для тестирования [PhotosRepository] */
 class PhotosRepositoryTest {
 
-    private val photo1 = PhotoItem("title1", isFavourite = true, media_type = "image")
-    private val photo2 = PhotoItem("title2", "19280", isFavourite = true, media_type = "image")
+    private val photo1 = PhotoItem("title1", isFavourite = true, mediaType = "image")
+    private val photo2 = PhotoItem("title2", "19280", isFavourite = true, mediaType = "image")
     private val photo3 = PhotoItem(
         "title3",
         "date",
         explanation = "explanation",
         isFavourite = true,
-        media_type = "image"
+        mediaType = "image"
     )
 
     private val dataStorage: IDataStorage = mockk()

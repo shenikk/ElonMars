@@ -3,7 +3,7 @@ package com.example.elonmars.domain
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.domain.interactors.PhotosInteractor
 import com.example.elonmars.domain.repositories.IPhotosRepository
-import com.example.elonmars.presentation.GalleryType
+import com.example.elonmars.presentation.enums.GalleryType
 import io.mockk.*
 import io.reactivex.Single
 import org.junit.Assert
@@ -40,8 +40,8 @@ class PhotosInteractorTest {
         verify(exactly = 1) { photosRepository.loadPhotosAsync() }
         testObserver.assertResult(
             listOf(
-                PhotoItem("title1", media_type = "image"),
-                PhotoItem("title3", media_type = "image")
+                PhotoItem("title1", mediaType = "image"),
+                PhotoItem("title3", mediaType = "image")
             )
         )
         testObserver.assertNever(getList())
@@ -69,8 +69,8 @@ class PhotosInteractorTest {
         verify(exactly = 1) { photosRepository.loadPhotosOnCall() }
         testObserver.assertResult(
             listOf(
-                PhotoItem("title1", media_type = "image"),
-                PhotoItem("title3", media_type = "image")
+                PhotoItem("title1", mediaType = "image"),
+                PhotoItem("title3", mediaType = "image")
             )
         )
         testObserver.assertNever(listOf())
@@ -118,19 +118,19 @@ class PhotosInteractorTest {
 
     private fun getFavList(): List<PhotoItem> =
         listOf(
-            PhotoItem("title1", media_type = "image"),
-            PhotoItem("title2", media_type = "image")
+            PhotoItem("title1", mediaType = "image"),
+            PhotoItem("title2", mediaType = "image")
         )
 
     private fun getList(): List<PhotoItem> = listOf(
-        PhotoItem("title1", media_type = "image"),
-        PhotoItem("title2", media_type = "image"),
-        PhotoItem("title3", media_type = "image")
+        PhotoItem("title1", mediaType = "image"),
+        PhotoItem("title2", mediaType = "image"),
+        PhotoItem("title3", mediaType = "image")
     )
 
     private fun getListWithVideo(): List<PhotoItem> = listOf(
-        PhotoItem("title1", media_type = "image"),
-        PhotoItem("title2", media_type = "video"),
-        PhotoItem("title3", media_type = "image")
+        PhotoItem("title1", mediaType = "image"),
+        PhotoItem("title2", mediaType = "video"),
+        PhotoItem("title3", mediaType = "image")
     )
 }

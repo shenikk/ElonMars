@@ -20,7 +20,8 @@ data class PhotoItem(
     var image: String? = null,
     var explanation: String? = null,
     var isFavourite: Boolean = false,
-    var media_type: String? = null) : Parcelable {
+    @SerializedName("media_type")
+    var mediaType: String? = null) : Parcelable {
 
     override fun equals(other: Any?): Boolean{
         other as PhotoItem

@@ -1,4 +1,4 @@
-package com.example.elonmars.presentation.enum
+package com.example.elonmars.presentation.enums
 
 /** Enum класс с состояниями таймера */
 enum class TimerState {

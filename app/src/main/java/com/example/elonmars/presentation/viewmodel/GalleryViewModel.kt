@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.domain.provider.ISchedulersProvider
 import com.example.elonmars.domain.interactors.IPhotosInteractor
-import com.example.elonmars.presentation.GalleryType
+import com.example.elonmars.presentation.enums.GalleryType
 import com.example.elonmars.presentation.extensions.logDebug
 import io.reactivex.disposables.Disposable
 

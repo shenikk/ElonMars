@@ -87,6 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
+                    android:layout_margin="@dimen/dp_50"
                     android:text="@string/no_tasks_for_the_day_n_click_on_the_rocket_to_create_your_task" />
 
             </FrameLayout>

@@ -1,8 +1,7 @@
 package com.example.elonmars.domain.interactors
 
 import com.example.elonmars.data.model.PhotoItem
-import com.example.elonmars.presentation.GalleryType
-import io.reactivex.Observable
+import com.example.elonmars.presentation.enums.GalleryType
 import io.reactivex.Single
 
 /** Интерфейс интерактора для экрана галереи. */

@@ -1,6 +1,6 @@
 package com.example.elonmars.domain.interactors
 
-import com.example.elonmars.presentation.enum.TimerState
+import com.example.elonmars.presentation.enums.TimerState
 
 /** Интерфейс интерактора для главного экрана. */
 interface IHomeInteractor {

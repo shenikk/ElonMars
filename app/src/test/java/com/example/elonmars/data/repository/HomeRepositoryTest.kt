@@ -1,7 +1,7 @@
 package com.example.elonmars.data.repository
 
 import com.example.elonmars.data.store.IDataStorage
-import com.example.elonmars.presentation.enum.TimerState
+import com.example.elonmars.presentation.enums.TimerState
 import io.mockk.*
 import org.junit.Assert
 import org.junit.Test
