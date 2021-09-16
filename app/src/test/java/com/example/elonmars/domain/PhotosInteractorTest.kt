@@ -3,8 +3,10 @@ package com.example.elonmars.domain
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.domain.interactors.PhotosInteractor
 import com.example.elonmars.domain.repositories.IPhotosRepository
+import com.example.elonmars.presentation.GalleryType
 import io.mockk.*
 import io.reactivex.Single
+import org.junit.Assert
 import org.junit.Test
 
 /** Класс для тестирования [PhotosInteractor] */
@@ -84,6 +86,33 @@ class PhotosInteractorTest {
         photosRepository.setFavourite(photoItem)
 
         verify(exactly = 1) { photosRepository.setFavourite(photoItem) }
+    }
+
+    @Test
+    fun setGalleryTypeTest() {
+        // Arrange
+        val galleryType = GalleryType.RANDOM.ordinal
+        every { photosRepository.setGalleryType(galleryType) } just Runs
+
+        // Act
+        photosInteractor.setGalleryType(galleryType)
+
+        // Assert
+        verify(exactly = 1) { photosRepository.setGalleryType(galleryType) }
+    }
+
+    @Test
+    fun getGalleryTypeTest() {
+        // Arrange
+        val galleryType = GalleryType.RANDOM.ordinal
+        every { photosInteractor.getGalleryType() } returns galleryType
+
+        // Act
+        val result = photosRepository.getGalleryType()
+
+        // Assert
+        verify(exactly = 1) { photosInteractor.getGalleryType() }
+        Assert.assertEquals(galleryType, result)
     }
 
 

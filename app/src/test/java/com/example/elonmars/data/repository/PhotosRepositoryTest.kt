@@ -4,6 +4,7 @@ import com.example.elonmars.data.exception.RequestException
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.domain.provider.IGalleryProvider
 import com.example.elonmars.data.store.IDataStorage
+import com.example.elonmars.presentation.GalleryType
 import io.mockk.*
 import org.junit.Assert
 import org.junit.Test
@@ -154,6 +155,33 @@ class PhotosRepositoryTest {
 
         // Assert
         verify(exactly = 1) { dataStorage.favouritePhotos = listOf(photo1) }
+    }
+
+    @Test
+    fun setGalleryTypeTest() {
+        // Arrange
+        val galleryType = GalleryType.RANDOM.ordinal
+        every { dataStorage.contentType = galleryType } just Runs
+
+        // Act
+        photosRepository.setGalleryType(galleryType)
+
+        // Assert
+        verify(exactly = 1) { dataStorage.contentType = galleryType }
+    }
+
+    @Test
+    fun getGalleryTypeTest() {
+        // Arrange
+        val galleryType = GalleryType.RANDOM.ordinal
+        every { dataStorage.contentType } returns galleryType
+
+        // Act
+        val result = photosRepository.getGalleryType()
+
+        // Assert
+        verify(exactly = 1) { dataStorage.contentType }
+        Assert.assertEquals(galleryType, result)
     }
 
     private fun getPhotos(): List<PhotoItem> {

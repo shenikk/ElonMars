@@ -32,6 +32,12 @@ class WeatherViewModel(
     private var latestDayLiveData = MutableLiveData<WeatherItem>()
     private val refreshLiveData = MutableLiveData<Boolean>()
 
+    override fun onCleared() {
+        super.onCleared()
+        disposable?.dispose()
+        logDebug("onCleared() called")
+    }
+
     /**
      * Метод для асинхронной загрузки списка фильмов.
      */
@@ -62,17 +68,6 @@ class WeatherViewModel(
 
         weatherItemsLiveData.value = weatherInteractor.getWeatherItems()
         latestDayLiveData.value = weatherInteractor.getLatestWeatherDay()
-    }
-
-    private fun doOnSuccess() {
-        weatherItemsLiveData.value = weatherInteractor.getWeatherItems()
-        latestDayLiveData.value = weatherInteractor.getLatestWeatherDay()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        disposable?.dispose()
-        logDebug("onCleared() called")
     }
 
     /**
@@ -113,5 +108,10 @@ class WeatherViewModel(
 
     fun getRefreshLiveData(): LiveData<Boolean> {
         return refreshLiveData
+    }
+
+    private fun doOnSuccess() {
+        weatherItemsLiveData.value = weatherInteractor.getWeatherItems()
+        latestDayLiveData.value = weatherInteractor.getLatestWeatherDay()
     }
 }
