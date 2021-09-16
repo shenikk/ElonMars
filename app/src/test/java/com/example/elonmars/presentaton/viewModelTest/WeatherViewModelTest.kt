@@ -13,6 +13,7 @@ import com.example.elonmars.presentation.viewmodel.WeatherViewModel
 import io.mockk.*
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -26,19 +27,20 @@ class WeatherViewModelTest {
     private lateinit var weatherViewModel: WeatherViewModel
 
     private var shimmerLiveDataObserver: Observer<Boolean> = mockk()
+    private var refreshLiveDataObserver: Observer<Boolean> = mockk()
     private var errorLiveDataObserver: Observer<Throwable> = mockk()
     private var weatherItemsLiveDataObserver: Observer<List<WeatherItem>> = mockk()
     private var latestDayLiveDataObserver: Observer<WeatherItem> = mockk()
 
     private val schedulersProvider: ISchedulersProvider = mockk()
     private val weatherInteractor: IWeatherInteractor = mockk()
-    private val dataStorage: IDataStorage = mockk()
 
     @Before
     fun setUp() {
         mockkStatic(Log::class)
         weatherViewModel = WeatherViewModel(weatherInteractor, schedulersProvider)
         weatherViewModel.getShimmerLiveData().observeForever(shimmerLiveDataObserver)
+        weatherViewModel.getRefreshLiveData().observeForever(refreshLiveDataObserver)
         weatherViewModel.getErrorLiveData().observeForever(errorLiveDataObserver)
         weatherViewModel.getWeatherItemsLiveData().observeForever(weatherItemsLiveDataObserver)
         weatherViewModel.getLatestDayLiveData().observeForever(latestDayLiveDataObserver)
@@ -48,6 +50,7 @@ class WeatherViewModelTest {
         every { schedulersProvider.ui() } returns Schedulers.trampoline()
 
         every { shimmerLiveDataObserver.onChanged(any()) } just Runs
+        every { refreshLiveDataObserver.onChanged(any()) } just Runs
         every { errorLiveDataObserver.onChanged(any()) } just Runs
         every { weatherItemsLiveDataObserver.onChanged(any()) } just Runs
         every { latestDayLiveDataObserver.onChanged(any()) } just Runs
@@ -57,13 +60,16 @@ class WeatherViewModelTest {
     fun loadDataAsync() {
         // Arrange
         every { weatherInteractor.loadDataAsync() } returns Single.just(Unit)
-        every { dataStorage.farenheitEnabled } returns true
+        every { weatherInteractor.getWeatherItems() } returns celsiusWeatherItemList()
+        every { weatherInteractor.getLatestWeatherDay() } returns celsiusWeatherItemList()[0]
 
         // Act
         weatherViewModel.loadDataAsync()
 
         // Assert
         verify(exactly = 1) { weatherInteractor.loadDataAsync() }
+        verify(exactly = 1) { weatherInteractor.getWeatherItems() }
+        verify(exactly = 1) { weatherInteractor.getLatestWeatherDay() }
         verify { errorLiveDataObserver wasNot called }
         verifyOrder {
             shimmerLiveDataObserver.onChanged(true)
@@ -74,22 +80,25 @@ class WeatherViewModelTest {
     }
 
     @Test
-    fun loadDataAsyncFarnheitEnabled() {
+    fun loadDataOnForceAsync() {
         // Arrange
-        every { weatherInteractor.loadDataAsync() } returns Single.just(Unit)
-        every { dataStorage.farenheitEnabled } returns false
+        every { weatherInteractor.loadDataAsyncOnCall() } returns Single.just(Unit)
+        every { weatherInteractor.getWeatherItems() } returns celsiusWeatherItemList()
+        every { weatherInteractor.getLatestWeatherDay() } returns celsiusWeatherItemList()[0]
 
         // Act
-        weatherViewModel.loadDataAsync()
+        weatherViewModel.loadDataOnForceAsync()
 
         // Assert
-        verify(exactly = 1) { weatherInteractor.loadDataAsync() }
+        verify(exactly = 1) { weatherInteractor.loadDataAsyncOnCall() }
+        verify(exactly = 1) { weatherInteractor.getWeatherItems() }
+        verify(exactly = 1) { weatherInteractor.getLatestWeatherDay() }
         verify { errorLiveDataObserver wasNot called }
         verifyOrder {
-            shimmerLiveDataObserver.onChanged(true)
+            refreshLiveDataObserver.onChanged(any())
             weatherItemsLiveDataObserver.onChanged(any())
             latestDayLiveDataObserver.onChanged(any())
-            shimmerLiveDataObserver.onChanged(false)
+            refreshLiveDataObserver.onChanged(any())
         }
     }
 
@@ -118,6 +127,8 @@ class WeatherViewModelTest {
     fun loadDataAsyncDataEmpty() {
         // Arrange
         every { weatherInteractor.loadDataAsync() } returns Single.just(Unit)
+        every { weatherInteractor.getWeatherItems() } returns listOf()
+        every { weatherInteractor.getLatestWeatherDay() } returns null
 
         // Act
         weatherViewModel.loadDataAsync()
@@ -132,7 +143,9 @@ class WeatherViewModelTest {
     fun convertTemperatureTest() {
         // Arrange
         every { weatherInteractor.loadDataAsync() } returns Single.just(Unit)
-        every { dataStorage.farenheitEnabled } returns false
+        every { weatherInteractor.convertTemperature() } just Runs
+        every { weatherInteractor.getWeatherItems() } returns celsiusWeatherItemList()
+        every { weatherInteractor.getLatestWeatherDay() } returns celsiusWeatherItemList()[0]
         weatherViewModel.loadDataAsync()
 
         // Act
@@ -148,8 +161,9 @@ class WeatherViewModelTest {
     @Test
     fun convertTemperatureDataEmpty() {
         // Arrange
-        every { weatherInteractor.loadDataAsync() } returns Single.just(Unit)
-        weatherViewModel.loadDataAsync()
+        every { weatherInteractor.convertTemperature() } just Runs
+        every { weatherInteractor.getWeatherItems() } returns null
+        every { weatherInteractor.getLatestWeatherDay() } returns null
 
         // Act
         weatherViewModel.convertTemperature()
@@ -159,11 +173,11 @@ class WeatherViewModelTest {
         verify(exactly = 1) { latestDayLiveDataObserver.onChanged(any()) }
     }
 
-    private fun createData(): List<WeatherDataItem> {
-        val list = arrayListOf<WeatherDataItem>()
-        list.add(WeatherDataItem("1", "1", "23", "45"))
-        list.add(WeatherDataItem("2", "2", "45", "-67"))
-        list.add(WeatherDataItem("3", "3", "3", "-5"))
+    private fun celsiusWeatherItemList(): List<WeatherItem> {
+        val list = arrayListOf<WeatherItem>()
+        list.add(WeatherItem("Sol 1", "1", "High: 23 °C", "Low: 45 °C"))
+        list.add(WeatherItem("Sol 2", "2", "High: 45 °C", "Low: -67 °C"))
+        list.add(WeatherItem("Sol 3", "3", "High: 3 °C", "Low: -5 °C"))
 
         return list
     }

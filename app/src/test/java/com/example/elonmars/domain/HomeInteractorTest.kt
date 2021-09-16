@@ -1,7 +1,7 @@
 package com.example.elonmars.domain
 
-import com.example.elonmars.data.repository.HomeRepository
 import com.example.elonmars.domain.interactors.HomeInteractor
+import com.example.elonmars.domain.repositories.IHomeRepository
 import com.example.elonmars.presentation.enum.TimerState
 import io.mockk.*
 import org.junit.Assert
@@ -10,7 +10,7 @@ import org.junit.Test
 /** Класс для тестирования [HomeInteractor] */
 class HomeInteractorTest {
 
-    private var homeRepository: HomeRepository = mockk()
+    private var homeRepository: IHomeRepository = mockk()
     private var homeInteractor = HomeInteractor(homeRepository)
 
     @Test

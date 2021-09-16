@@ -46,30 +46,32 @@ class GalleryProviderTest {
         verify(exactly = 1) { mockCall.execute() }
     }
 
-    @Test(expected = RequestException::class)
+    @Test
     fun loadPhotoItemsListFailTest() {
         // Arrange
         mockkStatic(Log::class)
-        val response = mockk<Response<ArrayList<PhotoItem>>>()
+        val response = mockk<Response<List<PhotoItem>>>()
 
         every { Log.e(any(), any()) } returns 0
         every { mockRetrofitClient.create(PhotoApiInterface::class.java) } returns photoApi
         every { photoApi.getPhotos(API_KEY, 10) } returns mockCall
         every { response.code() } returns 404
-        every { mockCall.execute() } throws RequestException("Response code: ${response.code()}")
+        every { response.isSuccessful } returns false
+        every { mockCall.execute() } returns response
 
         // Act
-        galleryProvider.loadPhotoItemsList()
+        val result = galleryProvider.loadPhotoItemsList()
 
         // Assert
         verify { Log.e(any(), any()) }
+        Assert.assertEquals(listOf<PhotoItem>(), result)
     }
 
     @Test
     fun loadPhotoItemsListFailBodyNullTest() {
         // Arrange
         mockkStatic(Log::class)
-        val response = mockk<Response<ArrayList<PhotoItem>>>()
+        val response = mockk<Response<List<PhotoItem>>>()
 
         every { Log.e(any(), any()) } returns 0
         every { mockRetrofitClient.create(PhotoApiInterface::class.java) } returns photoApi
@@ -88,8 +90,7 @@ class GalleryProviderTest {
         }
     }
 
-    // FIXME
-    @Test(expected = java.lang.Exception::class)
+    @Test
     fun loadPhotoItemsListFailBodyEmptyTest() {
         // Arrange
         mockkStatic(Log::class)
@@ -98,9 +99,12 @@ class GalleryProviderTest {
         every { mockRetrofitClient.create(PhotoApiInterface::class.java) } returns photoApi
         every { photoApi.getPhotos(API_KEY, 10) } returns mockCall
 
-        every { mockCall.execute() } returns Response.success(arrayListOf())
+        every { mockCall.execute() } returns Response.success(listOf())
 
         // Act
-        galleryProvider.loadPhotoItemsList()
+        val result = galleryProvider.loadPhotoItemsList()
+
+        // Assert
+        Assert.assertEquals(listOf<PhotoItem>(), result)
     }
 }

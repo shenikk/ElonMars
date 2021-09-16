@@ -33,6 +33,12 @@ class GalleryViewModel(
 
     private var galleryType: GalleryType = GalleryType.RANDOM
 
+    override fun onCleared() {
+        super.onCleared()
+        disposable?.dispose()
+        logDebug("onCleared() called")
+    }
+
     /**
      * Метод для асинхронной загрузки списка фото.
      */
@@ -66,21 +72,8 @@ class GalleryViewModel(
         updateContent()
     }
 
-    private fun updateContent() {
-        when(galleryType) {
-            GalleryType.RANDOM -> null
-            GalleryType.FAVOURITE -> getFavouritePhotos()
-        }
-    }
-
     fun setContentType(galleryType: GalleryType) {
         this.galleryType = galleryType
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        disposable?.dispose()
-        logDebug("onCleared() called")
     }
 
     /**
@@ -120,5 +113,12 @@ class GalleryViewModel(
      */
     fun getRefreshingProgressLiveData(): LiveData<Boolean> {
         return refreshLiveData
+    }
+
+    private fun updateContent() {
+        when(galleryType) {
+            GalleryType.RANDOM -> null
+            GalleryType.FAVOURITE -> getFavouritePhotos()
+        }
     }
 }

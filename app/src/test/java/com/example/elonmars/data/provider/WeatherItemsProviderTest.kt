@@ -66,6 +66,27 @@ class WeatherItemsProviderTest {
     }
 
     @Test
+    fun loadWeatherItemsListFailReturnEmptyListTest() {
+        // Arrange
+        mockkStatic(Log::class)
+        val response = mockk<Response<WeatherData>>()
+
+        every { Log.e(any(), any()) } returns 0
+        every { mockRetrofitClient.create(WeatherApiInterface::class.java) } returns weatherApi
+        every { weatherApi.getWeatherData("weather", "msl", "json") } returns mockCall
+        every { response.code() } returns 404
+        every { response.isSuccessful } returns false
+        every { mockCall.execute() } returns response
+
+        // Act
+        val result = weatherItemsProvider.loadWeatherItemsList()
+
+        // Assert
+        verify { Log.e(any(), any()) }
+        Assert.assertEquals(listOf<WeatherData>(), result)
+    }
+
+    @Test
     fun loadWeatherItemsListFailBodyNullTest() {
         // Arrange
         mockkStatic(Log::class)
@@ -85,18 +106,21 @@ class WeatherItemsProviderTest {
         }
     }
 
-    @Test(expected = Exception::class)
+    @Test
     fun loadWeatherItemsListFailBodyEmptyTest() {
         // Arrange
         mockkStatic(Log::class)
-        val emptybody = WeatherData(arrayListOf())
+        val emptyBody = WeatherData(listOf())
 
         every { Log.e(any(), any()) } returns 0
         every { mockRetrofitClient.create(WeatherApiInterface::class.java) } returns weatherApi
         every { weatherApi.getWeatherData("weather", "msl", "json") } returns mockCall
-        every { mockCall.execute() } returns Response.success(emptybody)
+        every { mockCall.execute() } returns Response.success(emptyBody)
 
         // Act
-        weatherItemsProvider.loadWeatherItemsList()
+        val result = weatherItemsProvider.loadWeatherItemsList()
+
+        // Assert
+        Assert.assertEquals(listOf<WeatherDataItem>(), result)
     }
 }

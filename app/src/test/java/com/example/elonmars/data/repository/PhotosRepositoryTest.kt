@@ -9,7 +9,7 @@ import org.junit.Assert
 import org.junit.Test
 
 /** Класс для тестирования [PhotosRepository] */
-class PhotosRepositoryTest { //FIXME
+class PhotosRepositoryTest {
 
     private val photo1 = PhotoItem("title1", isFavourite = true, media_type = "image")
     private val photo2 = PhotoItem("title2", "19280", isFavourite = true, media_type = "image")

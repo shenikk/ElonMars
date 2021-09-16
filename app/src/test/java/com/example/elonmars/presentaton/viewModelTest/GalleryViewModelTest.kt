@@ -11,6 +11,7 @@ import com.example.elonmars.presentation.viewmodel.GalleryViewModel
 import io.mockk.*
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -25,6 +26,7 @@ class GalleryViewModelTest {
     private var progressLiveDataObserver: Observer<Boolean> = mockk()
     private var refreshLiveDataObserver: Observer<Boolean> = mockk()
     private var errorLiveDataObserver: Observer<Throwable> = mockk()
+    private var favPhotoItemsLiveDataObserver: Observer<List<PhotoItem>> = mockk()
     private var photoItemsLiveDataObserver: Observer<List<PhotoItem>> = mockk()
 
     private val schedulersProvider: ISchedulersProvider = mockk()
@@ -38,6 +40,7 @@ class GalleryViewModelTest {
         galleryViewModel.getErrorLiveData().observeForever(errorLiveDataObserver)
         galleryViewModel.getPhotoItemsLiveData().observeForever(photoItemsLiveDataObserver)
         galleryViewModel.getRefreshingProgressLiveData().observeForever(refreshLiveDataObserver)
+        galleryViewModel.getFavPhotoItemsLiveData().observeForever(favPhotoItemsLiveDataObserver)
 
         every { Log.e(any(), any()) } returns 0
         every { schedulersProvider.io() } returns Schedulers.trampoline()
@@ -47,6 +50,7 @@ class GalleryViewModelTest {
         every { errorLiveDataObserver.onChanged(any()) } just Runs
         every { photoItemsLiveDataObserver.onChanged(any()) } just Runs
         every { refreshLiveDataObserver.onChanged(any()) } just Runs
+        every { favPhotoItemsLiveDataObserver.onChanged(any()) } just Runs
     }
 
     @Test
@@ -125,7 +129,46 @@ class GalleryViewModelTest {
         }
     }
 
-    private fun createData(): ArrayList<PhotoItem> {
+    @Test
+    fun getFavouritePhotosTest() {
+        // Arrange
+        every { photosInteractor.getFavouritePhotos() } returns getFavouritePhotos()
+
+        // Act
+        galleryViewModel.getFavouritePhotos()
+
+        // Assert
+        verify(exactly = 1) { photosInteractor.getFavouritePhotos() }
+        verify(exactly = 1) { favPhotoItemsLiveDataObserver.onChanged(any()) }
+    }
+
+    @Test
+    fun getFavouritePhotosEmptyListTest() {
+        // Arrange
+        every { photosInteractor.getFavouritePhotos() } returns listOf()
+
+        // Act
+        galleryViewModel.getFavouritePhotos()
+
+        // Assert
+        verify(exactly = 1) { photosInteractor.getFavouritePhotos() }
+        verify(exactly = 1) { favPhotoItemsLiveDataObserver.onChanged(any()) }
+    }
+
+    @Test
+    fun setFavouriteTest() {
+        // Arrange
+        val favouritePhoto = PhotoItem("title")
+        every { photosInteractor.setFavourite(favouritePhoto) } just Runs
+
+        // Act
+        galleryViewModel.setFavourite(favouritePhoto)
+
+        // Assert
+        verify(exactly = 1) { photosInteractor.setFavourite(favouritePhoto) }
+    }
+
+    private fun createData(): List<PhotoItem> {
         val list = arrayListOf<PhotoItem>()
         list.add(PhotoItem("title1", "date1", "image23", "explanation45"))
         list.add(PhotoItem("title2", "date2", "45", "explanation67"))
@@ -133,4 +176,14 @@ class GalleryViewModelTest {
 
         return list
     }
+
+    private fun getFavouritePhotos(): List<PhotoItem> {
+        val list = arrayListOf<PhotoItem>()
+        list.add(PhotoItem("title1", "date1", isFavourite = true))
+        list.add(PhotoItem("title2", "date2", isFavourite = true))
+        list.add(PhotoItem("title3", "date3", isFavourite = true))
+
+        return list
+    }
+
 }
