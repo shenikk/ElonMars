@@ -12,19 +12,19 @@ import com.example.elonmars.presentation.extensions.logDebug
  * @param itemsRepository репозиторий с данными о фото
  * @param schedulersProvider
  *
- * @testClass unit: GalleryViewModelTest
+ * @testClass unit: DetailPhotoViewModelTest
  */
 class DetailPhotoViewModel(
     private val photosInteractor: IPhotosInteractor,
     private val schedulersProvider: ISchedulersProvider
 ) : ViewModel() {
 
-    fun setFavourite(photoItem: PhotoItem) {
-        photosInteractor.setFavourite(photoItem)
-    }
-
     override fun onCleared() {
         super.onCleared()
         logDebug("onCleared() called")
+    }
+
+    fun setFavourite(photoItem: PhotoItem) {
+        photosInteractor.setFavourite(photoItem)
     }
 }

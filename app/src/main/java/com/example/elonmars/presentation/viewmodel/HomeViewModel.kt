@@ -1,16 +1,21 @@
 package com.example.elonmars.presentation.viewmodel
 
-import android.content.Context
 import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.elonmars.R
 import com.example.elonmars.domain.interactors.IHomeInteractor
 import com.example.elonmars.presentation.enum.TimerState
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+/**
+ * ViewModel главного экрана.
+ *
+ * @param homeInteractor интерактор главного экрана
+ *
+ * @testClass unit: HomeViewModelTest
+ */
 class HomeViewModel(private val homeInteractor: IHomeInteractor) : ViewModel() {
 
     private val timerText = MutableLiveData<String>()
