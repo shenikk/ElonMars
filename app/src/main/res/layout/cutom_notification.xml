@@ -19,6 +19,7 @@
 
         <TextView
             android:id="@+id/record_title"
+            style="@android:style/TextAppearance.StatusBar.EventContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dp_8"
@@ -27,6 +28,7 @@
 
         <TextView
             android:id="@+id/timer_content"
+            style="@android:style/TextAppearance.StatusBar.EventContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dp_8"

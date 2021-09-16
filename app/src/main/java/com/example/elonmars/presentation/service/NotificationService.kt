@@ -57,7 +57,7 @@ class NotificationService : Service() {
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.mipmap.ic_launcher_foreground)
             .setOnlyAlertOnce(true)
             .setCustomContentView(remoteViews)
             .setContentIntent(pendingIntent) // отобразит указанную активити при нажатии на notification
