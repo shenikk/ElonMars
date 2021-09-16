@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 //apply plugin: 'kotlin-parcelize' это то же самое, что и наверху
@@ -29,12 +30,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "PHOTOS_BASE_URL", '"https://api.nasa.gov/"'
             buildConfigField "String", "WEATHER_BASE_URL", '"https://mars.nasa.gov/"'
-            buildConfigField "String", "API_KEY", '"S0pO0YrtiG1iqfuIokCyaD1xM0D4xob8ywxlM6uf"'
         }
         debug {
             buildConfigField "String", "PHOTOS_BASE_URL", '"https://api.nasa.gov/"'
             buildConfigField "String", "WEATHER_BASE_URL", '"https://mars.nasa.gov/"'
-            buildConfigField "String", "API_KEY", '"S0pO0YrtiG1iqfuIokCyaD1xM0D4xob8ywxlM6uf"'
         }
     }
     compileOptions {

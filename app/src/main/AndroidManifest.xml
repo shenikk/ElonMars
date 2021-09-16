@@ -30,7 +30,8 @@
         <activity android:name=".presentation.view.PreferenceActivity" />
         <service android:name=".presentation.service.NotificationService" />
         <receiver android:name=".presentation.broadcast.NotificationBroadcastReceiver" />
-        <meta-data android:name="io.sentry.dsn" android:value="https://1318e78e8eda44ba92c8fd1a2d180615@o997365.ingest.sentry.io/5955732" />
+        <meta-data android:name="io.sentry.dsn"
+            android:value="${sentry_key}" />
     </application>
 
 </manifest>
