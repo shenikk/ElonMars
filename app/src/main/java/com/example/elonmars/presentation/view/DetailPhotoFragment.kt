@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.example.elonmars.MyApplication
 import com.example.elonmars.R
@@ -80,6 +81,12 @@ class DetailPhotoFragment : Fragment() {
                         showSnackbar(snackbarText)
                     }
                 }
+            }
+        }
+
+        view.findViewById<ImageView>(R.id.back_button).apply {
+            setOnClickListener {
+                findNavController().popBackStack()
             }
         }
     }
