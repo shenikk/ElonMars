@@ -12,11 +12,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.DatePicker
+import android.widget.TimePicker
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.elonmars.MyApplication
 import com.example.elonmars.R
+import com.example.elonmars.databinding.FragmentHomeBinding
 import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.broadcast.NotificationBroadcastReceiver
 import com.example.elonmars.presentation.enums.TimerState
@@ -28,10 +30,12 @@ import java.util.*
 class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     TimePickerDialog.OnTimeSetListener {
 
-    private lateinit var dateText: TextView
     private lateinit var calendar: Calendar
     private var notificationService: NotificationService? = null
     private var viewModel: HomeViewModel? = null
+
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     companion object {
         private const val ENTER_FADE_TIME = 1000
@@ -42,8 +46,9 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,19 +56,25 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
         provideDependencies(view.context)
         observeLiveData()
+        initUI()
 
-        val layout = view.findViewById<RelativeLayout>(R.id.layout)
-        startBackgroundAnimation(layout)
+        startBackgroundAnimation(binding.root)
         notificationService = NotificationService()
 
-        view.findViewById<Button>(R.id.date_button).apply {
+        startTimerOnCreate(view.context)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun initUI() {
+        binding.dateButton.apply {
             setOnClickListener {
                 pickDate(this.context)
             }
         }
-        dateText = view.findViewById(R.id.date)
-
-        startTimerOnCreate(view.context)
     }
 
     private fun provideDependencies(context: Context) {
@@ -88,12 +99,12 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     }
 
     private fun showData(text: String) {
-        dateText.text = text
+        binding.date.text = text
     }
 
     private fun setTextOnTimerFinish(timerState: Int) {
         if (timerState == TimerState.NOT_STARTED.ordinal) {
-            dateText.text = getString(R.string.flight_message)
+            binding.date.text = getString(R.string.flight_message)
         }
     }
 

@@ -20,6 +20,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.elonmars.MyApplication
 import com.example.elonmars.R
+import com.example.elonmars.databinding.FragmentHomeBinding
+import com.example.elonmars.databinding.FragmentMarsMissionBinding
 import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.adapter.TaskAdapter
 import com.example.elonmars.presentation.extensions.logError
@@ -37,15 +39,13 @@ import kotlin.collections.ArrayList
 /** Экран с задачами, добавляемые пользователем */
 class MarsMissionFragment : Fragment() {
 
-    private lateinit var calendarView: CalendarView
-    private lateinit var floatingButton: FloatingActionButton
-    private lateinit var recyclerView: RecyclerView
     private lateinit var taskAdapter: TaskAdapter
-    private lateinit var noTaskText: TextView
     private lateinit var chosenTaskDate: Calendar
 
     private var dataSet: List<TaskItem> = arrayListOf()
     private var viewModel: MarsMissionViewModel? = null
+    private var _binding: FragmentMarsMissionBinding? = null
+    private val binding get() = _binding!!
 
     companion object {
         private const val REQUEST_CODE_CALENDAR_PERMISSION = 122
@@ -55,8 +55,9 @@ class MarsMissionFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_mars_mission, container, false)
+    ): View {
+        _binding = FragmentMarsMissionBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,25 +66,29 @@ class MarsMissionFragment : Fragment() {
         provideDependencies(view.context)
         observeLiveData()
         setChosenDate()
+        initUI()
         viewModel?.getTaskItemFromDataBase(chosenTaskDate)
+        setUpAdapter(dataSet)
+    }
 
-        calendarView = view.findViewById<CalendarView>(R.id.calendar).apply {
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun initUI() {
+        binding.calendar.apply {
             this.setOnDateChangeListener { _, _, month, dayOfMonth ->
                 setChosenDate(dayOfMonth, month)
                 showTasksForChosenDate()
             }
         }
 
-        floatingButton = view.findViewById<FloatingActionButton>(R.id.floating_button).apply {
+        binding.floatingButton.apply {
             this.setOnClickListener {
                 setUpDialog(this.context)
             }
         }
-
-        noTaskText = view.findViewById(R.id.no_task_text)
-
-        recyclerView = view.findViewById(R.id.task_recycler)
-        setUpAdapter(dataSet)
     }
 
     private fun provideDependencies(context: Context) {
@@ -113,7 +118,7 @@ class MarsMissionFragment : Fragment() {
 
     private fun showData(list: List<TaskItem>) {
         setUpAdapter(list)
-        updateText(noTaskText, list)
+        updateText(binding.noTaskText, list)
     }
 
     private fun showError(throwable: Throwable) {
@@ -142,7 +147,7 @@ class MarsMissionFragment : Fragment() {
                 viewModel?.updateTaskStatus(taskItem)
             }
         }
-        recyclerView.adapter = taskAdapter
+        binding.taskRecycler.adapter = taskAdapter
     }
 
     private fun checkPermissionToInsertToCalendar(context: Context, title: String?) {
@@ -181,7 +186,7 @@ class MarsMissionFragment : Fragment() {
                 viewModel?.getTaskItemFromDataBase(chosenTaskDate)
                 taskAdapter.dataSet.remove(taskItem)
                 taskAdapter.notifyDataSetChanged()
-                updateText(noTaskText, dataSet)
+                updateText(binding.noTaskText, dataSet)
             }
             // A null listener allows the button to dismiss the dialog and take no further action.
             .setNegativeButton(android.R.string.cancel, null)

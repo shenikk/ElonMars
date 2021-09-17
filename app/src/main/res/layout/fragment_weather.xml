@@ -21,7 +21,9 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <include layout="@layout/fragment_weather_main_content" />
+    <include
+        android:id="@+id/fragment_weather_main_content"
+        layout="@layout/fragment_weather_main_content" />
 
     <View
         android:id="@+id/divider"
@@ -36,7 +38,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/fragment_weather_list_content" />
+        <include
+            android:id="@+id/fragment_weather_list_content"
+            layout="@layout/fragment_weather_list_content" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

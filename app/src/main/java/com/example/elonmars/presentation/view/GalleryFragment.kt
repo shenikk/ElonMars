@@ -5,20 +5,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.elonmars.MyApplication
 import com.example.elonmars.R
 import com.example.elonmars.data.model.PhotoItem
+import com.example.elonmars.databinding.FragmentGalleryBinding
 import com.example.elonmars.di.activity.DaggerActivityComponent
-import com.example.elonmars.presentation.enums.GalleryType
 import com.example.elonmars.presentation.adapter.PhotoAdapter
+import com.example.elonmars.presentation.enums.GalleryType
 import com.example.elonmars.presentation.extensions.getColorFromAttr
 import com.example.elonmars.presentation.extensions.logError
 import com.example.elonmars.presentation.extensions.showSnackbar
@@ -28,16 +26,12 @@ import io.reactivex.plugins.RxJavaPlugins
 /** Экран со списком фото */
 class GalleryFragment : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
     private lateinit var photoAdapter: PhotoAdapter
-    private lateinit var progressBar: ProgressBar
-    private lateinit var noFavourites: TextView
     private var viewModel: GalleryViewModel? = null
-    private lateinit var swipeRefresh: SwipeRefreshLayout
-
-    private lateinit var photoText: TextView
-    private lateinit var favouritePhotoText: TextView
     private var galleryType: GalleryType = GalleryType.RANDOM
+
+    private var _binding: FragmentGalleryBinding? = null
+    private val binding get() = _binding!!
 
     companion object {
         const val PRIMARY_TITLE_SIZE = 28f
@@ -48,8 +42,9 @@ class GalleryFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_gallery, container, false)
+    ): View {
+        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,21 +55,29 @@ class GalleryFragment : Fragment() {
         if (savedInstanceState == null) {
             viewModel?.loadDataAsync()
         }
-        recyclerView = view.findViewById(R.id.recycler)
-        // чтобы не моргало при обновлении одного айтема
-        recyclerView.itemAnimator = null
-        progressBar = view.findViewById(R.id.progress_bar)
-        swipeRefresh = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh_layout).apply {
-            this.setOnRefreshListener {
-                viewModel?.loadDataOnForceAsync()
-            }
-        }
-        noFavourites = view.findViewById(R.id.no_favourite_photos_text)
+
+        initUI()
         setUpButtons(view)
 
         // Необходимо для устранения ошибки самого RxJava2 (UndeliverableException)
         RxJavaPlugins.setErrorHandler { throwable: Throwable? ->
             logError("Exception: ${throwable.toString()}")
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun initUI() {
+        // чтобы не моргало при обновлении одного айтема
+        binding.recycler.itemAnimator = null
+
+        binding.swipeRefreshLayout.apply {
+            this.setOnRefreshListener {
+                viewModel?.loadDataOnForceAsync()
+            }
         }
     }
 
@@ -162,57 +165,57 @@ class GalleryFragment : Fragment() {
 
     private fun showProgress(isVisible: Boolean) {
         if (isVisible) {
-            progressBar.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.VISIBLE
         } else {
-            progressBar.visibility = View.GONE
+            binding.progressBar.visibility = View.GONE
         }
     }
 
     private fun showData(list: List<PhotoItem>) {
         if (GalleryType.RANDOM == galleryType) {
             setUpAdapter(list)
-            recyclerView.adapter = photoAdapter
-            updateText(noFavourites, list)
+            binding.recycler.adapter = photoAdapter
+            updateText(binding.noFavouritePhotosText, list)
         }
     }
 
     private fun showFavData(list: List<PhotoItem>) {
         setUpAdapter(list)
-        recyclerView.adapter = photoAdapter
+        binding.recycler.adapter = photoAdapter
 
-        updateText(noFavourites, list)
+        updateText(binding.noFavouritePhotosText, list)
     }
 
     private fun showRefreshProgress(isRefreshing: Boolean) {
-        swipeRefresh.isRefreshing = isRefreshing
+        binding.swipeRefreshLayout.isRefreshing = isRefreshing
     }
 
     private fun setUpButtons(view: View) {
-        photoText = view.findViewById<TextView>(R.id.photos).apply {
+        binding.photos.apply {
             setOnClickListener {
                 this.textSize = PRIMARY_TITLE_SIZE
                 this.setTextColor(this.context.getColorFromAttr(android.R.attr.textColorPrimary))
-                favouritePhotoText.setTextColor(
+                binding.favourite.setTextColor(
                     ContextCompat.getColor(
                         view.context,
                         R.color.grey_title
                     )
                 )
-                favouritePhotoText.textSize = SECONDARY_TITLE_SIZE
+                binding.favourite.textSize = SECONDARY_TITLE_SIZE
 
-                swipeRefresh.isEnabled = true
+                binding.swipeRefreshLayout.isEnabled = true
                 viewModel?.setContentType(GalleryType.RANDOM)
             }
         }
 
-        favouritePhotoText = view.findViewById<TextView>(R.id.favourite).apply {
+        binding.favourite.apply {
             setOnClickListener {
                 this.textSize = PRIMARY_TITLE_SIZE
-                photoText.textSize = SECONDARY_TITLE_SIZE
+                binding.photos.textSize = SECONDARY_TITLE_SIZE
                 this.setTextColor(this.context.getColorFromAttr(android.R.attr.textColorPrimary))
-                photoText.setTextColor(ContextCompat.getColor(view.context, R.color.grey_title))
+                binding.photos.setTextColor(ContextCompat.getColor(view.context, R.color.grey_title))
 
-                swipeRefresh.isEnabled = false
+                binding.swipeRefreshLayout.isEnabled = false
                 viewModel?.setContentType(GalleryType.FAVOURITE)
             }
         }

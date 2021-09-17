@@ -5,43 +5,36 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.elonmars.MyApplication
 import com.example.elonmars.R
+import com.example.elonmars.databinding.FragmentWeatherBinding
 import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.adapter.WeatherAdapter
 import com.example.elonmars.presentation.extensions.logError
 import com.example.elonmars.presentation.extensions.showSnackbar
 import com.example.elonmars.presentation.model.WeatherItem
 import com.example.elonmars.presentation.viewmodel.WeatherViewModel
-import com.facebook.shimmer.ShimmerFrameLayout
 import io.reactivex.plugins.RxJavaPlugins
 
 /** Экран с информацией о погоде за последние 10 доступных дней */
 class WeatherFragment : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
     private lateinit var weatherAdapter: WeatherAdapter
-    private lateinit var shimmerViewContainer: ShimmerFrameLayout
-    private lateinit var weatherDay: TextView
-    private lateinit var today: TextView
-    private lateinit var highTemp: TextView
-    private lateinit var lowTemp: TextView
-    private lateinit var temperatureSwitch: SwitchCompat
-    private lateinit var swipeRefresh: SwipeRefreshLayout
 
     private var viewModel: WeatherViewModel? = null
     private var dataSet: List<WeatherItem> = arrayListOf()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_weather, container, false)
+    private var _binding: FragmentWeatherBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentWeatherBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,15 +45,8 @@ class WeatherFragment : Fragment() {
         if (savedInstanceState == null) {
             viewModel?.loadDataAsync()
         }
-        init()
-
-        setUpRecycler(recyclerView)
-
-        swipeRefresh = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh_layout).apply {
-            this.setOnRefreshListener {
-                viewModel?.loadDataOnForceAsync()
-            }
-        }
+        initUI()
+        setUpRecycler(binding.fragmentWeatherListContent.weatherRecycler)
 
         // Необходимо для устранения ошибки самого RxJava2 (UndeliverableException)
         RxJavaPlugins.setErrorHandler { throwable: Throwable? ->
@@ -71,25 +57,27 @@ class WeatherFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        shimmerViewContainer.startShimmerAnimation()
+        binding.fragmentWeatherListContent.shimmerViewContainer.startShimmerAnimation()
     }
 
-    private fun init() {
-        view?.let {
-            recyclerView = it.findViewById(R.id.weather_recycler)
-            shimmerViewContainer = it.findViewById(R.id.shimmer_view_container)
-            weatherDay = it.findViewById(R.id.weather_day)
-            today = it.findViewById(R.id.today)
-            highTemp = it.findViewById(R.id.temp_high)
-            lowTemp = it.findViewById(R.id.temp_low)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
-            temperatureSwitch = it.findViewById<SwitchCompat>(R.id.temperature_switch).apply {
-                this.isChecked = viewModel?.getFahrenheitEnabled() == true
+    private fun initUI() {
+        binding.swipeRefreshLayout.apply {
+            this.setOnRefreshListener {
+                viewModel?.loadDataOnForceAsync()
+            }
+        }
 
-                setOnCheckedChangeListener { _, isChecked ->
-                    viewModel?.setFahrenheitEnabled(isChecked)
-                    viewModel?.convertTemperature()
-                }
+        binding.fragmentWeatherMainContent.temperatureSwitch.apply {
+            this.isChecked = viewModel?.getFahrenheitEnabled() == true
+
+            setOnCheckedChangeListener { _, isChecked ->
+                viewModel?.setFahrenheitEnabled(isChecked)
+                viewModel?.convertTemperature()
             }
         }
     }
@@ -138,7 +126,7 @@ class WeatherFragment : Fragment() {
     }
 
     private fun showRefreshProgress(isRefreshing: Boolean) {
-        swipeRefresh.isRefreshing = isRefreshing
+        binding.swipeRefreshLayout.isRefreshing = isRefreshing
     }
 
     private fun showError(throwable: Throwable) {
@@ -148,22 +136,22 @@ class WeatherFragment : Fragment() {
 
     private fun showProgress(isVisible: Boolean) {
         if (isVisible) {
-            shimmerViewContainer.startShimmerAnimation()
+            binding.fragmentWeatherListContent.shimmerViewContainer.startShimmerAnimation()
         } else {
-            shimmerViewContainer.stopShimmerAnimation()
-            shimmerViewContainer.visibility = View.GONE
+            binding.fragmentWeatherListContent.shimmerViewContainer.stopShimmerAnimation()
+            binding.fragmentWeatherListContent.shimmerViewContainer.visibility = View.GONE
         }
     }
 
     private fun showData(list: List<WeatherItem>) {
         weatherAdapter = WeatherAdapter(list)
-        recyclerView.adapter = weatherAdapter
+        binding.fragmentWeatherListContent.weatherRecycler.adapter = weatherAdapter
     }
 
     private fun setLatestData(weatherItem: WeatherItem) {
-        weatherDay.text = weatherItem.weatherDay
-        highTemp.text = weatherItem.highTemp
-        lowTemp.text = weatherItem.lowTemp
+        binding.fragmentWeatherMainContent.weatherDay.text = weatherItem.weatherDay
+        binding.fragmentWeatherMainContent.tempHigh.text = weatherItem.highTemp
+        binding.fragmentWeatherMainContent.tempLow.text = weatherItem.lowTemp
     }
 
     private fun setUpToolBar(view: View) {

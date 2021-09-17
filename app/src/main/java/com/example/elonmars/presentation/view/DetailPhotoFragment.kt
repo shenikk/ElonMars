@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -14,19 +12,19 @@ import com.bumptech.glide.Glide
 import com.example.elonmars.MyApplication
 import com.example.elonmars.R
 import com.example.elonmars.data.model.PhotoItem
+import com.example.elonmars.databinding.FragmentDetailPhotoBinding
 import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.extensions.showSnackbar
 import com.example.elonmars.presentation.viewmodel.DetailPhotoViewModel
-import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 /** Экран с детальной информацией о выбранном фото */
 class DetailPhotoFragment : Fragment() {
-    
-    private lateinit var detailPhoto: ImageView
-    private var viewModel: DetailPhotoViewModel? = null
 
+    private var viewModel: DetailPhotoViewModel? = null
     private var currentItem: PhotoItem? = null
+    private var _binding: FragmentDetailPhotoBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,35 +36,38 @@ class DetailPhotoFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_detail_photo, container, false)
+    ): View {
+        _binding = FragmentDetailPhotoBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         createViewModel(view.context)
+        initUI(view)
+    }
 
-        detailPhoto = view.findViewById<ImageView>(R.id.detail_photo)
-            .apply {
+    private fun initUI(view: View) {
+        binding.detailPhoto.apply {
             Glide.with(view)
                 .load(currentItem?.image)
                 .centerInside()
                 .into(this)
         }
 
-        view.findViewById<TextView>(R.id.description).apply {
+        binding.description.apply {
             text = currentItem?.explanation
             if (currentItem?.explanation == "") {
                 text = this.context.getString(R.string.no_description)
             }
         }
 
-        view.findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar).apply {
+        binding.collapsingToolbar.apply {
             this.title = currentItem?.title
         }
 
-        view.findViewById<FloatingActionButton>(R.id.detail_fab).apply {
+        binding.detailFab.apply {
             currentItem?.let {
                 setFabIcon(it, this)
 
@@ -84,11 +85,16 @@ class DetailPhotoFragment : Fragment() {
             }
         }
 
-        view.findViewById<ImageView>(R.id.back_button).apply {
+        binding.backButton.apply {
             setOnClickListener {
                 findNavController().popBackStack()
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun setFabIcon(currentItem: PhotoItem, fab: FloatingActionButton) {
