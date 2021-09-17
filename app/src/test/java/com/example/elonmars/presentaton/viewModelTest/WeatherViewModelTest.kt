@@ -173,6 +173,25 @@ class WeatherViewModelTest {
         verify(exactly = 1) { latestDayLiveDataObserver.onChanged(any()) }
     }
 
+    @Test
+    fun getFahrenheitEnabledTest() {
+        every { weatherInteractor.getFahrenheitEnabled() } returns true
+
+        val result = weatherViewModel.getFahrenheitEnabled()
+
+        verify(exactly = 1) { weatherInteractor.getFahrenheitEnabled() }
+        Assert.assertEquals(true, result)
+    }
+
+    @Test
+    fun setFahrenheitEnabledTest() {
+        every { weatherInteractor.setFahrenheitEnabled(false) } just Runs
+
+        weatherViewModel.setFahrenheitEnabled(false)
+
+        verify(exactly = 1) { weatherInteractor.setFahrenheitEnabled(false) }
+    }
+
     private fun celsiusWeatherItemList(): List<WeatherItem> {
         val list = arrayListOf<WeatherItem>()
         list.add(WeatherItem("Sol 1", "1", "High: 23 °C", "Low: 45 °C"))

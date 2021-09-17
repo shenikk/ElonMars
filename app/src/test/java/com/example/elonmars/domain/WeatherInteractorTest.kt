@@ -118,6 +118,25 @@ class WeatherInteractorTest {
         Assert.assertEquals(0, result?.size)
     }
 
+    @Test
+    fun getFahrenheitEnabledTest() {
+        every { dataStorage.fahrenheitEnabled } returns true
+
+        val result = weatherInteractor.getFahrenheitEnabled()
+
+        verify(exactly = 1) { dataStorage.fahrenheitEnabled }
+        Assert.assertEquals(true, result)
+    }
+
+    @Test
+    fun setFahrenheitEnabledTest() {
+        every { dataStorage.fahrenheitEnabled = false } just Runs
+
+        weatherInteractor.setFahrenheitEnabled(false)
+
+        verify(exactly = 1) { dataStorage.fahrenheitEnabled = false }
+    }
+
     private fun createData(): List<WeatherDataItem> {
         val list = arrayListOf<WeatherDataItem>()
         list.add(WeatherDataItem("1", "1", "23", "45"))

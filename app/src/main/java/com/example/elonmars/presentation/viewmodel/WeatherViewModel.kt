@@ -77,6 +77,18 @@ class WeatherViewModel(
     }
 
     /**
+     * Метод возвращает значение флага о выбранных градусах измерения.
+     */
+    fun getFahrenheitEnabled() = weatherInteractor.getFahrenheitEnabled()
+
+    /**
+     * Метод устанавливает значение флага о выбранных градусах измерения.
+     */
+    fun setFahrenheitEnabled(enabled: Boolean) {
+        weatherInteractor.setFahrenheitEnabled(enabled)
+    }
+
+    /**
      * Метод для получения инстанса LiveData.
      *
      * @return LiveData с [Boolean].

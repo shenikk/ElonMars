@@ -38,4 +38,14 @@ interface IWeatherInteractor {
      * @return модель [WeatherItem].
      */
     fun getLatestWeatherDay(): WeatherItem?
+
+    /**
+     * Возвращает значение флага о выбранных градусах измерения.
+     */
+    fun getFahrenheitEnabled(): Boolean
+
+    /**
+     * Устанавливает значение флага о выбранных градусах измерения.
+     */
+    fun setFahrenheitEnabled(enabled: Boolean)
 }

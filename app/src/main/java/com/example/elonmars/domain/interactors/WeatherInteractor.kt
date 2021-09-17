@@ -53,6 +53,12 @@ class WeatherInteractor(
 
     override fun getLatestWeatherDay() = dataStorage.latestWeatherDay
 
+    override fun getFahrenheitEnabled() = dataStorage.fahrenheitEnabled
+
+    override fun setFahrenheitEnabled(enabled: Boolean) {
+        dataStorage.fahrenheitEnabled = enabled
+    }
+
     override fun getWeatherItems() = dataStorage.weatherItems
 
     private fun doOnSuccess(weatherDataItemList: List<WeatherDataItem>) {

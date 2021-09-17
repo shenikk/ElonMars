@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.elonmars.MyApplication
 import com.example.elonmars.R
-import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.di.activity.DaggerActivityComponent
 import com.example.elonmars.presentation.adapter.WeatherAdapter
 import com.example.elonmars.presentation.extensions.logError
@@ -37,7 +36,6 @@ class WeatherFragment : Fragment() {
     private lateinit var lowTemp: TextView
     private lateinit var temperatureSwitch: SwitchCompat
     private lateinit var swipeRefresh: SwipeRefreshLayout
-    private lateinit var dataStorage: IDataStorage
 
     private var viewModel: WeatherViewModel? = null
     private var dataSet: List<WeatherItem> = arrayListOf()
@@ -86,10 +84,10 @@ class WeatherFragment : Fragment() {
             lowTemp = it.findViewById(R.id.temp_low)
 
             temperatureSwitch = it.findViewById<SwitchCompat>(R.id.temperature_switch).apply {
-                this.isChecked = dataStorage.fahrenheitEnabled
+                this.isChecked = viewModel?.getFahrenheitEnabled() == true
 
                 setOnCheckedChangeListener { _, isChecked ->
-                    dataStorage.fahrenheitEnabled = isChecked
+                    viewModel?.setFahrenheitEnabled(isChecked)
                     viewModel?.convertTemperature()
                 }
             }
@@ -109,7 +107,6 @@ class WeatherFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, activityComponent.getViewModelFactory()).get(
             WeatherViewModel::class.java)
-        dataStorage = appComponent.getDataStorage()
     }
 
     private fun observeLiveData() {

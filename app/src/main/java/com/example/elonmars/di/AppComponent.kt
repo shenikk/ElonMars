@@ -22,8 +22,6 @@ interface AppComponent {
         fun build(): AppComponent
     }
 
-    fun getDataStorage(): IDataStorage
-
     fun getPhotosInteractor(): IPhotosInteractor
 
     fun getTaskInteractor(): ITaskInteractor

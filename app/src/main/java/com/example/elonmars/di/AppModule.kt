@@ -26,12 +26,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 @Module
 class AppModule {
 
-    /** Метод для получения хранилища данных */
-    @Provides
-    fun getDataStorage(context: Context): IDataStorage {
-        return DataStorage(context.getSharedPreferences("PREFS", Context.MODE_PRIVATE))
-    }
-
     /** Метод для получения интерактора с обработкой фото */
     @Provides
     fun providePhotosInteractor(context: Context): IPhotosInteractor {
@@ -54,6 +48,10 @@ class AppModule {
     @Provides
     fun getHomeInteractor(context: Context): IHomeInteractor {
         return HomeInteractor(getHomeRepository(context))
+    }
+
+    private fun getDataStorage(context: Context): IDataStorage {
+        return DataStorage(context.getSharedPreferences("PREFS", Context.MODE_PRIVATE))
     }
 
     private fun getHomeRepository(context: Context): IHomeRepository {
