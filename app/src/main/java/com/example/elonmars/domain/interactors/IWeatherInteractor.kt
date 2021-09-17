@@ -1,6 +1,6 @@
 package com.example.elonmars.domain.interactors
 
-import com.example.elonmars.presentation.model.WeatherItem
+import com.example.elonmars.presentation.weather.model.WeatherItem
 import io.reactivex.Single
 
 /** Интерфейс интерактора для экрана с погодой. */

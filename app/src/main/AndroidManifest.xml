@@ -17,7 +17,7 @@
         android:theme="@style/Theme.ElonMars"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".presentation.view.SplashScreen"
+            android:name=".presentation.activity.SplashScreen"
             android:exported="true"
             android:theme="@style/SplashScreenTheme">
             <intent-filter>
@@ -26,10 +26,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.view.MainActivity" />
-        <activity android:name=".presentation.view.PreferenceActivity" />
-        <service android:name=".presentation.service.NotificationService" />
-        <receiver android:name=".presentation.broadcast.NotificationBroadcastReceiver" />
+        <activity android:name=".presentation.activity.MainActivity" />
+        <activity android:name=".presentation.setttings.view.PreferenceActivity" />
+        <service android:name="com.example.elonmars.presentation.home.service.NotificationService" />
+        <receiver android:name="com.example.elonmars.presentation.home.broadcast.NotificationBroadcastReceiver" />
         <meta-data android:name="io.sentry.dsn"
             android:value="${sentry_key}" />
     </application>

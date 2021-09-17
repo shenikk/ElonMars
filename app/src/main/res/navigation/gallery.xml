@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/gallery_fragment"
-        android:name="com.example.elonmars.presentation.view.GalleryFragment"
+        android:name="com.example.elonmars.presentation.gallery.view.GalleryFragment"
         tools:layout="@layout/fragment_gallery"
         android:label="Gallery" >
         <action
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/detail_photo_fragment"
-        android:name="com.example.elonmars.presentation.view.DetailPhotoFragment"
+        android:name="com.example.elonmars.presentation.detail_photo.view.DetailPhotoFragment"
         tools:layout="@layout/fragment_detail_photo"
         android:label="DetailPhoto" >
         <argument

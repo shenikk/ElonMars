@@ -2,7 +2,7 @@ package com.example.elonmars.domain
 
 import com.example.elonmars.domain.interactors.HomeInteractor
 import com.example.elonmars.domain.repositories.IHomeRepository
-import com.example.elonmars.presentation.enums.TimerState
+import com.example.elonmars.presentation.home.enums.TimerState
 import io.mockk.*
 import org.junit.Assert
 import org.junit.Test

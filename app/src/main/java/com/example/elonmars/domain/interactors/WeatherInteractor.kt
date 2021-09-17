@@ -5,7 +5,7 @@ import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.repositories.IItemsRepository
 import com.example.elonmars.presentation.extensions.getFirstItem
 import com.example.elonmars.presentation.extensions.logError
-import com.example.elonmars.presentation.model.WeatherItem
+import com.example.elonmars.presentation.weather.model.WeatherItem
 import io.reactivex.Single
 
 /**

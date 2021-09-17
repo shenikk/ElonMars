@@ -1,7 +1,7 @@
 package com.example.elonmars.data.repository
 
 import com.example.elonmars.domain.provider.ITaskItemsProvider
-import com.example.elonmars.presentation.model.TaskItem
+import com.example.elonmars.presentation.mission.model.TaskItem
 import io.mockk.*
 import org.junit.Test
 import java.util.*

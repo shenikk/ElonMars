@@ -1,6 +1,6 @@
 package com.example.elonmars.domain.provider
 
-import com.example.elonmars.presentation.model.TaskItem
+import com.example.elonmars.presentation.mission.model.TaskItem
 import java.util.*
 
 /** Интерфейс провайдера данных с информацией о задачах. */

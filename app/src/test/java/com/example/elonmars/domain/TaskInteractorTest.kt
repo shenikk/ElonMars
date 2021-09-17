@@ -2,9 +2,8 @@ package com.example.elonmars.domain
 
 import com.example.elonmars.domain.interactors.TaskInteractor
 import com.example.elonmars.domain.repositories.ITasksRepository
-import com.example.elonmars.presentation.model.TaskItem
+import com.example.elonmars.presentation.mission.model.TaskItem
 import io.mockk.every
-import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
 import io.reactivex.Completable

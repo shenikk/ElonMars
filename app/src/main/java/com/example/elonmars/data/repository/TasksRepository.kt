@@ -2,7 +2,7 @@ package com.example.elonmars.data.repository
 
 import com.example.elonmars.domain.provider.ITaskItemsProvider
 import com.example.elonmars.domain.repositories.ITasksRepository
-import com.example.elonmars.presentation.model.TaskItem
+import com.example.elonmars.presentation.mission.model.TaskItem
 import io.reactivex.Completable
 import io.reactivex.Single
 import java.util.*

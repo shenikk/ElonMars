@@ -4,8 +4,8 @@ import android.app.Application
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
-import com.example.elonmars.di.AppComponent
-import com.example.elonmars.di.DaggerAppComponent
+import com.example.elonmars.di.app.AppComponent
+import com.example.elonmars.di.app.DaggerAppComponent
 
 /**
  * Класс [Application] для инициализации компонентов,

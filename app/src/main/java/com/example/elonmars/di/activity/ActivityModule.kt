@@ -6,7 +6,7 @@ import com.example.elonmars.domain.interactors.IPhotosInteractor
 import com.example.elonmars.domain.interactors.ITaskInteractor
 import com.example.elonmars.domain.interactors.IWeatherInteractor
 import com.example.elonmars.domain.provider.ISchedulersProvider
-import com.example.elonmars.presentation.viewmodel.ViewModelFactory
+import com.example.elonmars.presentation.factory.ViewModelFactory
 import dagger.Module
 import dagger.Provides
 

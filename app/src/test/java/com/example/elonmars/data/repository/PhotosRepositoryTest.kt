@@ -4,7 +4,7 @@ import com.example.elonmars.data.exception.RequestException
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.domain.provider.IGalleryProvider
 import com.example.elonmars.data.store.IDataStorage
-import com.example.elonmars.presentation.enums.GalleryType
+import com.example.elonmars.presentation.gallery.enums.GalleryType
 import io.mockk.*
 import org.junit.Assert
 import org.junit.Test

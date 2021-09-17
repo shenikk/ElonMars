@@ -1,8 +1,8 @@
 package com.example.elonmars.presentaton.viewModelTest
 
 import com.example.elonmars.domain.interactors.IHomeInteractor
-import com.example.elonmars.presentation.enums.TimerState
-import com.example.elonmars.presentation.viewmodel.HomeViewModel
+import com.example.elonmars.presentation.home.enums.TimerState
+import com.example.elonmars.presentation.home.viewmodel.HomeViewModel
 import io.mockk.*
 import org.junit.Assert
 import org.junit.Test

@@ -1,7 +1,7 @@
 package com.example.elonmars.di.activity
 
-import com.example.elonmars.di.AppComponent
-import com.example.elonmars.presentation.viewmodel.ViewModelFactory
+import com.example.elonmars.di.app.AppComponent
+import com.example.elonmars.presentation.factory.ViewModelFactory
 import dagger.Component
 
 /** Компонент уровня активити для реализации DI */

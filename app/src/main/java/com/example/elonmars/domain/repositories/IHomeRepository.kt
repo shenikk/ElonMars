@@ -1,6 +1,6 @@
 package com.example.elonmars.domain.repositories
 
-import com.example.elonmars.presentation.enums.TimerState
+import com.example.elonmars.presentation.home.enums.TimerState
 
 /** Интерфейс репозитория с данными о конечном времени события. */
 interface IHomeRepository {

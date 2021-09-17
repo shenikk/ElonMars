@@ -7,8 +7,8 @@ import com.example.elonmars.data.exception.RequestException
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.domain.interactors.IPhotosInteractor
 import com.example.elonmars.domain.provider.ISchedulersProvider
-import com.example.elonmars.presentation.enums.GalleryType
-import com.example.elonmars.presentation.viewmodel.GalleryViewModel
+import com.example.elonmars.presentation.gallery.enums.GalleryType
+import com.example.elonmars.presentation.gallery.viewmodel.GalleryViewModel
 import io.mockk.*
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers

@@ -1,7 +1,7 @@
 package com.example.elonmars.domain.interactors
 
 import com.example.elonmars.domain.repositories.ITasksRepository
-import com.example.elonmars.presentation.model.TaskItem
+import com.example.elonmars.presentation.mission.model.TaskItem
 import io.reactivex.Completable
 import io.reactivex.Single
 import java.util.*

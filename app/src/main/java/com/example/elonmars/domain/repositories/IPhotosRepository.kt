@@ -1,7 +1,7 @@
 package com.example.elonmars.domain.repositories
 
 import com.example.elonmars.data.model.PhotoItem
-import com.example.elonmars.presentation.enums.GalleryType
+import com.example.elonmars.presentation.gallery.enums.GalleryType
 import io.reactivex.Single
 
 /** Интерфейс репозитория по скачиванию данных из сети. */

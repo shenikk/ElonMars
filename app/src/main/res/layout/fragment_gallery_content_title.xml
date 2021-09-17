@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
     android:orientation="vertical"
-    tools:context=".presentation.view.MainActivity">
+    tools:context=".presentation.activity.MainActivity">
 
     <TextView
         android:id="@+id/photos"

@@ -3,7 +3,7 @@ package com.example.elonmars.domain
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.domain.interactors.PhotosInteractor
 import com.example.elonmars.domain.repositories.IPhotosRepository
-import com.example.elonmars.presentation.enums.GalleryType
+import com.example.elonmars.presentation.gallery.enums.GalleryType
 import io.mockk.*
 import io.reactivex.Single
 import org.junit.Assert

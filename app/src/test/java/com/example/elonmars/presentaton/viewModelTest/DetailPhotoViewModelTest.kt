@@ -3,7 +3,7 @@ package com.example.elonmars.presentaton.viewModelTest
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.domain.interactors.IPhotosInteractor
 import com.example.elonmars.domain.provider.ISchedulersProvider
-import com.example.elonmars.presentation.viewmodel.DetailPhotoViewModel
+import com.example.elonmars.presentation.detail_photo.viewmodel.DetailPhotoViewModel
 import io.mockk.*
 import org.junit.Test
 

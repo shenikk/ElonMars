@@ -4,7 +4,7 @@ import com.example.elonmars.data.model.WeatherDataItem
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.interactors.WeatherInteractor
 import com.example.elonmars.domain.repositories.IItemsRepository
-import com.example.elonmars.presentation.model.WeatherItem
+import com.example.elonmars.presentation.weather.model.WeatherItem
 import io.mockk.*
 import io.reactivex.Single
 import org.junit.Assert

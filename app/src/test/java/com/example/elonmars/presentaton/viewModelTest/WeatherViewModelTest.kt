@@ -3,13 +3,11 @@ package com.example.elonmars.presentaton.viewModelTest
 import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.example.elonmars.data.model.WeatherDataItem
 import com.example.elonmars.data.exception.RequestException
 import com.example.elonmars.domain.provider.ISchedulersProvider
-import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.interactors.IWeatherInteractor
-import com.example.elonmars.presentation.model.WeatherItem
-import com.example.elonmars.presentation.viewmodel.WeatherViewModel
+import com.example.elonmars.presentation.weather.model.WeatherItem
+import com.example.elonmars.presentation.weather.viewmodel.WeatherViewModel
 import io.mockk.*
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers

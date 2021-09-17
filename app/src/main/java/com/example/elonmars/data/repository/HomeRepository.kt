@@ -2,7 +2,7 @@ package com.example.elonmars.data.repository
 
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.repositories.IHomeRepository
-import com.example.elonmars.presentation.enums.TimerState
+import com.example.elonmars.presentation.home.enums.TimerState
 
 /**
  * Репозиторий - провайдер данных о состоянии таймера и конечном времени события.

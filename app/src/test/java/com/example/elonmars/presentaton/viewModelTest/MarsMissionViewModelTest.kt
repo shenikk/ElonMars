@@ -5,8 +5,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.elonmars.domain.provider.ISchedulersProvider
 import com.example.elonmars.domain.interactors.ITaskInteractor
-import com.example.elonmars.presentation.model.TaskItem
-import com.example.elonmars.presentation.viewmodel.MarsMissionViewModel
+import com.example.elonmars.presentation.mission.model.TaskItem
+import com.example.elonmars.presentation.mission.viewmodel.MarsMissionViewModel
 import io.mockk.*
 import io.reactivex.Completable
 import io.reactivex.Single
