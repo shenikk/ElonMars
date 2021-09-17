@@ -1,6 +1,10 @@
 package com.example.elonmars.presentation.home.service
 
-import android.app.*
+import android.app.Notification
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.Service
+import android.app.NotificationChannel
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder

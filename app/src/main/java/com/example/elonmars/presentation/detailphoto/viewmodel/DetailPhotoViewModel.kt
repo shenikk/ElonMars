@@ -1,4 +1,4 @@
-package com.example.elonmars.presentation.detail_photo.viewmodel
+package com.example.elonmars.presentation.detailphoto.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.elonmars.data.model.PhotoItem

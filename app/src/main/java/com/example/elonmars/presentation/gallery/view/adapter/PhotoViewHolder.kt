@@ -19,6 +19,11 @@ class PhotoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val starIcon: ImageView = view.findViewById(R.id.star_icon)
     private var progressDrawable = CircularProgressDrawable(imageView.context)
 
+    companion object {
+        private const val CENTER_RADIUS = 30f
+        private const val STROKE_WIDTH = 5f
+    }
+
     fun configureHolder(currentItem: PhotoItem) {
         titleText.text = currentItem.date
         dateText.text = currentItem.title
@@ -46,8 +51,8 @@ class PhotoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private fun setupProgress() {
         progressDrawable.apply {
-            centerRadius = 30f
-            strokeWidth = 5f
+            centerRadius = CENTER_RADIUS
+            strokeWidth = STROKE_WIDTH
         }.start()
     }
 }

@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/detail_photo_fragment"
-        android:name="com.example.elonmars.presentation.detail_photo.view.DetailPhotoFragment"
+        android:name="com.example.elonmars.presentation.detailphoto.view.DetailPhotoFragment"
         tools:layout="@layout/fragment_detail_photo"
         android:label="DetailPhoto" >
         <argument

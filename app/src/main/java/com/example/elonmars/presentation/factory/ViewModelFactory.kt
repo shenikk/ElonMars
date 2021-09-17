@@ -7,7 +7,7 @@ import com.example.elonmars.domain.interactors.IPhotosInteractor
 import com.example.elonmars.domain.interactors.ITaskInteractor
 import com.example.elonmars.domain.interactors.IWeatherInteractor
 import com.example.elonmars.domain.provider.ISchedulersProvider
-import com.example.elonmars.presentation.detail_photo.viewmodel.DetailPhotoViewModel
+import com.example.elonmars.presentation.detailphoto.viewmodel.DetailPhotoViewModel
 import com.example.elonmars.presentation.gallery.viewmodel.GalleryViewModel
 import com.example.elonmars.presentation.home.viewmodel.HomeViewModel
 import com.example.elonmars.presentation.mission.viewmodel.MarsMissionViewModel

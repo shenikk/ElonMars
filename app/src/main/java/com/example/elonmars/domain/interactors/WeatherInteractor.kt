@@ -4,7 +4,7 @@ import com.example.elonmars.data.model.WeatherDataItem
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.repositories.IItemsRepository
 import com.example.elonmars.presentation.extensions.getFirstItem
-import com.example.elonmars.presentation.extensions.logError
+import com.example.elonmars.presentation.weather.converter.WeatherConverter
 import com.example.elonmars.presentation.weather.model.WeatherItem
 import io.reactivex.Single
 
@@ -18,7 +18,8 @@ import io.reactivex.Single
  */
 class WeatherInteractor(
     private val itemsRepository: IItemsRepository,
-    private val dataStorage: IDataStorage
+    private val dataStorage: IDataStorage,
+    private val weatherConverter: WeatherConverter
 ) : IWeatherInteractor {
 
     private val weatherItemsData = mutableListOf<WeatherDataItem>()
@@ -41,8 +42,8 @@ class WeatherInteractor(
         weatherItemsData.getFirstItem()?.let { item ->
             if (dataStorage.fahrenheitEnabled) {
 
-                dataStorage.weatherItems = weatherItemsData.map { convertFarenheit(it) }
-                dataStorage.latestWeatherDay = convertFarenheit(item)
+                dataStorage.weatherItems = weatherItemsData.map { convertFahrenheit(it) }
+                dataStorage.latestWeatherDay = convertFahrenheit(item)
 
             } else {
                 dataStorage.weatherItems = weatherItemsData.map { convertCelsius(it) }
@@ -72,16 +73,16 @@ class WeatherInteractor(
 
     private fun convertAfterServerDownload(weatherDataItem: WeatherDataItem): WeatherItem {
         return if (dataStorage.fahrenheitEnabled) {
-            convertFarenheit(weatherDataItem)
+            convertFahrenheit(weatherDataItem)
         } else {
             convertCelsius(weatherDataItem)
         }
     }
 
-    private fun convertFarenheit(weatherDataItem: WeatherDataItem): WeatherItem {
+    private fun convertFahrenheit(weatherDataItem: WeatherDataItem): WeatherItem {
 
-        val highTemp = convertToFarenheit(weatherDataItem.highTemp) ?: "NA"
-        val lowTemp = convertToFarenheit(weatherDataItem.lowTemp) ?: "NA"
+        val highTemp = weatherConverter.convertToFahrenheit(weatherDataItem.highTemp) ?: "NA"
+        val lowTemp = weatherConverter.convertToFahrenheit(weatherDataItem.lowTemp) ?: "NA"
 
         return WeatherItem(
             "Sol ${weatherDataItem.weatherDay}",
@@ -99,14 +100,5 @@ class WeatherInteractor(
             "High: ${weatherDataItem.highTemp} °C",
             "Low: ${weatherDataItem.lowTemp} °C"
         )
-    }
-
-    private fun convertToFarenheit(temperature: String?): String? {
-        return try {
-            (temperature?.toFloat()?.let { (it * 9f / 5f) + 32f })?.toInt().toString()
-        } catch (e: Exception) {
-            logError("$temperature is not a number")
-            null
-        }
     }
 }

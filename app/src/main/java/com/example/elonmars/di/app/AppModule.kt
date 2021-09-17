@@ -17,6 +17,7 @@ import com.example.elonmars.domain.provider.IGalleryProvider
 import com.example.elonmars.domain.provider.IWeatherItemsProvider
 import com.example.elonmars.domain.repositories.IHomeRepository
 import com.example.elonmars.domain.repositories.IPhotosRepository
+import com.example.elonmars.presentation.weather.converter.WeatherConverter
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -41,7 +42,7 @@ class AppModule {
     /** Метод для получения интерактора с обработкой погодных данных */
     @Provides
     fun getWeatherInteractor(context: Context): IWeatherInteractor {
-        return WeatherInteractor(getItemsRepository(context), getDataStorage(context))
+        return WeatherInteractor(getItemsRepository(context), getDataStorage(context), WeatherConverter())
     }
 
     /** Метод для получения интерактора главного экрана */

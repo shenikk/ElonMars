@@ -1,4 +1,4 @@
-package com.example.elonmars.presentation.detail_photo.view
+package com.example.elonmars.presentation.detailphoto.view
 
 import android.content.Context
 import android.os.Bundle
@@ -14,7 +14,7 @@ import com.example.elonmars.R
 import com.example.elonmars.data.model.PhotoItem
 import com.example.elonmars.databinding.FragmentDetailPhotoBinding
 import com.example.elonmars.di.activity.DaggerActivityComponent
-import com.example.elonmars.presentation.detail_photo.viewmodel.DetailPhotoViewModel
+import com.example.elonmars.presentation.detailphoto.viewmodel.DetailPhotoViewModel
 import com.example.elonmars.presentation.extensions.showSnackbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
