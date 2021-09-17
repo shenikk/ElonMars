@@ -4,6 +4,7 @@ import com.example.elonmars.data.model.WeatherDataItem
 import com.example.elonmars.data.store.IDataStorage
 import com.example.elonmars.domain.interactors.WeatherInteractor
 import com.example.elonmars.domain.repositories.IItemsRepository
+import com.example.elonmars.presentation.weather.converter.WeatherConverter
 import com.example.elonmars.presentation.weather.model.WeatherItem
 import io.mockk.*
 import io.reactivex.Single
@@ -15,7 +16,8 @@ class WeatherInteractorTest {
 
     private val itemsRepository: IItemsRepository = mockk()
     private val dataStorage: IDataStorage = mockk()
-    private val weatherInteractor = WeatherInteractor(itemsRepository, dataStorage)
+//    private val weatherConverter: WeatherConverter = mockk()
+    private val weatherInteractor = WeatherInteractor(itemsRepository, dataStorage, WeatherConverter())
     private val latestWeatherDay = WeatherItem("Sol 1", "1", "High: 23 °C", "Low: 45 °C")
     private val latestWeatherDayFahrenheit = WeatherItem("Sol 1", "1", "High: 73 °F", "Low: 113 °F")
 
@@ -39,10 +41,12 @@ class WeatherInteractorTest {
         every { dataStorage.latestWeatherDay = latestWeatherDayFahrenheit } just Runs
         every { dataStorage.fahrenheitEnabled } returns true
 
-        val testObserver = weatherInteractor.loadDataAsync().test()
+        weatherInteractor.loadDataAsync().test()
 
         verify(exactly = 1) { itemsRepository.loadDataAsync() }
-        testObserver.assertResult(Unit)
+        verify(exactly = 3) { dataStorage.fahrenheitEnabled }
+        verify(exactly = 1) { dataStorage.weatherItems = fahrenheitWeatherItemList() }
+        verify(exactly = 1) { dataStorage.latestWeatherDay = latestWeatherDayFahrenheit }
     }
 
     @Test
@@ -60,15 +64,20 @@ class WeatherInteractorTest {
 
     @Test
     fun loadDataAsyncOnCallWithFahrenheitTest() {
-        every { itemsRepository.loadDataAsyncOnCall() } returns Single.just(createData())
-        every { dataStorage.weatherItems = fahrenheitWeatherItemList() } just Runs
+        val item1 = WeatherDataItem("1", "1", "23", "45")
+        val item2 = WeatherDataItem("1", "1", "23", "45")
+        val item3 = WeatherDataItem("1", "1", "23", "45")
+        every { itemsRepository.loadDataAsyncOnCall() } returns Single.just(listOf(item1, item2, item3))
+        every { dataStorage.weatherItems = fahrenheitWeatherItemList2() } just Runs
         every { dataStorage.latestWeatherDay = latestWeatherDayFahrenheit } just Runs
         every { dataStorage.fahrenheitEnabled } returns true
 
-        val testObserver = weatherInteractor.loadDataAsyncOnCall().test()
+        weatherInteractor.loadDataAsyncOnCall().test()
 
         verify(exactly = 1) { itemsRepository.loadDataAsyncOnCall() }
-        testObserver.assertResult(Unit)
+        verify(exactly = 3) { dataStorage.fahrenheitEnabled }
+        verify(exactly = 1) { dataStorage.weatherItems = fahrenheitWeatherItemList2() }
+        verify(exactly = 1) { dataStorage.latestWeatherDay = latestWeatherDayFahrenheit }
     }
 
     /** No method is invoked because 'weatherItemsData' is empty */
@@ -160,6 +169,15 @@ class WeatherInteractorTest {
         list.add(WeatherItem("Sol 1", "1", "High: 73 °F", "Low: 113 °F"))
         list.add(WeatherItem("Sol 2", "2", "High: 113 °F", "Low: -88 °F"))
         list.add(WeatherItem("Sol 3", "3", "High: 37 °F", "Low: 23 °F"))
+
+        return list
+    }
+
+    private fun fahrenheitWeatherItemList2(): List<WeatherItem> {
+        val list = arrayListOf<WeatherItem>()
+        list.add(WeatherItem("Sol 1", "1", "High: 73 °F", "Low: 113 °F"))
+        list.add(WeatherItem("Sol 1", "1", "High: 73 °F", "Low: 113 °F"))
+        list.add(WeatherItem("Sol 1", "1", "High: 73 °F", "Low: 113 °F"))
 
         return list
     }

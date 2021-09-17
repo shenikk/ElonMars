@@ -1,11 +1,13 @@
 package com.example.elonmars.presentaton
 
 import com.example.elonmars.presentation.weather.converter.WeatherConverter
+import com.example.elonmars.presentation.weather.viewmodel.WeatherViewModel
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
+/** Класс для тестирования [WeatherConverter] */
 @RunWith(Parameterized::class)
 class Parametrized(
     private var value: String,
