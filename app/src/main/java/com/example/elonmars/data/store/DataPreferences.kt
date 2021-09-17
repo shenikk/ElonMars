@@ -7,7 +7,7 @@ import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.lang.reflect.Type
 
-abstract class DataPreferences {
+open class DataPreferences {
 
     /** Метод для парсинга данных из формата Json */
     protected inline fun <reified T> getDataFromJson(input: String): List<T> {

@@ -9,6 +9,8 @@ import com.example.elonmars.presentation.model.WeatherItem
  * Реализация хранилища данных.
  *
  * @param preferences преференсы для хранения данных.
+ *
+ * @testClass instrumented: DataStorageTest
  */
 class DataStorage(private val preferences: SharedPreferences) : DataPreferences(), IDataStorage {
 
