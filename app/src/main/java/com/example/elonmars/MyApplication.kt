@@ -39,4 +39,7 @@ class MyApplication : Application() {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
+    // test commit2
+    // test commit3
+    //sjsjs
 }
